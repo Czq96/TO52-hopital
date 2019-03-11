@@ -6,7 +6,7 @@ using NPOI.SS.UserModel;
 using NPOI.HSSF.UserModel;
 using System.IO;
 
-public class Class1
+public class ExcelReaderListString
 {
     public List<List<string>> rowReadAll(string save_address, int sheet_number)//读取excel表格相应工作表的所有数据
     {
@@ -14,9 +14,9 @@ public class Class1
         //如果传入参数合法
         if (!string.IsNullOrEmpty(save_address) && sheet_number > 0)
         {
-            int rowAllCnt = Class1.rowORcolAllCount(save_address, sheet_number, true);
-            int colAllCnt = Class1.rowORcolAllCount(save_address, sheet_number, false);
-            data = Class1.rowReadSection(save_address, 1, rowAllCnt, 1, colAllCnt, sheet_number);
+            int rowAllCnt = ExcelReaderListString.rowORcolAllCount(save_address, sheet_number, true);
+            int colAllCnt = ExcelReaderListString.rowORcolAllCount(save_address, sheet_number, false);
+            data = ExcelReaderListString.rowReadSection(save_address, 1, rowAllCnt, 1, colAllCnt, sheet_number);
         }
         return data;
     }
@@ -81,99 +81,51 @@ public class Class1
             if (!string.IsNullOrEmpty(save_address) && start_row > 0 && stop_row > 0 && sart_column > 0 && stop_column > 0 && sheet_number > 0)
 
             {
-
                 readfile = new FileStream(save_address, FileMode.Open, FileAccess.Read);
-
                 HSSFWorkbook hssfworkbook = new HSSFWorkbook(readfile);
-
                 ISheet sheet = hssfworkbook.GetSheetAt(sheet_number - 1);
-
                 if (sheet != null)
-
                 {
-
                     for (int rowIndex = start_row - 1; rowIndex < stop_row; rowIndex++)
-
                     {
-
                         IRow row = sheet.GetRow(rowIndex);
-
                         if (row != null)
-
                         {
-
                             List<string> oneRow = new List<string>();
-
-
-
                             for (int columnIndex = sart_column - 1; columnIndex < stop_column; columnIndex++)
-
                             {
-
                                 ICell cell = row.GetCell(columnIndex);
-
                                 if (cell != null)
-
                                 {
-
                                     oneRow.Add(cell.ToString());
-
                                 }
-
                                 else
                                 {
-
                                     oneRow.Add("");//填充空的数据
-
                                 }
-
                             }
-
-
-
                             if (data == null)
-
                             {
-
                                 data = new List<List<string>>();//初始化
-
                             }
-
                             data.Add(oneRow);
-
                         }
-
                         else
                         {
-
                             List<string> oneRow = new List<string>();//软件为相应位置空行创建内存中的空数据行
-
                             for (int columnIndex = sart_column - 1; columnIndex < stop_column; columnIndex++)
-
                             {
-
                                 oneRow.Add("");//填充空的数据
-
                             }
-
                             if (data == null)
-
                             {
-
                                 data = new List<List<string>>();//初始化
-
                             }
-
                             data.Add(oneRow);
-
                         }
-
                     }
-
                 }
-
             }
-
         }
         catch (Exception e)
         {
