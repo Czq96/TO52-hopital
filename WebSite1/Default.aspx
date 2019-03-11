@@ -18,12 +18,11 @@
 </asp:Content>--%>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
- <%--   <h3>We suggest the following:</h3>--%>
-
-    <asp:TextBox ID="tete" runat="server"></asp:TextBox>
-    <asp:Button ID="yyy" runat="server" OnClick="yyy_Click" />
-        <div id ="test"><%=gethtml()%></div>
+    <asp:TextBox ID="tete" runat="server" Width="100%"></asp:TextBox>
+    <%-- <asp:Button ID="yyy" runat="server" OnClick="yyy_Click" /> --%>
+    <div id ="test"><%=gethtml()%></div>
     <asp:UpdatePanel ID="test1" runat="server">
+
     </asp:UpdatePanel>
  <%--   <ol class="round">
         <li class="one">

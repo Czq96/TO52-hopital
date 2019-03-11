@@ -11,23 +11,16 @@ using MySql.Data.MySqlClient;
 /// </summary>
 public class bdd_functions
 {
-
-
-
     MySqlConnection getConnection()
     {
         //MySqlConnection con = new MySqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DatabaseConnexion"].ConnectionString);
         MySqlConnection con = new MySqlConnection("server=localhost;user id=root;database=hopital;SslMode=none");
         return con;
     }
-    //
-    // TODO: 在此处添加构造函数逻辑
-    //
 
     //sert à executer la commande
     private void executeCmd(MySqlCommand cmd)
     {
-
         MySqlConnection con = getConnection();
         cmd.Connection = con;
 

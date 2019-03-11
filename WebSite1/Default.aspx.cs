@@ -6,13 +6,15 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using System.Text.RegularExpressions;
+// using System.Runtime.Serialization.dll; //to json
+using System.Web.Script.Serialization;
 
 
 public partial class _Default : Page
 {
     string html = null;
-    Class1 c = new Class1();
-    string path_source = "C:/Users/c/source/repos/WebSite1/WebSite1/";
+    ExcelReaderListString c = new ExcelReaderListString();
+    //string path_source = "C:/Users/c/source/repos/WebSite1/WebSite1/";
 
     List<List<string>> data_patient = null;
     List<List<string>> data_arrangement = null;
@@ -22,15 +24,20 @@ public partial class _Default : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        tete.Text = "geygye";
-        String xxx = "sadadad";
+        string str = System.Environment.CurrentDirectory;
+
+        //String xxx = "sadadad";
         // List sbs = new List<List<int>>;
         load_arrangement();
         load_patient();
 
         former_arrangement();
 
+        JsonHelper j = new JsonHelper();
+        tete.Text = j.ListlistToJson(data_arrangement_format);
+
         all_table_html(data_arrangement_format);
+
 
         //    DataTable dt = new DataTable();
         //    DataSet ds = new DataSet();
@@ -44,14 +51,16 @@ public partial class _Default : Page
     }
 
     public List<List<string>> load_patient()
-    {
-        data_patient = c.rowReadAll("C:/Users/c/source/repos/WebSite1/WebSite1/patients2blocks.xls", 1);
+    {   
+        // 读取.xls 文件将数据存在 data_patient 中； 尚未支持其他格式的表格文件
+        data_patient = c.rowReadAll("C:/Users/c/source/repos/WebSite1/WebSite1/patients2blocks.xls", 1);//C:/Users/c/source/repos/WebSite1/WebSite1/
         return data_patient;
     }
 
     public List<List<string>> load_arrangement()
     {
-        data_arrangement = c.rowReadAll("C:/Users/c/source/repos/WebSite1/WebSite1/blocks2or-days.xls", 1); //blocks2or-days.xlsx
+        
+        data_arrangement = c.rowReadAll("C:/Users/c/source/repos/WebSite1/WebSite1/blocks2or-days.xls", 1); //C:/Users/c/source/repos/WebSite1/WebSite1/blocks2or-days.xls
         return data_arrangement;
     }
 
@@ -78,6 +87,7 @@ public partial class _Default : Page
 
     public void former_arrangement()
     {
+        //重组表格的 blocks2or-days 的内容 开放但是没有病人的时候用 ouvert   不开放的为 ""
         if (data_arrangement_format == null)
         {
             data_arrangement_format = new List<List<string>>(data_arrangement.ToArray());//初始化
@@ -86,7 +96,8 @@ public partial class _Default : Page
         {
             for (int day = 0; day < data_arrangement[salle].Count; day++)
             {
-                string all_patient = "";
+                string all_patient = ""; // 初始化所有为空
+                int p = 0;
                 if (data_arrangement[salle][day] != "")
                 {
                     int arrange = Convert.ToInt32(data_arrangement[salle][day].ToString())-1;
@@ -94,6 +105,8 @@ public partial class _Default : Page
                     {
                         if (data_patient[arrange][patient] == "1")
                         {
+                            //patients[p] = patient;
+                            //p += 1;
                             all_patient += (patient.ToString() + ",");
                         }
                     }
@@ -103,7 +116,7 @@ public partial class _Default : Page
                     }
 
                 }
-                data_arrangement_format[salle][day] = all_patient;
+                data_arrangement_format[salle][day] = all_patient; //patients
             }
         }
     }
@@ -120,23 +133,19 @@ public partial class _Default : Page
 
     public string all_table_html(List<List<string>> data) //List<List<int>>
     {
+        //根据 表格 arrangement 输出html
         html = null;
-        html = html + " <div>测试测试 ：  后台创建html代码</div>";
+        //html = html + " <div>测试测试 ：  后台创建html代码</div>";
         for (int i = 0; i < data.Count; i++)
         {
             if (i == 0)
-            {
+            { //表头
                 html += "<table id=\"diary\" border= 1 width=500px bordercolor=#FBBF00 >" +
                        "<tr><td ></td><td ><center>Lundi</td><td><center>Mardi  </td><td>   Mecredi </td><td>   Jeudi  </td><td>   Vendredi  </td></tr>";
             }
             html += "<tr>"+ "<td > salle " + (i+1)+"</td>";
             for (int j = 0; j < data[i].Count; j++)
             {
-                //html += "<td>";
-                //if (data[i][j] == "" & j==0)
-                //{
-                //html += data[i][j];
-                //}
                 if(data[i][j]!=null&& data[i][j]!="ouvert"&& data[i][j] != "")
                 {
                     html += "<td bgcolor =\"#CC4338\">";
@@ -149,13 +158,9 @@ public partial class _Default : Page
                 if (data[i][j] == "ouvert")
                 {
                     html += "<td bgcolor=\"#A1F081\" >" + data[i][j] + "</td>";
-
                 }
                 if (data[i][j] == "")
                     html += "<td bgcolor=\"#978e9d\"></td>";
-
-
-
             }
             html += "</tr>";
             if (i + 1 == data.Count)
@@ -217,7 +222,5 @@ public partial class _Default : Page
     protected void yyy_Click(object sender, EventArgs e)
     {
         all_table_html(data_arrangement_format); //data_arrangement_format
-        // data_arrangement
-        // data_patient
     }
 }
