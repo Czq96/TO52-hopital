@@ -50,7 +50,7 @@
             <asp:ScriptReference Name="jquery.ui.combined" />
         </Scripts>
     </asp:ScriptManager>
-              <%--  <div class="header">
+                <div class="header">
             <nav class="navbar top-navbar navbar-expand-md navbar-light">
                 <!-- Logo -->
                 <div class="navbar-header">
@@ -64,7 +64,7 @@
                     </a>
                 </div>
                 <!-- End Logo -->
-                <div class="navbar-collapse">
+       <%--      <div class="navbar-collapse">
                     <!-- toggle and nav items -->
                     <ul class="navbar-nav mr-auto mt-md-0">
                         <!-- This is  -->
@@ -75,7 +75,7 @@
                     <!-- User profile and search -->
                     <ul class="navbar-nav my-lg-0">
 
-                        <!-- Search -->
+                      <!-- Search -->
                         <li class="nav-item hidden-sm-down search-box"> <a class="nav-link hidden-sm-down text-muted  " href="javascript:void(0)"><i class="ti-search"></i></a>
                             <form class="app-search">
                                 <input type="text" class="form-control" placeholder="Search here"> <a class="srh-btn"><i class="ti-close"></i></a> </form>
@@ -93,11 +93,11 @@
                                     <li><a href="#"><i class="fa fa-power-off"></i> Logout</a></li>
                                 </ul>
                             </div>
-                        </li>
-                    </ul>
-                </div>
+                       </li>
+                   </ul>
+               </div>--%>
             </nav>
-        </div>--%>
+        </div>
      <%--           <div class="left-sidebar">
             <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
@@ -125,7 +125,7 @@
             <!-- End Sidebar scroll-->
         </div>--%>
     <header>
-        <div class="content-wrapper">
+     <%--   <div class="content-wrapper">
             <div class="float-left">
                 <p class="site-title"><a runat="server" href="~/">将你的徽标放置在此处</a></p>
             </div>
@@ -156,7 +156,7 @@
                     </ul>
                 </nav>
             </div>
-        </div>
+        </div>--%>
     </header>
           <div class="left-sidebar">
             <!-- Sidebar scroll-->

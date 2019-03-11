@@ -8,6 +8,8 @@ using System.Data;
 using System.Text.RegularExpressions;
 // using System.Runtime.Serialization.dll; //to json
 using System.Web.Script.Serialization;
+using System.Dynamic;
+using Newtonsoft.Json;
 
 
 public partial class _Default : Page
@@ -30,13 +32,15 @@ public partial class _Default : Page
         // List sbs = new List<List<int>>;
         load_arrangement();
         load_patient();
+        tete.Text = Test();
 
         former_arrangement();
 
-        JsonHelper j = new JsonHelper();
-        tete.Text = j.ListlistToJson(data_arrangement_format);
+        //JsonHelper j = new JsonHelper();
+        //tete.Text = j.ListlistToJson(data_arrangement_format);
 
         all_table_html(data_arrangement_format);
+       
 
 
         //    DataTable dt = new DataTable();
@@ -51,16 +55,18 @@ public partial class _Default : Page
     }
 
     public List<List<string>> load_patient()
-    {   
+    {
         // 读取.xls 文件将数据存在 data_patient 中； 尚未支持其他格式的表格文件
-        data_patient = c.rowReadAll("C:/Users/c/source/repos/WebSite1/WebSite1/patients2blocks.xls", 1);//C:/Users/c/source/repos/WebSite1/WebSite1/
+        string path = Server.MapPath("./patients2blocks.xls");
+      
+        data_patient = c.rowReadAll(path, 1);//C:/Users/c/source/repos/WebSite1/WebSite1/
         return data_patient;
     }
 
     public List<List<string>> load_arrangement()
     {
-        
-        data_arrangement = c.rowReadAll("C:/Users/c/source/repos/WebSite1/WebSite1/blocks2or-days.xls", 1); //C:/Users/c/source/repos/WebSite1/WebSite1/blocks2or-days.xls
+        String path2 = Server.MapPath("./blocks2or-days.xls");
+        data_arrangement = c.rowReadAll(path2, 1); //C:/Users/c/source/repos/WebSite1/WebSite1/blocks2or-days.xls   ..//
         return data_arrangement;
     }
 
@@ -90,7 +96,7 @@ public partial class _Default : Page
         //重组表格的 blocks2or-days 的内容 开放但是没有病人的时候用 ouvert   不开放的为 ""
         if (data_arrangement_format == null)
         {
-            data_arrangement_format = new List<List<string>>(data_arrangement.ToArray());//初始化
+            data_arrangement_format = new List<List<string>>(data_arrangement.ToArray());//初始化  如果修改这个可能同时会修改掉list    data_arrangement
         }
         for (int salle = 0; salle < data_arrangement.Count; salle++)
         {
@@ -119,6 +125,98 @@ public partial class _Default : Page
                 data_arrangement_format[salle][day] = all_patient; //patients
             }
         }
+    }
+
+    public string Test()
+    {
+        dynamic flexible = new ExpandoObject();
+
+        //创建一个空的 手术室列表   每个手术室门口都贴着一张时刻表 就是 arrangements
+        List<ExpandoObject> salles = new List<ExpandoObject>();
+
+        for (int salle = 0; salle < data_arrangement.Count; salle++)
+        {
+            //新建一个空的手术室， sall.lundi  sall.....
+            dynamic sall = new ExpandoObject();
+            for (int d = 0; d < 5; d++)
+            {   //新建空白的一天
+                dynamic day = new ExpandoObject();
+                if (data_arrangement[salle][d] == "")
+                {
+                    day.status = "ferme";
+                }
+                else
+                {
+                    day.status = "open";
+                    int block_time = Convert.ToInt32(data_arrangement[salle][d].ToString());
+                    day.time_id = block_time;
+                    List<ExpandoObject> patients = new List<ExpandoObject>();
+                    int NumberPatient = 0;
+                    for (int p = 0; p < data_patient[day.time_id - 1].Count; p++)
+                    {
+                        dynamic patient = new ExpandoObject();
+                        if (data_patient[day.time_id - 1][p] == "1")
+                        {
+                            patient.id = p;
+                            patients.Add(patient);
+                            NumberPatient += 1;
+                        }
+                    }
+                    day.patient_number = NumberPatient;
+                    if (NumberPatient > 0)
+                    {
+                        day.patients = patients;
+                    }
+                }
+                switch (d)
+                {
+                    case 0:
+                        sall.lundi = day;
+                        break;
+                    case 1:
+                        sall.mardi = day;
+                        break;
+                    case 2:
+                        sall.mercredi = day;
+                        break;
+                    case 3:
+                        sall.jeudi = day;
+                        break;
+                    case 4:
+                        sall.vendredi = day;
+                        break;
+                }
+                //if (d==0)
+                //    sall.lundi = day;
+            }
+            salles.Add(sall);
+        }
+
+        flexible.salles = salles;
+
+        //dynamic flexible2 = new ExpandoObject();
+        //flexible2.a = "aaaaa";
+        //flexible2.b = "bbbbb";
+
+
+        //dynamic flexible3 = new ExpandoObject();
+        //flexible3.a = "aaaaa";
+        //flexible3.b = "bbbbb";
+        //flexible3.c = "ccc";
+
+
+        //List<ExpandoObject> l = new List<ExpandoObject> { flexible2, flexible2, flexible2 };
+
+        //flexible.test = flexible2;
+        //flexible.Int = 3;
+        //l.Add(flexible3);
+        //flexible.l = l;
+        //flexible.String = "hi";
+
+        var dictionary = (IDictionary<string, object>)flexible;
+
+        var serialized = JsonConvert.SerializeObject(dictionary); // {"Int":3,"String":"hi","Bool":false}
+        return serialized;
     }
 
     public DataTable todatable( List<List<string>> d)
