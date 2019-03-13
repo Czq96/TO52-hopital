@@ -61,10 +61,11 @@ public class local_data
                 if (data_arrangement[salle][d] == "")
                 {
                     day.status = "ferme";
+                    day.patient_number = 0;
                 }
                 else
                 {
-                    day.status = "open";
+                    day.status = "ouvert";
                     int block_time = Convert.ToInt32(data_arrangement[salle][d].ToString());
                     day.time_id = block_time;
                     List<ExpandoObject> patients = new List<ExpandoObject>();
@@ -82,6 +83,7 @@ public class local_data
                     day.patient_number = NumberPatient;
                     if (NumberPatient > 0)
                     {
+                        day.status = "occupe";
                         day.patients = patients;
                     }
                 }

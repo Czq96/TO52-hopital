@@ -47,16 +47,45 @@
    
  <div ng-app="myApp2" ng-controller="myCtrl">
      <div ng-repeat="salle in data.salles">
-         <td ng-if="$odd" style="background-color:#f1f1f1">{{salle.Lundi.status}} </td>
-         <td ng-if="$odd" style="background-color:#f1f1f1">{{salle.Mardi.status}} </td>
-         <td ng-if="$odd" style="background-color:#f1f1f1">{{salle.Mercredi.status}} </td>
-         <td ng-if="$odd" style="background-color:#f1f1f1">{{salle.Jeudi.status}} </td>
-         <td ng-if="$odd" style="background-color:#f1f1f1">{{salle.Vendredi.status}} </td>
+       <table id="diary" border= 1 width=500px bordercolor=#FBBF00 >
+          <tr>
+           <td ng-if="salle.Lundi.patient_number ==0" bgcolor="#CC4338" >{{salle.Lundi.status}} </td>  <%-- A1F081 开门无人     978e9d关门--%>
+           <td ng-if="salle.Mardi.patient_number ==0" bgcolor="#978e9d"> {{salle.Mardi.status}} </td>
+           <td ng-if="salle.Mercredi.patient_number ==0"   >{{salle.Mercredi.status}} </td>
+           <td ng-if="salle.Jeudi.patient_number ==0" >{{salle.Jeudi.status}} </td>
+           <td ng-if="salle.Vendredi.patient_number ==0" >{{salle.Vendredi.status}} </td>
+          </tr> 
+    <%--<tbody bs-loading-overlay bs-loading-overlay-reference-id=="{{filter.name}}" bs-loading-overlay-delay="filter.loadingDelay">
+        <tr ng-if="filter.match_items.length == 0 && !filter.firstRun">
+            <td class="bg-white" colspan="{{filter.colspan}}" style="min-height:200px;">
+                <h2 class="text-center">
+                    <span ng-include="filter.cfg.info_tpl"></span>
+                </h2>
+            </td>
+        </tr>
+        <!--<tr ng-class="filter.cfg.row_classes" st-select-row="row" st-select-mode="multiple" ng-repeat="row in filter.match_items" ng-include="filter.cfg.row_tpl"></tr>-->
+        <tr ng-class="{{filter.cfg.row_classes}}" ng-repeat="row in filter.match_items" ng-include="filter.cfg.row_tpl"></tr>
+    </tbody>--%>
+</table> 
      </div>
    <%--Full Name: {{data.salles[0].Lundi.status+ " " + lastName}}--%>
 
 </div>
-    
+
+<%--<style>
+table, th , td {
+  border: 1px solid grey;
+  border-collapse: collapse;
+  padding: 5px;
+}
+table tr:nth-child(odd) {
+  background-color: #f1f1f1;
+}
+table tr:nth-child(even) {
+  background-color: #ffffff;
+}
+</style>--%>
+
 <script>
     var app = angular.module('myApp2', []).controller('myCtrl', function ($scope) {
         $scope.data = <%=data_json%>;
