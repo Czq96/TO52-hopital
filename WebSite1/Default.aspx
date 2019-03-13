@@ -44,16 +44,29 @@
   <%--<div id="bar"><%=data_json%></div>--%>
   <div>---------------------------------------------------------------------------------------------</div>
 
-   
+<style>
+    .ferme {
+        background-color:#978e9d;
+        bgcolor:#978e9d;
+        }
+    .ouvert {
+        background-color:#A1F081;
+        bgcolor:#A1F081;
+    }
+    .occupe {
+        background-color:#CC4338;
+    }
+</style>
+ 
  <div ng-app="myApp2" ng-controller="myCtrl">
      <div ng-repeat="salle in data.salles">
        <table id="diary" border= 1 width=500px bordercolor=#FBBF00 >
           <tr>
-           <td ng-if="salle.Lundi.patient_number ==0" bgcolor="#CC4338" >{{salle.Lundi.status}} </td>  <%-- A1F081 开门无人     978e9d关门--%>
-           <td ng-if="salle.Mardi.patient_number ==0" bgcolor="#978e9d"> {{salle.Mardi.status}} </td>
-           <td ng-if="salle.Mercredi.patient_number ==0"   >{{salle.Mercredi.status}} </td>
-           <td ng-if="salle.Jeudi.patient_number ==0" >{{salle.Jeudi.status}} </td>
-           <td ng-if="salle.Vendredi.patient_number ==0" >{{salle.Vendredi.status}} </td>
+           <td class="{{salle.Lundi.status}}">{{salle.Lundi.status}} </td>  <%-- #CC4338有人   A1F081 开门无人     978e9d关门--%>
+           <td class="{{salle.Mardi.status}}"> {{salle.Mardi.status}} </td>
+           <td class="{{salle.Mercredi.status}}">{{salle.Mercredi.status}} </td>
+           <td class="{{salle.Jeudi.status}}">{{salle.Jeudi.status}} </td>
+           <td class="{{salle.Vendredi.status}}">{{salle.Vendredi.status}} </td>
           </tr> 
     <%--<tbody bs-loading-overlay bs-loading-overlay-reference-id=="{{filter.name}}" bs-loading-overlay-delay="filter.loadingDelay">
         <tr ng-if="filter.match_items.length == 0 && !filter.firstRun">
@@ -71,20 +84,6 @@
    <%--Full Name: {{data.salles[0].Lundi.status+ " " + lastName}}--%>
 
 </div>
-
-<%--<style>
-table, th , td {
-  border: 1px solid grey;
-  border-collapse: collapse;
-  padding: 5px;
-}
-table tr:nth-child(odd) {
-  background-color: #f1f1f1;
-}
-table tr:nth-child(even) {
-  background-color: #ffffff;
-}
-</style>--%>
 
 <script>
     var app = angular.module('myApp2', []).controller('myCtrl', function ($scope) {
