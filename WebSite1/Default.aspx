@@ -18,128 +18,49 @@
 </asp:Content>--%>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <asp:TextBox ID="tete" runat="server" Width="100%"></asp:TextBox>
-    <%-- <asp:Button ID="yyy" runat="server" OnClick="yyy_Click" /> --%>
-    <div id ="test"><%=gethtml()%></div>
-    <asp:UpdatePanel ID="test1" runat="server">
-
-    </asp:UpdatePanel>
- <%--   <ol class="round">
-        <li class="one">
-            <h5>Getting Started</h5>
-            ASP.NET Web Forms lets you build dynamic websites using a familiar drag-and-drop, event-driven model.
-            A design surface and hundreds of controls and components let you rapidly build sophisticated, powerful UI-driven sites with data access.
-            <a href="https://go.microsoft.com/fwlink/?LinkId=245146">Learn more…</a>
-        </li>
-        <li class="two">
-            <h5>Add NuGet packages and jump-start your coding</h5>
-            NuGet makes it easy to install and update free libraries and tools.
-            <a href="https://go.microsoft.com/fwlink/?LinkId=245147">Learn more…</a>
-        </li>
-        <li class="three">
-            <h5>Find Web Hosting</h5>
-            You can easily find a web hosting company that offers the right mix of features and price for your applications.
-            <a href="https://go.microsoft.com/fwlink/?LinkId=245143">Learn more…</a>
-        </li>
-    </ol>--%>
-    <script>
-        function func() {
-            
-        }
-    </script>
-       <%--   	<style type="text/css" scoped>
-									* {box-sizing: border-box;}
-									ul {list-style-type: none;}
-									body {font-family: Verdana, sans-serif;}
-
-									.month {
-									    padding: 70px 25px;
-									    width: 100%;
-									    background: #c0262e;
-									    text-align: center;
-									}
-
-									.month ul {
-									    margin: 0;
-									    padding: 0;
-									}
-
-									.month ul li {
-									    color: white;
-									    font-size: 20px;
-									    text-transform: uppercase;
-									    letter-spacing: 3px;
-									}
-
-									.month .prev {
-									    float: left;
-									    padding-top: 10px;
-									}
-
-									.month .next {
-									    float: right;
-									    padding-top: 10px;
-									}
-
-                                    .red {
-  background-color: #E20A0A;
-  color: #ffffff;
-  }
-
-									#diary {
-									   
-									    border-collapse: collapse;
-									    width: 50%;
-									}
-
-									#diary td, #diary th {
-									    border: 0px;
-									    padding: 8px;
-									}
-
-
-									#diary td:hover {
-									  background-color: #c0262e!important ; color: #fff;
-									}
-									#diary td:nth-child(even){background-color: #fff;}
-									#diary th {
-									  width: 10%;
-									    padding-top: 12px;
-									    padding-bottom: 12px;
-									    background-color: #ffe2e4;
-									    color: #666;
-									    text-align: center;
-									    font-size:7px;
-									}
-									#diary td{
-									  width: 10%;
-									   height: 50
-                                       
-                                       
-                                       px;
-									  background: #fff4f5;
-									  text-align: center;
-									    font-size:15px;
-									    color: #777;
-									}
-
-
-
-									</style>--%>
     <style type="text/css" scoped>
         #diary {
-									   
-									    border-collapse: collapse;
-									    width: 50%;
-									}
+				border-collapse: collapse;
+				width: 50%;
+				}
         #diary td{
-									  width: 10%;
-									   height: 50px;
-									
-									  text-align: center;
-									    font-size:20px;
-                                        
-									  
-									}
-        </style>
-</asp:Content>
+                    width: 10%;
+				    height: 50px;
+					text-align: center;
+					font-size:20px;
+        }
+    </style>
+
+    <asp:TextBox ID="tete" runat="server" Width="100%"></asp:TextBox>
+    
+    <%-- <asp:Button ID="yyy" runat="server" OnClick="yyy_Click" /> --%>
+    <div id ="test"><%=gethtml()%></div>
+    <%--<div  ng-app>
+    Angularjs TEST
+    Name: <input type=text ng-model="name">
+    <br>
+    Current user's name: {{name}}
+    </div>--%>
+  <%--<div id="bar"><%=data_json%></div>--%>
+  <div>---------------------------------------------------------------------------------------------</div>
+
+   
+ <div ng-app="myApp2" ng-controller="myCtrl">
+     <div ng-repeat="salle in data.salles">
+         <td ng-if="$odd" style="background-color:#f1f1f1">{{salle.Lundi.status}} </td>
+         <td ng-if="$odd" style="background-color:#f1f1f1">{{salle.Mardi.status}} </td>
+         <td ng-if="$odd" style="background-color:#f1f1f1">{{salle.Mercredi.status}} </td>
+         <td ng-if="$odd" style="background-color:#f1f1f1">{{salle.Jeudi.status}} </td>
+         <td ng-if="$odd" style="background-color:#f1f1f1">{{salle.Vendredi.status}} </td>
+     </div>
+   <%--Full Name: {{data.salles[0].Lundi.status+ " " + lastName}}--%>
+
+</div>
+    
+<script>
+    var app = angular.module('myApp2', []).controller('myCtrl', function ($scope) {
+        $scope.data = <%=data_json%>;
+    });
+</script>
+
+ </asp:Content>

@@ -23,14 +23,16 @@ public partial class _Default : Page
 
     //List<List<int>> arrangement = null;
     local_data Local_Data = new local_data();
+    public string data_json;
     protected void Page_Load(object sender, EventArgs e)
     {
         string str = System.Environment.CurrentDirectory;
         Local_Data.load_data(Server);
         
         all_table_html(Local_Data.data_arrangement_format);
+        data_json = Local_Data.get_json();
 
-        tete.Text = Local_Data.get_json();
+        tete.Text = data_json;
     }
     
     public string all_table_html(List<List<string>> data) //List<List<int>>

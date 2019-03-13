@@ -1,7 +1,7 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site.master.cs" Inherits="SiteMaster" %>
 
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh" xmlns:ng="http://angularjs.org" id="ng-app">
 <%--<head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
@@ -41,9 +41,14 @@
     <script src="https:**oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https:**oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+    <script src="http://code.angularjs.org/1.7.5/angular.js"></script>
+
+    <%--<script src="./Scripts/i18n/angular.js"></script>--%>
+    
 </head>
 <body>
     <form runat="server">
+
     <asp:ScriptManager runat="server">
         <Scripts>
             <asp:ScriptReference Name="jquery" />
@@ -62,6 +67,7 @@
                         <span>
                             <img src="images/logoGrand.png" alt="homepage" class="dark-logo" /></span>
                     </a>
+                          
                 </div>
                 <!-- End Logo -->
        <%--      <div class="navbar-collapse">
