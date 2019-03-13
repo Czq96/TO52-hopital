@@ -55,6 +55,7 @@ public class local_data
         {
             //新建一个空的手术室， sall.lundi  sall.....
             dynamic sall = new ExpandoObject();
+            sall.Number = salle;
             for (int d = 0; d < 5; d++)
             {   //新建空白的一天
                 dynamic day = new ExpandoObject();
