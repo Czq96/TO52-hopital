@@ -32,7 +32,7 @@ public partial class _Default : Page
         all_table_html(Local_Data.data_arrangement_format);
         data_json = Local_Data.get_json();
 
-        tete.Text = data_json;
+        //tete.Text = data_json;
     }
     
     public string all_table_html(List<List<string>> data) //List<List<int>>
@@ -50,21 +50,23 @@ public partial class _Default : Page
             html += "<tr>"+ "<td > salle " + (i+1)+"</td>";
             for (int j = 0; j < data[i].Count; j++)
             {
-                if(data[i][j]!=null&& data[i][j]!="ouvert"&& data[i][j] != "")
+                if(data[i][j]!=null&& data[i][j]!= "ouvert" && data[i][j] != "")
                 {
                     html += "<td bgcolor =\"#CC4338\">";
-                    html += "<select style=\"width: 100px; \" onchange=\"alert(this.value)\" > ";
+                    html += "<select style=\"width: 130px; \" onchange=\"alert(this.value)\" > ";
                     string[] sArray = Regex.Split(data[i][j], ",", RegexOptions.IgnoreCase);
+                    int n = sArray.Count();
+                    html += "<option value= n>" + n+ " patients</option>";
                     foreach (string c in sArray)
                         html += "<option value=\" "+c+"\">" + c+"</option>";
                     html += " </select></td>";
                 }
-                if (data[i][j] == "ouvert")
-                {
-                    html += "<td bgcolor=\"#A1F081\" >" + data[i][j] + "</td>";
-                }
-                if (data[i][j] == "")
+                else if (data[i][j] == "")
                     html += "<td bgcolor=\"#978e9d\"></td>";
+                else
+                {
+                    html += "<td bgcolor=\"#A1F081\" > Aucun patient </td>";
+                }
             }
             html += "</tr>";
             if (i + 1 == data.Count)

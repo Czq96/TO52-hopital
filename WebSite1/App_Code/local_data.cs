@@ -16,12 +16,14 @@ public class local_data
 
     List<List<string>> data_patient = null;
     List<List<string>> data_arrangement = null;
+    List<List<string>> data_specialite = null;
+
+    dynamic data_dic = new ExpandoObject();
+
     public List<List<string>> data_arrangement_format = null;
+    
+    public string data_json;
 
-    public dynamic data_dic = new ExpandoObject();
-    string data_json;
-
-    List<List<int>> arrangement = null;
     public void load_data(HttpServerUtility Server)
     {
         //调用读取 excel 文件存到listlist string 中
@@ -32,28 +34,30 @@ public class local_data
         former_arrangement();
     }
 
-    public List<List<string>> load_patient(HttpServerUtility Server)
+    public void load_patient(HttpServerUtility Server)
     {
         // 读取.xls 文件将数据存在 data_patient 中； 尚未支持其他格式的表格文件
+        //C:/Users/c/source/repos/WebSite1/WebSite1/
         string path = Server.MapPath("./App_Data/patients2blocks.xls");
-        data_patient = c.rowReadAll(path, 1);//C:/Users/c/source/repos/WebSite1/WebSite1/
-        return data_patient;
-    }
+        data_patient = c.rowReadAll(path, 1);
+     }
 
-    public List<List<string>> load_arrangement(HttpServerUtility Server)
+    public void load_arrangement(HttpServerUtility Server)
     {
-        String path2 = Server.MapPath("./App_Data/blocks2or-days.xls");
-        data_arrangement = c.rowReadAll(path2, 1); //C:/Users/c/source/repos/WebSite1/WebSite1/blocks2or-days.xls   ..//
-        return data_arrangement;
+        String path = Server.MapPath("./App_Data/blocks2or-days.xls");
+        data_arrangement = c.rowReadAll(path, 1);
+        path = Server.MapPath("./App_Data/Spécialités chirurgicales.xls");
+        data_specialite = c.rowReadAll(path, 1);
     }
 
     public string load_json()
+
     {
         //创建一个空的 手术室列表   每个手术室门口都贴着一张时刻表 就是 arrangements
         List<ExpandoObject> salles = new List<ExpandoObject>();
         for (int salle = 0; salle < data_arrangement.Count; salle++)
         {
-            //新建一个空的手术室， sall.lundi  sall.....
+            //新建一个空的手术室， sall.lundi  sall.....   
             dynamic sall = new ExpandoObject();
             sall.Number = salle;
             for (int d = 0; d < 5; d++)

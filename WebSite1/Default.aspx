@@ -16,7 +16,7 @@
       </div>
     </section>
 </asp:Content>--%>
-
+<%--   开头 gethtml（） 返回的表格 的css格式 --%>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <style type="text/css" scoped>
         #diary {
@@ -40,7 +40,8 @@
             }
     </style>
 
-    <asp:TextBox ID="tete" runat="server" Width="100%"></asp:TextBox>
+    <%--  后台数据返回测试  -- %>
+    <%--<asp:TextBox ID="tete" runat="server" Width="100%"></asp:TextBox>--%>
 
     <%-- <asp:Button ID="yyy" runat="server" OnClick="yyy_Click" /> --%>
     <div id="test"><%=gethtml()%></div>
@@ -50,10 +51,12 @@
     <br>
     Current user's name: {{name}}
     </div>--%>
-    <div id="bar"><%=data_json%></div>
-    <div>---------------------------------------------------------------------------------------------</div>
+    
+<%-- json 文件查看  --%>
+<%--    <div id="bar"><%=data_json%></div>--%>
+    <div>----------------------------   angularJS Test----------------------------------------------</div>
 
-    <style>
+    <style type="text/css" scoped>
         .ferme {
             background-color: #978e9d;
             width : 30px;
@@ -84,7 +87,7 @@
                         <label>
                             <select width="80px" ng-model="myselect1" onchange="alert(this.value)" ng-if="salle.Lundi.patient_number != 0"
                                 ng-options="patient.id as patient.id for patient in salle.Lundi.patients">
-                                <option value="">-- choisir --</option>
+                                <option value="">{{salle.Lundi.patient_number}} patients</option>
                                 <%--veuille--%>
                             </select>
                         </label>
@@ -94,7 +97,7 @@
                         <label>
                             <select width="80px" ng-model="myselect1" onchange="alert(this.value)" ng-if="salle.Mardi.patient_number != 0"
                                 ng-options="patient.id as patient.id for patient in salle.Mardi.patients">
-                                <option value="">-- choisir --</option>
+                                <option value="">{{salle.Mardi.patient_number}} patients</option>
                             </select>
                         </label>
                         {{salle.Mardi.status}} </td>
@@ -102,7 +105,7 @@
                         <label>
                             <select width="80px" ng-model="myselect1" onchange="alert(this.value)" ng-if="salle.Mercredi.patient_number != 0"
                                 ng-options="patient.id as patient.id for patient in salle.Mercredi.patients">
-                                <option value="">-- choisir --</option>
+                                <option value=""> {{salle.Mercredi.patient_number}} patients</option>
                             </select>
                         </label>
                         {{salle.Mercredi.status}} </td>
@@ -110,7 +113,7 @@
                         <label>
                             <select width="80px" ng-model="myselect1" onchange="alert(this.value)" ng-if="salle.Jeudi.patient_number != 0"
                                 ng-options="patient.id as patient.id for patient in salle.Jeudi.patients">
-                                <option value="">-- choisir --</option>
+                                <option value="">{{salle.Jeudi.patient_number}} patients</option>
                             </select>
                         </label>
                         {{salle.Jeudi.status}} </td>
@@ -118,7 +121,7 @@
                         <label>
                             <select width="80px" ng-model="myselect1" onchange="alert(this.value)" ng-if="salle.Vendredi.patient_number != 0"
                                 ng-options="patient.id as patient.id for patient in salle.Vendredi.patients">
-                                <option value="">-- choisir --</option>
+                                <option value="">{{salle.Vendredi.patient_number}} patients</option>
                             </select>
                         </label>
                {{salle.Vendredi.status}} </td>
