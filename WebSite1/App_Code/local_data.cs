@@ -16,12 +16,17 @@ public class local_data
     List<List<string>> data_patient = null;
     List<List<string>> data_arrangement = null;
     List<List<string>> data_specialite = null;
-
+    bdd_functions bdd = new bdd_functions();
     dynamic data_dic = new ExpandoObject();
 
     public List<List<string>> data_arrangement_format = null;
     
     public string data_json;
+
+    public List<List<string>> getSpecialite()
+    {//TODO 返回的 data_specialite 可能是一个引用 
+        return data_specialite;
+    }
 
     public void load_data(HttpServerUtility Server)
     {
@@ -29,19 +34,23 @@ public class local_data
         //生成一个json文件
         load_arrangement(Server);
         load_patient(Server);
+        update_departement();
         data_json = load_json();
         former_arrangement();
     }
 
-    public void load_patient(HttpServerUtility Server)
+    //TODO 下拉框根据不同的文件来进行导入 
+    void load_patient(HttpServerUtility Server)
     {
         // 读取.xls 文件将数据存在 data_patient 中； 尚未支持其他格式的表格文件
-        //C:/Users/c/source/repos/WebSite1/WebSite1/
-        string path = Server.MapPath("./App_Data/patients2blocks.xls");
+        //C:/Users/c/source/repos/WebSite1/WebSite1/       patients2ors.xls   patients2blocks.xls
+        string path = Server.MapPath("./App_Data/patients2ors.xls");
         data_patient = c.rowReadAll(path, 1);
      }
 
-    public void load_arrangement(HttpServerUtility Server)
+
+    //这一份是固定的，无需改动  
+    void load_arrangement(HttpServerUtility Server)
     {
         String path = Server.MapPath("./App_Data/blocks2or-days.xls");
         data_arrangement = c.rowReadAll(path, 1);
@@ -49,8 +58,30 @@ public class local_data
         data_specialite = c.rowReadAll(path, 1);
     }
 
-    public string load_json()
+    void update_departement()
+    { //bdd 中更新病人的科室
+        for (int salle = 0; salle < data_arrangement.Count; salle++)
+        {
+            for (int day = 0; day < data_arrangement[salle].Count; day++)
+            {
+                if (data_arrangement[salle][day] != "")
+                {
+                    int arrangeNumber = Convert.ToInt32(data_arrangement[salle][day].ToString());
+                    for (int patient = 0; patient < data_patient[arrangeNumber-1].Count; patient++)
+                    {
+                        if (data_patient[arrangeNumber-1][patient] == "1")  //如果某一个病人 patient 要在这个 timeblock 动手术
+                        {
+                            bdd.update_patient_spe(patient + 1, data_specialite[salle][day]);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
+
+
+    string load_json()
     {
         bdd_functions bdd = new bdd_functions();
         //创建一个空的 手术室列表   每个手术室门口都贴着一张时刻表 就是 arrangements
@@ -135,7 +166,7 @@ public class local_data
         //重组表格的 blocks2or-days 的内容 开放但是没有病人的时候用 ouvert   不开放的为 ""  有病人的为一串字符串
         if (data_arrangement_format == null)
         {
-            data_arrangement_format = new List<List<string>>(data_arrangement.ToArray());//初始化  如果修改这个可能同时会修改掉list    data_arrangement
+            data_arrangement_format = new List<List<string>>(data_arrangement.ToArray());//初始化 TODO  如果修改这个同时会修改掉list    data_arrangement  需要改成深拷贝
         }
         for (int salle = 0; salle < data_arrangement.Count; salle++)
         {
@@ -148,11 +179,12 @@ public class local_data
                     int arrange = Convert.ToInt32(data_arrangement[salle][day].ToString()) - 1;
                     for (int patient = 0; patient < data_patient[arrange].Count; patient++)
                     {
-                        if (data_patient[arrange][patient] == "1")
+                        if (data_patient[arrange][patient] == "1")  //如果某一个病人 patient 要在这个 timeblock 动手术
                         {
                             //patients[p] = patient;
                             //p += 1;
-                            all_patient += (patient.ToString() + ",");
+                            // 循环中 patient 的id 从0 开始，    数据库中的id从1开始
+                            all_patient += ((patient+1).ToString() + ",");
                         }
                     }
                     if (all_patient == "")

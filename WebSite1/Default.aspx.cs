@@ -55,10 +55,13 @@ public partial class _Default : Page
             {
                 if(data[i][j]!=null&& data[i][j]!= "ouvert" && data[i][j] != "")
                 {
-                    html += "<td bgcolor =\"#CC4338\">";
+                    html += "<td bgcolor =\"#CC4338\"><font color=\"black\">"+
+                           Local_Data.getSpecialite()[i][j]
+                         + "</font><br>";
+
                     html += "<select style=\"width: 130px; \" onchange=\"window.location = this.value;\" > ";
                     string[] sArray = Regex.Split(data[i][j], ",", RegexOptions.IgnoreCase);
-                    int n = sArray.Count();
+                    int n = sArray.Count()-1;
                     html += "<option value= n>" + n+ " patients</option>";
                     foreach (string c in sArray)
                     {
@@ -66,9 +69,9 @@ public partial class _Default : Page
                         {
                             DataTable patient, patientTest;
                             int patientNumber = Convert.ToInt32(c.ToString());
-                           // patientTest = bdd.select_patient(2);
+                           // patientTest = bdd.select_patient(2);  
                             patient = bdd.select_patient(patientNumber);
-                            html += "<option value=\" patient.aspx?id=" + patient.Rows[0][1] + "\">" + patient.Rows[0][2]+ "</option>";
+                            html +=  "<option value=\" patient.aspx?id=" + patient.Rows[0][1] + "\">" + patient.Rows[0][1] + patient.Rows[0][2]+ "</option>";
                         }
                     }
                     html += " </select></td>";
@@ -77,7 +80,9 @@ public partial class _Default : Page
                     html += "<td bgcolor=\"#978e9d\"></td>";
                 else
                 {
-                    html += "<td bgcolor=\"#A1F081\" > Aucun patient </td>";
+                    html += "<td bgcolor=\"#A1F081\" > <font color=\"black\">" +
+                        Local_Data.getSpecialite()[i][j]
+                        + "</font><br>Aucun patient </td>";
                 }
             }
             html += "</tr>";

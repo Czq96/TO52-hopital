@@ -23,5 +23,6 @@ public partial class patient : System.Web.UI.Page
         patient = bdd.select_patient(patientID);
         number.Text = patient.Rows[0][1].ToString();
         name.Text = patient.Rows[0][2].ToString();
+        departement.Text = patient.Rows[0][3].ToString();
     }
 }

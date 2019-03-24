@@ -83,4 +83,13 @@ public class bdd_functions
             executeCmd(cmd);
         }
     }
+    public void update_patient_spe(int num, String dep)
+    {
+        using (MySqlCommand cmd = new MySqlCommand("UPDATE patient SET departement = @dep WHERE patient.numero = @num "))
+        {
+            cmd.Parameters.AddWithValue("@num", num);
+            cmd.Parameters.AddWithValue("@dep", dep);
+            executeCmd(cmd);
+        }
+    }
 }
