@@ -66,7 +66,7 @@ public partial class _Default : Page
                         {
                             DataTable patient, patientTest;
                             int patientNumber = Convert.ToInt32(c.ToString());
-                            patientTest = bdd.select_patient(2);
+                           // patientTest = bdd.select_patient(2);
                             patient = bdd.select_patient(patientNumber);
                             html += "<option value=\" patient.aspx?id=" + patient.Rows[0][1] + "\">" + patient.Rows[0][2]+ "</option>";
                         }
