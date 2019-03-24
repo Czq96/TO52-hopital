@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Dynamic;
 using Newtonsoft.Json;
+using System.Data;
+
 
 
 /// <summary>
@@ -53,6 +54,7 @@ public class local_data
     public string load_json()
 
     {
+        bdd_functions bdd = new bdd_functions();
         //创建一个空的 手术室列表   每个手术室门口都贴着一张时刻表 就是 arrangements
         List<ExpandoObject> salles = new List<ExpandoObject>();
         for (int salle = 0; salle < data_arrangement.Count; salle++)
@@ -80,7 +82,10 @@ public class local_data
                         dynamic patient = new ExpandoObject();
                         if (data_patient[day.time_id - 1][p] == "1")
                         {
-                            patient.id = p;
+                            DataTable patientDataTable;
+                            patientDataTable = bdd.select_patient(p);
+                            //  patient.id = p;
+                            // DataTable to ExpandoObject 
                             patients.Add(patient);
                             NumberPatient += 1;
                         }

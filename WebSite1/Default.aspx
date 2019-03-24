@@ -21,13 +21,13 @@
     <style type="text/css" scoped>
         #diary {
             border-collapse: collapse;
-            width: 60%;
+            width: 75%;
             table-layout: fixed;
             
         }
 
             #diary td {
-                width: 20%;
+                width: 30%;
                 height: 50px;
                 text-align: center;
                 font-size: 20px;

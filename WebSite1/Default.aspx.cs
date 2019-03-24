@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
+//using System.Web.UI.WebControls;
 using System.Data;
 using System.Text.RegularExpressions;
 // using System.Runtime.Serialization.dll; //to json
-using System.Web.Script.Serialization;
-using System.Dynamic;
-using Newtonsoft.Json;
+//using System.Web.Script.Serialization;
+//using System.Dynamic;
+//using Newtonsoft.Json;
 
 
 public partial class _Default : Page
@@ -24,6 +24,8 @@ public partial class _Default : Page
     //List<List<int>> arrangement = null;
     local_data Local_Data = new local_data();
     public string data_json;
+    bdd_functions bdd = new bdd_functions();
+
     protected void Page_Load(object sender, EventArgs e)
     {
         string str = System.Environment.CurrentDirectory;
@@ -42,6 +44,7 @@ public partial class _Default : Page
         //html = html + " <div>测试测试 ：  后台创建html代码</div>";
         for (int i = 0; i < data.Count; i++)
         {
+            html += "<script>   </script>";
             if (i == 0)
             { //表头
                 html += "<table id=\"diary\" border= 1 width=500px bordercolor=#FBBF00 >" +
@@ -53,12 +56,21 @@ public partial class _Default : Page
                 if(data[i][j]!=null&& data[i][j]!= "ouvert" && data[i][j] != "")
                 {
                     html += "<td bgcolor =\"#CC4338\">";
-                    html += "<select style=\"width: 130px; \" onchange=\"alert(this.value)\" > ";
+                    html += "<select style=\"width: 130px; \" onchange=\"window.location = this.value;\" > ";
                     string[] sArray = Regex.Split(data[i][j], ",", RegexOptions.IgnoreCase);
                     int n = sArray.Count();
                     html += "<option value= n>" + n+ " patients</option>";
                     foreach (string c in sArray)
-                        html += "<option value=\" "+c+"\">" + c+"</option>";
+                    {
+                        if (c != "")
+                        {
+                            DataTable patient, patientTest;
+                            int patientNumber = Convert.ToInt32(c.ToString());
+                            patientTest = bdd.select_patient(2);
+                            patient = bdd.select_patient(patientNumber);
+                            html += "<option value=\" patient.aspx?id=" + patient.Rows[0][1] + "\">" + patient.Rows[0][2]+ "</option>";
+                        }
+                    }
                     html += " </select></td>";
                 }
                 else if (data[i][j] == "")
