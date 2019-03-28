@@ -28,8 +28,13 @@ public partial class _Default : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        string patientsDoc = Request.Form["patientsDoc"];
+        if (patientsDoc == null)
+        {
+            patientsDoc = "patients2blocks";   //patients2ors
+        }
         string str = System.Environment.CurrentDirectory;
-        Local_Data.load_data(Server);
+        Local_Data.load_data(Server, patientsDoc);
         
         all_table_html(Local_Data.data_arrangement_format);
         data_json = Local_Data.get_json();

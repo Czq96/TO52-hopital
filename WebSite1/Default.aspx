@@ -23,7 +23,6 @@
             border-collapse: collapse;
             width: 75%;
             table-layout: fixed;
-            
         }
 
             #diary td {
@@ -32,8 +31,9 @@
                 text-align: center;
                 font-size: 20px;
             }
+
             #diary tr {
-                min-height:70px;
+                min-height: 70px;
                 height: 70px;
                 text-align: center;
                 font-size: 20px;
@@ -42,34 +42,52 @@
 
     <%--  后台数据返回测试  -- %>
     <%--<asp:TextBox ID="tete" runat="server" Width="100%"></asp:TextBox>--%>
-
+    <div id="description">
+        <br />
+        choose patient blocks：
+        <select style="width: 200px;" name="patientsDoc" id="patientsDoc">
+            <span style="white-space: pre"></span>
+            <option value="patients2blocks">patients2blocks</option>
+            <option value="patients2ors">patients2ors</option>
+        </select>
+    </div>
     <%-- <asp:Button ID="yyy" runat="server" OnClick="yyy_Click" /> --%>
     <div id="test"><%=gethtml()%></div>
+
+<%--    <script>
+        function sech(id) {//改变文件的选择时触发
+            var aa = document.getElementById(id);
+            var c = aa.selectedIndex;//获得改变后该省的索引号
+            document.getElementById("HiddenField1").value = aa.options[c].text;//将选中的text赋值给HiddenField1的Value;
+        }
+    </script>--%>
+
+
     <%--<div  ng-app>
     Angularjs TEST
     Name: <input type=text ng-model="name">
     <br>
     Current user's name: {{name}}
     </div>--%>
-    
-<%-- json 文件查看  --%>
-<%--    <div id="bar"><%=data_json%></div>--%>
+
+    <%-- json 文件查看  --%>
+    <%--    <div id="bar"><%=data_json%></div>--%>
     <div>----------------------------   angularJS Test----------------------------------------------</div>
 
     <style type="text/css" scoped>
         .ferme {
             background-color: #978e9d;
-            width : 30px;
+            width: 30px;
         }
 
         .ouvert {
             background-color: #A1F081;
-            width : 30px;
+            width: 30px;
         }
 
         .occupe {
             background-color: #CC4338;
-            width : 30px;
+            width: 30px;
         }
 
         .default_select {
@@ -78,9 +96,20 @@
     </style>
 
     <div ng-app="myApp2" ng-controller="myCtrl">
-        <div >
-            <table id="diary" border="1"  bordercolor="#FBBF00">
-                <tr><td ></td><td ><center>Lundi</td><td><center>Mardi  </td><td>   Mecredi </td><td>   Jeudi  </td><td>   Vendredi  </td></tr>
+        <div>
+            <table id="diary" border="1" bordercolor="#FBBF00">
+                <tr>
+                    <td></td>
+                    <td>
+                        <center>
+                        Lundi</td>
+                    <td>
+                        <center>
+                        Mardi  </td>
+                    <td>Mecredi </td>
+                    <td>Jeudi  </td>
+                    <td>Vendredi  </td>
+                </tr>
                 <tr ng-repeat="salle in data.salles">
                     <td>salle {{salle.Number}}:</td>
                     <td class="{{salle.Lundi.status}}">
@@ -105,7 +134,7 @@
                         <label>
                             <select width="80px" ng-model="myselect1" onchange="alert(this.value)" ng-if="salle.Mercredi.patient_number != 0"
                                 ng-options="patient.id as patient.id for patient in salle.Mercredi.patients">
-                                <option value=""> {{salle.Mercredi.patient_number}} patients</option>
+                                <option value="">{{salle.Mercredi.patient_number}} patients</option>
                             </select>
                         </label>
                         {{salle.Mercredi.status}} </td>
@@ -124,7 +153,7 @@
                                 <option value="">{{salle.Vendredi.patient_number}} patients</option>
                             </select>
                         </label>
-               {{salle.Vendredi.status}} </td>
+                        {{salle.Vendredi.status}} </td>
                 </tr>
                 <%--<tbody bs-loading-overlay bs-loading-overlay-reference-id=="{{filter.name}}" bs-loading-overlay-delay="filter.loadingDelay">
         <tr ng-if="filter.match_items.length == 0 && !filter.firstRun">

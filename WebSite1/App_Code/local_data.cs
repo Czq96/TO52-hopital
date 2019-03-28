@@ -28,31 +28,31 @@ public class local_data
         return data_specialite;
     }
 
-    public void load_data(HttpServerUtility Server)
+    public void load_data(HttpServerUtility Server, string patientsDoc)
     {
         //调用读取 excel 文件存到listlist string 中
         //生成一个json文件
-        load_arrangement(Server);
-        load_patient(Server);
+        load_arrangement(Server, "blocks2or-days");
+        load_patient(Server, patientsDoc);  //引号中不能有空格 patients2ors.xls
         update_departement();
         data_json = load_json();
         former_arrangement();
     }
 
     //TODO 下拉框根据不同的文件来进行导入 
-    void load_patient(HttpServerUtility Server)
+    void load_patient(HttpServerUtility Server, string FileName)
     {
         // 读取.xls 文件将数据存在 data_patient 中； 尚未支持其他格式的表格文件
         //C:/Users/c/source/repos/WebSite1/WebSite1/       patients2ors.xls   patients2blocks.xls
-        string path = Server.MapPath("./App_Data/patients2ors.xls");
+        string path = Server.MapPath("./App_Data/"+FileName+".xls");
         data_patient = c.rowReadAll(path, 1);
      }
 
 
-    //这一份是固定的，无需改动  
-    void load_arrangement(HttpServerUtility Server)
+    //可以根据file name进行选择
+    void load_arrangement(HttpServerUtility Server, string FileName)
     {
-        String path = Server.MapPath("./App_Data/blocks2or-days.xls");
+        String path = Server.MapPath("./App_Data/"+FileName+ ".xls");
         data_arrangement = c.rowReadAll(path, 1);
         path = Server.MapPath("./App_Data/Spécialités chirurgicales.xls");
         data_specialite = c.rowReadAll(path, 1);
