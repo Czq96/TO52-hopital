@@ -35,7 +35,8 @@ public class local_data
         load_arrangement(Server, "blocks2or-days");
         load_patient(Server, patientsDoc);  //引号中不能有空格 patients2ors.xls
         update_departement();
-        data_json = load_json();
+        //data_json = load_json();
+        data_json ="{}";
         former_arrangement();
     }
 
@@ -44,7 +45,7 @@ public class local_data
     {
         // 读取.xls 文件将数据存在 data_patient 中； 尚未支持其他格式的表格文件
         //C:/Users/c/source/repos/WebSite1/WebSite1/       patients2ors.xls   patients2blocks.xls
-        string path = Server.MapPath("./App_Data/"+FileName+".xls");
+        string path = Server.MapPath("./App_Data/"+FileName+".csv");//xls
         data_patient = c.rowReadAll(path, 1);
      }
 
@@ -52,14 +53,14 @@ public class local_data
     //可以根据file name进行选择
     void load_arrangement(HttpServerUtility Server, string FileName)
     {
-        String path = Server.MapPath("./App_Data/"+FileName+ ".xls");
+        String path = Server.MapPath("./App_Data/"+FileName+ ".csv");
         data_arrangement = c.rowReadAll(path, 1);
         path = Server.MapPath("./App_Data/Spécialités chirurgicales.xls");
         data_specialite = c.rowReadAll(path, 1);
     }
 
     void update_departement()
-    { //bdd 中更新病人的科室
+    { //bdd 中更新病人的各种信息  TODO: 病人中新建 arrangement,根据arrangement来修改参数
         for (int salle = 0; salle < data_arrangement.Count; salle++)
         {
             for (int day = 0; day < data_arrangement[salle].Count; day++)
