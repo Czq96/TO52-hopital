@@ -22,7 +22,7 @@ public partial class _Default : Page
     //List<List<string>> data_arrangement_format = null;
 
     //List<List<int>> arrangement = null;
-    local_data Local_Data = new local_data();
+    public local_data Local_Data = new local_data();
     public string data_json;
     bdd_functions bdd = new bdd_functions();
 
@@ -31,12 +31,12 @@ public partial class _Default : Page
         string patientsDoc = Request.Form["patientsDoc"];
         if (patientsDoc == null)
         {
-            patientsDoc = "patients2blocks";   //patients2ors
+            patientsDoc = "test/patients2ors";   //patients2ors   patients2blocks
         }
         string str = System.Environment.CurrentDirectory;
         Local_Data.load_data(Server, patientsDoc);
         
-        all_table_html(Local_Data.data_arrangement_format);
+        all_table_html(Local_Data.Data_arrangement_format);
         data_json = Local_Data.get_json();
 
         //tete.Text = data_json;
@@ -106,6 +106,6 @@ public partial class _Default : Page
     }
     protected void yyy_Click(object sender, EventArgs e)
     {
-        all_table_html(Local_Data.data_arrangement_format); //data_arrangement_format
+        all_table_html(Local_Data.Data_arrangement_format); //data_arrangement_format
     }
 }

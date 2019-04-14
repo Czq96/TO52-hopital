@@ -13,66 +13,80 @@ public class local_data
 {
     ExcelReaderListString c = new ExcelReaderListString();
 
-    List<List<string>> data_patient = null;
+    List<List<string>> data_patient_information = null; 
+    List<List<string>> data_patient_ors = null;
+    List<List<string>> data_patient_icu = null;
     List<List<string>> data_arrangement = null;
-    List<List<string>> data_specialite = null;
+    List<List<string>> data_arrange_specialite = null;
+    private List<List<string>> data_arrangement_format = null;
+    private string data_json;
+
     bdd_functions bdd = new bdd_functions();
     dynamic data_dic = new ExpandoObject();
-
-    public List<List<string>> data_arrangement_format = null;
-    
-    public string data_json;
-
-    public List<List<string>> getSpecialite()
-    {//TODO 返回的 data_specialite 可能是一个引用 
-        return data_specialite;
-    }
 
     public void load_data(HttpServerUtility Server, string patientsDoc)
     {
         //调用读取 excel 文件存到listlist string 中
         //生成一个json文件
-        load_arrangement(Server, "blocks2or-days");
-        load_patient(Server, patientsDoc);  //引号中不能有空格 patients2ors.xls
-        update_departement();
+        loadPatientInformation(Server, "test/patients_information");  //引号中不能有空格 patients2icu.xls
+        loadArrangement(Server, "blocks2or-days");
+        loadPatientOrs(Server, patientsDoc);  //引号中不能有空格 patients2ors.xls
+        loadPatientIcu(Server, "test/patients2icu");  //引号中不能有空格 patients2icu.xls
+        updatePatientInformation();
+        updatePatientDepartement();
         //data_json = load_json();
-        data_json ="{}";
+        Data_json ="{}";
         former_arrangement();
     }
 
-    //TODO 下拉框根据不同的文件来进行导入 
-    void load_patient(HttpServerUtility Server, string FileName)
+    void loadPatientInformation(HttpServerUtility Server, string FileName)
     {
-        // 读取.xls 文件将数据存在 data_patient 中； 尚未支持其他格式的表格文件
+        // 读取.xls 文件将数据存在 data_patient_ors 中； 尚未支持其他格式的表格文件
         //C:/Users/c/source/repos/WebSite1/WebSite1/       patients2ors.xls   patients2blocks.xls
-        string path = Server.MapPath("./App_Data/"+FileName+".csv");//xls
-        data_patient = c.rowReadAll(path, 1);
-     }
-
-
-    //可以根据file name进行选择
-    void load_arrangement(HttpServerUtility Server, string FileName)
-    {
-        String path = Server.MapPath("./App_Data/"+FileName+ ".csv");
-        data_arrangement = c.rowReadAll(path, 1);
-        path = Server.MapPath("./App_Data/Spécialités chirurgicales.xls");
-        data_specialite = c.rowReadAll(path, 1);
+        string path = Server.MapPath("./App_Data/" + FileName + ".csv");//xls
+        Data_patient_information = c.rowReadAll(path, 1);
     }
 
-    void update_departement()
+    //TODO 下拉框根据不同的文件来进行导入 
+    void loadPatientOrs(HttpServerUtility Server, string FileName)
+    {
+        // 读取.xls 文件将数据存在 data_patient_ors 中； 尚未支持其他格式的表格文件
+        //C:/Users/c/source/repos/WebSite1/WebSite1/       patients2ors.xls   patients2blocks.xls
+        string path = Server.MapPath("./App_Data/"+FileName+".csv");//xls
+        Data_patient_ors = c.rowReadAll(path, 1);
+     }
+
+    void loadPatientIcu(HttpServerUtility Server, string FileName)
+    {
+        // 读取.xls 文件将数据存在 data_patient_ors 中； 尚未支持其他格式的表格文件
+        //C:/Users/c/source/repos/WebSite1/WebSite1/       patients2ors.xls   patients2blocks.xls
+        string path = Server.MapPath("./App_Data/" + FileName + ".csv");//xls
+        Data_patient_icu = c.rowReadAll(path, 1);
+    }
+
+    //可以根据file name进行选择
+    void loadArrangement(HttpServerUtility Server, string FileName)
+    {
+        String path = Server.MapPath("./App_Data/"+FileName+ ".csv");
+        Data_arrangement = c.rowReadAll(path, 1);
+        path = Server.MapPath("./App_Data/Spécialités chirurgicales.xls");
+        Data_arrange_specialite = c.rowReadAll(path, 1);
+    }
+
+    void updatePatientDepartement()
     { //bdd 中更新病人的各种信息  TODO: 病人中新建 arrangement,根据arrangement来修改参数
-        for (int salle = 0; salle < data_arrangement.Count; salle++)
+        for (int salle = 0; salle < Data_arrangement.Count; salle++)
         {
-            for (int day = 0; day < data_arrangement[salle].Count; day++)
+            for (int day = 0; day < Data_arrangement[salle].Count; day++)
             {
-                if (data_arrangement[salle][day] != "")
+                if (Data_arrangement[salle][day] != "")
                 {
-                    int arrangeNumber = Convert.ToInt32(data_arrangement[salle][day].ToString());
-                    for (int patient = 0; patient < data_patient[arrangeNumber-1].Count; patient++)
+                    int arrangeNumber = Convert.ToInt32(Data_arrangement[salle][day].ToString());
+                    for (int patient = 0; patient < Data_patient_ors[arrangeNumber-1].Count; patient++)
                     {
-                        if (data_patient[arrangeNumber-1][patient] == "1")  //如果某一个病人 patient 要在这个 timeblock 动手术
+                        if (Data_patient_ors[arrangeNumber-1][patient] == "1")  //如果某一个病人 patient 要在这个 timeblock 动手术
                         {
-                            bdd.update_patient_spe(patient + 1, data_specialite[salle][day]);
+                            bdd.update_patient_departement(patient + 1, Data_arrange_specialite[salle][day]);
                         }
                     }
                 }
@@ -80,6 +94,19 @@ public class local_data
         }
     }
 
+    void updatePatientInformation()
+    {
+        if(Data_patient_information!=null)
+        {
+            for (int patient = 0; patient < Data_patient_information.Count; patient++)
+            {
+                bdd.update_patient_specialty(patient+1, Convert.ToInt32(Data_patient_information[patient][0]));
+                bdd.update_patient_urgencyLevel(patient + 1, Convert.ToInt32(Data_patient_information[patient][1]));
+                bdd.update_patient_waitingTime(patient + 1, Convert.ToInt32(Data_patient_information[patient][2]));
+                bdd.update_patient_maxWaitingTime(patient + 1, Convert.ToInt32(Data_patient_information[patient][3]));
+            }
+        }
+    }
 
 
     string load_json()
@@ -87,7 +114,7 @@ public class local_data
         bdd_functions bdd = new bdd_functions();
         //创建一个空的 手术室列表   每个手术室门口都贴着一张时刻表 就是 arrangements
         List<ExpandoObject> salles = new List<ExpandoObject>();
-        for (int salle = 0; salle < data_arrangement.Count; salle++)
+        for (int salle = 0; salle < Data_arrangement.Count; salle++)
         {
             //新建一个空的手术室， sall.lundi  sall.....   
             dynamic sall = new ExpandoObject();
@@ -95,7 +122,7 @@ public class local_data
             for (int d = 0; d < 5; d++)
             {   //新建空白的一天
                 dynamic day = new ExpandoObject();
-                if (data_arrangement[salle][d] == "")
+                if (Data_arrangement[salle][d] == "")
                 {
                     day.status = "ferme";
                     day.patient_number = 0;
@@ -103,14 +130,14 @@ public class local_data
                 else
                 {
                     day.status = "ouvert";
-                    int block_time = Convert.ToInt32(data_arrangement[salle][d].ToString());
+                    int block_time = Convert.ToInt32(Data_arrangement[salle][d].ToString());
                     day.time_id = block_time;
                     List<ExpandoObject> patients = new List<ExpandoObject>();
                     int NumberPatient = 0;
-                    for (int p = 0; p < data_patient[day.time_id - 1].Count; p++)
+                    for (int p = 0; p < Data_patient_ors[day.time_id - 1].Count; p++)
                     {
                         dynamic patient = new ExpandoObject();
-                        if (data_patient[day.time_id - 1][p] == "1")
+                        if (Data_patient_ors[day.time_id - 1][p] == "1")
                         {
                             DataTable patientDataTable;
                             patientDataTable = bdd.select_patient(p);
@@ -159,28 +186,28 @@ public class local_data
 
     public string get_json()
     {
-        return this.data_json;
+        return this.Data_json;
     }
 
     public void former_arrangement()
     {
         //重组表格的 blocks2or-days 的内容 开放但是没有病人的时候用 ouvert   不开放的为 ""  有病人的为一串字符串
-        if (data_arrangement_format == null)
+        if (Data_arrangement_format == null)
         {
-            data_arrangement_format = new List<List<string>>(data_arrangement.ToArray());//初始化 TODO  如果修改这个同时会修改掉list    data_arrangement  需要改成深拷贝
+            Data_arrangement_format = new List<List<string>>(Data_arrangement.ToArray());//初始化 TODO  如果修改这个同时会修改掉list    data_arrangement  需要改成深拷贝
         }
-        for (int salle = 0; salle < data_arrangement.Count; salle++)
+        for (int salle = 0; salle < Data_arrangement.Count; salle++)
         {
-            for (int day = 0; day < data_arrangement[salle].Count; day++)
+            for (int day = 0; day < Data_arrangement[salle].Count; day++)
             {
                 string all_patient = ""; // 初始化所有为空
                 int p = 0;
-                if (data_arrangement[salle][day] != "")
+                if (Data_arrangement[salle][day] != "")
                 {
-                    int arrange = Convert.ToInt32(data_arrangement[salle][day].ToString()) - 1;
-                    for (int patient = 0; patient < data_patient[arrange].Count; patient++)
+                    int arrange = Convert.ToInt32(Data_arrangement[salle][day].ToString()) - 1;
+                    for (int patient = 0; patient < Data_patient_ors[arrange].Count; patient++)
                     {
-                        if (data_patient[arrange][patient] == "1")  //如果某一个病人 patient 要在这个 timeblock 动手术
+                        if (Data_patient_ors[arrange][patient] == "1")  //如果某一个病人 patient 要在这个 timeblock 动手术
                         {
                             //patients[p] = patient;
                             //p += 1;
@@ -194,9 +221,107 @@ public class local_data
                     }
 
                 }
-                data_arrangement_format[salle][day] = all_patient; //patients
+                Data_arrangement_format[salle][day] = all_patient; //patients
             }
         }
+    }
+
+
+    //封装
+    public List<List<string>> Data_patient_information
+    {
+        get
+        {
+            return data_patient_information;
+        }
+
+        set
+        {
+            data_patient_information = value;
+        }
+    }
+
+    public List<List<string>> Data_patient_ors
+    {
+        get
+        {
+            return data_patient_ors;
+        }
+
+        set
+        {
+            data_patient_ors = value;
+        }
+    }
+
+    public List<List<string>> Data_patient_icu
+    {
+        get
+        {
+            return data_patient_icu;
+        }
+
+        set
+        {
+            data_patient_icu = value;
+        }
+    }
+
+    public List<List<string>> Data_arrangement
+    {
+        get
+        {
+            return data_arrangement;
+        }
+
+        set
+        {
+            data_arrangement = value;
+        }
+    }
+
+    public List<List<string>> Data_arrange_specialite
+    {
+        get
+        {
+            return data_arrange_specialite;
+        }
+
+        set
+        {
+            data_arrange_specialite = value;
+        }
+    }
+
+    public List<List<string>> Data_arrangement_format
+    {
+        get
+        {
+            return data_arrangement_format;
+        }
+
+        set
+        {
+            data_arrangement_format = value;
+        }
+    }
+
+    public string Data_json
+    {
+        get
+        {
+            return data_json;
+        }
+
+        set
+        {
+            data_json = value;
+        }
+    }
+
+    public List<List<string>> getSpecialite()
+    {
+        return Data_arrange_specialite;
     }
 
 }

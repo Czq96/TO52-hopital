@@ -17,7 +17,7 @@ public partial class patient : System.Web.UI.Page
             patientID = Convert.ToInt32(pID);
         }
         bd.Text = patientID.ToString();
-        //TODO 重复创建了数据库request 需要优化  比如前一个页面返回来过这些数据，直接调用？？？ 
+        //TODO 重复创建了数据库request 需要优化  
         bdd_functions bdd = new bdd_functions();
         DataTable patient;
         patient = bdd.select_patient(patientID);

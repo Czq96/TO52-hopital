@@ -83,12 +83,48 @@ public class bdd_functions
             executeCmd(cmd);
         }
     }
-    public void update_patient_spe(int num, String dep)
+    public void update_patient_departement(int num, String dep)
     {
         using (MySqlCommand cmd = new MySqlCommand("UPDATE patient SET departement = @dep WHERE patient.numero = @num "))
         {
             cmd.Parameters.AddWithValue("@num", num);
             cmd.Parameters.AddWithValue("@dep", dep);
+            executeCmd(cmd);
+        }
+    }
+    public void update_patient_specialty(int num, int spe)
+    {
+        using (MySqlCommand cmd = new MySqlCommand("UPDATE patient SET specialty = @spe WHERE patient.numero = @num "))
+        {
+            cmd.Parameters.AddWithValue("@num", num);
+            cmd.Parameters.AddWithValue("@spe", spe);
+            executeCmd(cmd);
+        }
+    }
+    public void update_patient_urgencyLevel(int num, int urgency)
+    {
+        using (MySqlCommand cmd = new MySqlCommand("UPDATE patient SET urgencyLevel = @urgency WHERE patient.numero = @num "))
+        {
+            cmd.Parameters.AddWithValue("@num", num);
+            cmd.Parameters.AddWithValue("@urgency", urgency);
+            executeCmd(cmd);
+        }
+    }
+    public void update_patient_waitingTime(int num, int waitTime)
+    {
+        using (MySqlCommand cmd = new MySqlCommand("UPDATE patient SET waitingTime = @wt WHERE patient.numero = @num "))
+        {
+            cmd.Parameters.AddWithValue("@num", num);
+            cmd.Parameters.AddWithValue("@wt", waitTime);
+            executeCmd(cmd);
+        }
+    }
+    public void update_patient_maxWaitingTime(int num, int maxTime)
+    {
+        using (MySqlCommand cmd = new MySqlCommand("UPDATE patient SET maxWaitingTime = @maxTime WHERE patient.numero = @num "))
+        {
+            cmd.Parameters.AddWithValue("@num", num);
+            cmd.Parameters.AddWithValue("@maxTime", maxTime);
             executeCmd(cmd);
         }
     }

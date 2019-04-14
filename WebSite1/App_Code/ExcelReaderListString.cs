@@ -149,45 +149,7 @@ public class ExcelReaderListString
         return data;
     }
 
-
-    //读取 csv文件
-    public static List<List<string>> readCsv(string filePath)
-    {
-        DataTable dt = OpenCSV(filePath);
-        List<DataRow> list = dt.AsEnumerable().ToList();
-        List<List<string>> listString = new List<List<string>>();
-        //init list<list<string>>
-        int rowNumber = 0;
-        foreach(DataRow row in list)
-        {
-            if (row != null) // If column with index 0 in the current row not is DBNull
-            {
-                List<string> oneRow = new List<string>();
-                foreach (string str in row.ItemArray)
-                {
-                    if (str != null)
-                    {
-                        oneRow.Add(str.ToString());
-                    }
-                    else
-                    {
-                        oneRow.Add("");//填充空的数据
-                    }
-                }
-                listString.Add(oneRow);
-            }
-            else // append empty string when value is DBNull
-            {
-                List<string> oneRow = new List<string>();
-
-                listString.Add(oneRow);
-            }
-            rowNumber += 1;
-        }
-        return listString;
-    }
-
-    public static DataTable OpenCSV(string filePath)//从csv读取数据返回table
+    public static List<List<string>> readCsv(string filePath)//从csv读取数据返回table
     {
         System.Text.Encoding encoding = GetType(filePath); //Encoding.ASCII;//
         DataTable dt = new DataTable();
@@ -200,46 +162,28 @@ public class ExcelReaderListString
         string strLine = "";
         //记录每行记录中的各字段内容
         string[] aryLine = null;
-        string[] tableHead = null;
         //标示列数
         int columnCount = 0;
-        //标示是否是读取的第一行
-        bool IsFirst = true;
+
+        List<DataRow> list = dt.AsEnumerable().ToList();
+        List<List<string>> listString = new List<List<string>>();
+
         //逐行读取CSV中的数据
-        while ((strLine = sr.ReadLine()) != null)
+        while ((strLine = sr.ReadLine()) != null)  //
         {
-            /*if (IsFirst == true)
-            {
-                tableHead = strLine.Split(',');
-                IsFirst = false;
-                columnCount = tableHead.Length;
-                //创建列
-                for (int i = 0; i < columnCount; i++)
-                {
-                    DataColumn dc = new DataColumn(tableHead[i]);
-                    dt.Columns.Add(dc);
-                }
-            }
-            else
-            {*/
             aryLine = strLine.Split(',');
+            List<string> oneRow = new List<string>();
             columnCount = aryLine.Length;
-                DataRow dr = dt.NewRow();
                 for (int j = 0; j < columnCount; j++)
                 {
-                    dr[j] = aryLine[j];
+                    oneRow.Add(aryLine[j]);
                 }
-                dt.Rows.Add(dr);
-            //}
+            listString.Add(oneRow);
         }
-        //if (aryLine != null && aryLine.Length > 0)
-        //{
-        //    dt.DefaultView.Sort = tableHead[0] + " " + "asc";
-        //}
 
         sr.Close();
         fs.Close();
-        return dt;
+        return listString;
     }
     public static System.Text.Encoding GetType(string FILE_NAME)
 {

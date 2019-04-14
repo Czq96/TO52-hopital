@@ -52,6 +52,7 @@
         </select>
     </div>
     <%-- <asp:Button ID="yyy" runat="server" OnClick="yyy_Click" /> --%>
+    
     <div id="test"><%=gethtml()%></div>
 
 <%--    <script>
@@ -70,10 +71,10 @@
     Current user's name: {{name}}
     </div>--%>
 
-    <%-- json 文件查看  --%>
-    <%--    <div id="bar"><%=data_json%></div>--%>
+   
     <div>----------------------------   angularJS Test----------------------------------------------</div>
-
+    json 文件查看
+    <div id="bar"><%=data_json%>
     <style type="text/css" scoped>
         .ferme {
             background-color: #978e9d;
