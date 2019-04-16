@@ -69,7 +69,7 @@ public class local_data
     {
         String path = Server.MapPath("./App_Data/"+FileName+ ".csv");
         Data_arrangement = c.rowReadAll(path, 1);
-        path = Server.MapPath("./App_Data/Spécialités chirurgicales.xls");
+        path = Server.MapPath("./App_Data/Spécialités_chirurgicales.csv");
         Data_arrange_specialite = c.rowReadAll(path, 1);
     }
 

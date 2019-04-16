@@ -104,32 +104,6 @@
                </div>--%>
             </nav>
         </div>
-     <%--           <div class="left-sidebar">
-            <!-- Sidebar scroll-->
-            <div class="scroll-sidebar">
-                 <!-- Sidebar navigation-->
-                <nav class="sidebar-nav">
-                    <ul id="sidebarnav">
-                        <li class="nav-devider"></li>
-                        <li class="nav-label">Home</li>
-                        <li><a class="has-arrow"  href="index.php?id=1" aria-expanded="true"><i class="fa fa-bar-chart"></i><span class="hide-menu">Dashboard </span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="~/About.aspx">Graphes - Blocs Operatoirs</a></li>
-                                <li><a href="indexSoins.php?id=1">Graphes - Soins Intensifs</a></li>
-                            </ul>
-                        </li>
-                         <li> <a href="index.php?id=1"><i class="fa fa-table"></i><span class="hide-menu">Blocs opératoire</span></a></li>
-                        <li> <i class="fa fa-table"></i><span class="hide-menu">Soins intensifs</span></li>
-                        <li> <i class="fa fa-users"></i><span class="hide-menu">Patients</span></li>
-                       
-
-                        
-                    </ul>
-                </nav>
-                <!-- End Sidebar navigation -->
-            </div>
-            <!-- End Sidebar scroll-->
-        </div>--%>
     <header>
      <%--   <div class="content-wrapper">
             <div class="float-left">
@@ -171,22 +145,12 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <li class="nav-devider"></li>
-                        <li class="nav-label">Home</li>
-
-                        <li><a class="has-arrow"  href="index.php?id=1" aria-expanded="true"><i class="fa fa-bar-chart"></i><span class="hide-menu">Dashboard </span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="Default.aspx">Graphes - Blocs Operatoirs</a></li>
-                                <li><a href="indexSoins.php?id=1">Graphes - Soins Intensifs</a></li>
-                            </ul>
-                        </li>
-                         <li> <a runat="server" href="~/About"><i class="fa fa-table"></i><span class="hide-menu">Blocs opératoire</span></a></li>
-                        <li> <a c href="soins.php"><i class="fa fa-table"></i><span class="hide-menu">Soins intensifs</span></a></li>
+                     <%-- 有一个下拉选项 <li><a class="has-arrow"  href="index.php?id=1" aria-expanded="true"><i class="fa fa-bar-chart"></i><span class="hide-menu">Dashboard </span></a>
+                            </li>--%>
                         <li> <a c href="Default.aspx"><i class="fa fa-users"></i><span class="hide-menu">Home</span></a></li>
-                        目前先使用 patient.aspx 来显示一个病人
-                        <li> <a c href="patient.aspx"><i class="fa fa-users"></i><span class="hide-menu">Patients</span></a></li>
+              
+                        <li> <a c href="patient.aspx"><i class="fa fa-users"></i><span class="hide-menu">Patient</span></a></li>
                        
-
-                        
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
