@@ -34,8 +34,8 @@ public class local_data
         loadPatientIcu(Server, "test/patients2icu");  //引号中不能有空格 patients2icu.xls
         updatePatientInformation();
         updatePatientDepartement();
-        //data_json = load_json();
-        Data_json ="{}";
+        data_json = load_json();
+        //Data_json ="{}";
         former_arrangement();
     }
 
@@ -205,7 +205,7 @@ public class local_data
                 if (Data_arrangement[salle][day] != "")
                 {
                     int arrange = Convert.ToInt32(Data_arrangement[salle][day].ToString()) - 1;
-                    for (int patient = 0; patient < Data_patient_ors[arrange].Count; patient++)
+                    for (int patient = 0; patient < Data_patient_information.Count; patient++)//Data_patient_information.Count 返回病人的数量
                     {
                         if (Data_patient_ors[arrange][patient] == "1")  //如果某一个病人 patient 要在这个 timeblock 动手术
                         {

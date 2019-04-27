@@ -198,7 +198,7 @@ public class ExcelReaderListString
 /// <param name="fs">文件流</param>
 /// <returns>文件的编码类型</returns>
 public static System.Text.Encoding GetType(System.IO.FileStream fs)
-{
+{  
     byte[] Unicode = new byte[] { 0xFF, 0xFE, 0x41 };
     byte[] UnicodeBIG = new byte[] { 0xFE, 0xFF, 0x00 };
     byte[] UTF8 = new byte[] { 0xEF, 0xBB, 0xBF }; //带BOM

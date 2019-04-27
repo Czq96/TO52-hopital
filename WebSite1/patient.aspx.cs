@@ -24,5 +24,8 @@ public partial class patient : System.Web.UI.Page
         number.Text = patient.Rows[0][1].ToString();
         name.Text = patient.Rows[0][2].ToString();
         departement.Text = patient.Rows[0][3].ToString();
+        urgencyLevel.Text = patient.Rows[0][5].ToString();
+        waitingTime.Text = patient.Rows[0][6].ToString();
+        maxWaitingTime.Text = patient.Rows[0][7].ToString();
     }
 }

@@ -48,10 +48,18 @@ public partial class _Default : Page
         html = null;
         //html = html + " <div>测试测试 ：  后台创建html代码</div>";
         for (int i = 0; i < data.Count; i++)
-        {
-            html += "<script>   </script>";
+        {   //鼠标悬浮窗js
+            //var tip = document.getElementById("tooltipBlock");
+            //var selects = document.getElementById("selects");
+            //function tooltip(obj) {
+            //    var x = selects.offsetLeft, y = obj.offsetTop, h = obj.offsetHeight, w = selects.offsetWidth;  /*tip.style.width = w + "px";  （这部分是定义显示提示的块的宽度） */
+            //    tip.style.marginLeft = x + w + "px"; tip.style.marginTop = y - 30 + "px"; tip.style.display = "block"; tip.innerHTML = "这部分为程序传递（把数据库里相关国家资料传过来）"; }
+            //function nodisplay() { tip.style.display = "none"; }
+
+            html += "<script> <script language=\"javascript\"> function OpenSelectInfo() {var width = 1000;  var height = 500;   var url = \"patient.aspx?id=3\"; window.showModalDialog(url, null, 'dialogWidth=' + width + 'px;dialogHeight=' + height + 'px;help:no;status:no'); }</script>";
             if (i == 0)
             { //表头
+                html += "<input type=\"button\" id=\"btn_ModifyNickName\" runat=\"server\" value=\"打开模态窗口\"  style=\"width: 126px;\" onclick=\"OpenSelectInfo()\" />   ";
                 html += "<table id=\"diary\" border= 1 width=500px bordercolor=#FBBF00 >" +
                        "<tr><td ></td><td ><center>Lundi</td><td><center>Mardi  </td><td>   Mecredi </td><td>   Jeudi  </td><td>   Vendredi  </td></tr>";
             }
@@ -64,7 +72,9 @@ public partial class _Default : Page
                            Local_Data.getSpecialite()[i][j]
                          + "</font><br>";
 
-                    html += "<select style=\"width: 130px; \" onchange=\"window.location = this.value;\" > ";
+                    //html += "<select style=\"width: 130px; \" onchange=\"window.location = this.value;\" > ";
+                    html += "<select style=\"width: 130px; \" onchange=\"OpenSelectInfo()\" > ";
+                    //this.Response.Write("<script language=javascript>window.open('rows.aspx','newwindow','width=200,height=200')</script>");
                     string[] sArray = Regex.Split(data[i][j], ",", RegexOptions.IgnoreCase);
                     int n = sArray.Count()-1;
                     html += "<option value= n>" + n+ " patients</option>";
@@ -72,11 +82,13 @@ public partial class _Default : Page
                     {
                         if (c != "")
                         {
-                            DataTable patient, patientTest;
+                            DataTable patient;
                             int patientNumber = Convert.ToInt32(c.ToString());
                            // patientTest = bdd.select_patient(2);  
                             patient = bdd.select_patient(patientNumber);
-                            html +=  "<option value=\" patient.aspx?id=" + patient.Rows[0][1] + "\">" + patient.Rows[0][1] + patient.Rows[0][2]+ "</option>";
+                            html += "<option  " +
+                                "value =\" patient.aspx?id=" + patient.Rows[0][1] + "\">"
+                                + patient.Rows[0][1] +" "+ patient.Rows[0][2]+ "</option>";
                         }
                     }
                     html += " </select></td>";
@@ -97,6 +109,7 @@ public partial class _Default : Page
                 continue;
             }
         }
+        html +="<div id=\"MyFormLayer\" style=\"DISPLAY: none; Z - INDEX: 103; LEFT: 16px; WIDTH: 408px; POSITION: absolute; TOP: 24px; HEIGHT: 304px\"> < iframe scrolling = \"no\" frameborder = \"0\" width = \"100%\" height = \"100%\" id = \"IFRAME1\" runat = \"server\" > </ iframe > </ div >";
         return html;
     }
 

@@ -53,7 +53,85 @@
     </div>
     <%-- <asp:Button ID="yyy" runat="server" OnClick="yyy_Click" /> --%>
     
-    <div id="test"><%=gethtml()%></div>
+
+     <div>        
+         <input type="button" id="btn_ModifyNickName" runat="server" value="打开模态窗口"  style="width: 126px;" onclick="OpenSelectInfo()" />   
+          
+    </div>
+    <div id="inforBlock" background-color: white; border: 1px solid black;">test悬浮窗</div>
+    <select onclick="javascript:alert('event has been triggered')">
+         <option  value ="1">1</option>
+         <option  value ="2">2</option>
+         <option  value ="3">3</option>
+    </select>
+    <div id="test"><%=gethtml()%></div> <%-- 这里显示所有的表格数据--%>
+    <script>
+        var infoDiv = document.getElementById("inforBlock");
+        function displayPatientInfo(obj)
+        {
+            var x = selects.offsetLeft, y = obj.offsetTop, h = obj.offsetHeight, w = selects.offsetWidth;
+            infoDiv.style.marginLeft = x + w; infoDiv.style.marginTop = y - 30;
+            infoDiv.innerHTML="";
+            infoDiv.style.display = 'block';
+        }
+
+        function vanishPatientInfo()
+        {
+            infoDiv.style.display = 'none';
+        }
+    </script>
+    <script type="text/javascript">
+        // fix for deprecated method in Chrome 37
+        if (!window.showModalDialog) {
+            window.showModalDialog = function (arg1, arg2, arg3) {
+
+                var w;
+                var h;
+                var resizable = "no";
+                var scroll = "no";
+                var status = "no";
+
+                // get the modal specs
+                var mdattrs = arg3.split(";");
+                for (i = 0; i < mdattrs.length; i++) {
+                    var mdattr = mdattrs[i].split(":");
+
+                    var n = mdattr[0];
+                    var v = mdattr[1];
+                    if (n) { n = n.trim().toLowerCase(); }
+                    if (v) { v = v.trim().toLowerCase(); }
+
+                    if (n == "dialogheight") {
+                        h = v.replace("px", "");
+                    } else if (n == "dialogwidth") {
+                        w = v.replace("px", "");
+                    } else if (n == "resizable") {
+                        resizable = v;
+                    } else if (n == "scroll") {
+                        scroll = v;
+                    } else if (n == "status") {
+                        status = v;
+                    }
+                }
+
+                var left = 100;
+                var top = 100;
+                var targetWin = window.open(arg1, arg1, 'toolbar=no, location=no, directories=no, status=' + status + ', menubar=no, scrollbars=' + scroll + ', resizable=' + resizable + ', copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+                targetWin.focus();
+            };
+        }
+</script>
+     <script type="text/javascript">
+
+         function OpenSelectInfo() {
+             var width = 50;  //模态窗口的宽度
+             var height = 50;   //模态窗口的高度
+             var url = "patient.aspx?id=3"; //模态窗口的url地址
+             returnValue = window.showModalDialog(url, null, 'dialogWidth=' + width + 'px;dialogHeight=' + height + 'px;help:no;status:yes;center: yes');
+             
+         }
+    </script>
+
 
 <%--    <script>
         function sech(id) {//改变文件的选择时触发
