@@ -88,7 +88,7 @@ public partial class _Default : Page
                             // patientTest = bdd.select_patient(2);  
                             patient = bdd.select_patient(patientNumber);
                             html += "<option  " +
-                                "value =\" " + patient.Rows[0][1] + "\">"
+                                "value =\" " + patient.Rows[0][1] + ","+patient.Rows[0][2] +","+patient.Rows[0][3]+","+ patient.Rows[0][5]+","+ patient.Rows[0][6]+","+ patient.Rows[0][7]+"\">"
                                 + patient.Rows[0][1] + " " + patient.Rows[0][2] + "</option>";
                         }
                     }
@@ -122,14 +122,5 @@ public partial class _Default : Page
     {
         all_table_html(Local_Data.Data_arrangement_format); //data_arrangement_format
     }
-    public string tetete(string c){
-        bdd_functions bdd = new bdd_functions();
-        DataTable patient;
-       
-            int id = Convert.ToInt32(txt_JobGoal.Text.ToString());
-            patient = bdd.select_patient(Convert.ToInt32(id));
-            TextBox1.Text = patient.Rows[0][1].ToString();
-            return patient.Rows[0][1].ToString();
-     
-    }
+    
 }

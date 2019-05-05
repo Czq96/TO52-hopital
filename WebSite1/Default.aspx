@@ -53,7 +53,7 @@
     </div>
     <%-- <asp:Button ID="yyy" runat="server" OnClick="yyy_Click" /> --%>
     
-    <li><asp:Button ID="btnShow" runat="server" Text="操作三（弹出层）" OnClientClick="return ShowBlock();" /></li>
+   
 
      <div>        
          <input type="button" id="btn_ModifyNickName" runat="server" value="打开模态窗口"  style="width: 126px;" onclick="OpenSelectInfo()" />   
@@ -65,19 +65,46 @@
          <option  value ="2">2</option>
          <option  value ="3">3</option>
     </select>
-    <div id="divNewBlock" style=" border:solid 5px;padding:10px;width:600px;z-index:1001; 
-        position: absolute; display:none;top:50%; left:10%;margin:-50px;">
+    <div id="divNewBlock" style=" border:solid 5px;padding:10px;width:400px;
+        position: absolute; display:none;top:15%;right:0%;">
             <div style="padding:3px 15px 3px 15px;text-align:left;vertical-align:middle;" >
-                <div>
-                   弹出层，平时在隐藏状态，这里可以放控件，加载数据，操作数据等。
-                </div>
-                <div>     
-                    <asp:Button ID="BtnOperation" runat="server" Text="操作按钮" OnClientClick="return Operate();"/> 
+                  <div class="row">
+        <div class="col-md-2"></div>  
+        <div class="col-md-5">
+               <div class="row " style=" font-size:medium">Information de la patient</div>
+             
+            <table border="1">
+                <tr style="background-color :#808080; color :white">
+                    <td><b> patient numéro: </b></td>
+                    <td>  <asp:TextBox ID="number" runat="server"></asp:TextBox></td>
+                    </tr>
+                <tr style="background-color :#808080; color :white"">
+                    <td><b> patient name:  </b></td>
+                    <td>  <asp:TextBox ID="name" runat="server"></asp:TextBox></td>
+                </tr>
+                <tr style="background-color :#808080; color :white"">
+                    <td><b> patient departement: </b></td>
+                    <td>    <asp:TextBox ID="departement" runat="server"></asp:TextBox></td>
+                </tr>
+                <tr style="background-color :#808080; color :white"">
+                    <td><b>  urgency level: </b></td>
+                    <td>    <asp:TextBox ID="urgencyLevel" runat="server"></asp:TextBox></td>
+                </tr>
+                <tr style="background-color :#808080; color :white"">
+                    <td><b> waiting time: </b></td>
+                    <td>    <asp:TextBox ID="waitingTime" runat="server"></asp:TextBox></td>
+                </tr>
+                <tr style="background-color :#808080; color :white"">
+                    <td><b> max waiting time: </b></td>
+                    <td>    <asp:TextBox ID="maxWaitingTime" runat="server"></asp:TextBox></td>
+                </tr>
 
-                    <input type="text" id="wy" name="wy" >
-                  <asp:TextBox ID="txt_JobGoal" runat="server" Width="100%" TextMode="MultiLine" ToolTip="请输入工作目标！"></asp:TextBox>
-                     <asp:TextBox ID="TextBox1" runat="server" Width="100%" TextMode="MultiLine" ToolTip="请输入工作目标！"></asp:TextBox>
-                    <asp:Button ID="BttCancel"  runat="server" Text="关闭" OnClientClick="return HideBlock();" />
+            </table>
+            </div>
+            </div>
+                <div>     
+                  
+                    <asp:Button ID="BttCancel"  runat="server" Text="fermer" OnClientClick="return HideBlock();" />
                 </div>
             </div>
       </div> 
@@ -108,10 +135,17 @@
 
         function ShowBlock(c) {
             var set = SetBlock();
-            
-            document.getElementById("<%=txt_JobGoal.ClientID%>").value=c;       
-            document.getElementById("wy").value = c;
-            alert(c);
+            var m = c.split(",")
+            document.getElementById("<%=number.ClientID%>").value = m[0];    
+            document.getElementById("<%=name.ClientID%>").value = m[1];   
+            document.getElementById("<%=departement.ClientID%>").value = m[2];   
+            document.getElementById("<%=urgencyLevel.ClientID%>").value = m[3];   
+            document.getElementById("<%=waitingTime.ClientID%>").value = m[4];   
+            document.getElementById("<%=maxWaitingTime.ClientID%>").value = m[5];   
+
+          
+
+          
             document.getElementById("divNewBlock").style.display = "";
             return false;
         }
