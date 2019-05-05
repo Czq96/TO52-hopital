@@ -53,6 +53,7 @@
     </div>
     <%-- <asp:Button ID="yyy" runat="server" OnClick="yyy_Click" /> --%>
     
+    <li><asp:Button ID="btnShow" runat="server" Text="操作三（弹出层）" OnClientClick="return ShowBlock();" /></li>
 
      <div>        
          <input type="button" id="btn_ModifyNickName" runat="server" value="打开模态窗口"  style="width: 126px;" onclick="OpenSelectInfo()" />   
@@ -64,6 +65,24 @@
          <option  value ="2">2</option>
          <option  value ="3">3</option>
     </select>
+    <div id="divNewBlock" style=" border:solid 5px;padding:10px;width:600px;z-index:1001; 
+        position: absolute; display:none;top:50%; left:10%;margin:-50px;">
+            <div style="padding:3px 15px 3px 15px;text-align:left;vertical-align:middle;" >
+                <div>
+                   弹出层，平时在隐藏状态，这里可以放控件，加载数据，操作数据等。
+                </div>
+                <div>     
+                    <asp:Button ID="BtnOperation" runat="server" Text="操作按钮" OnClientClick="return Operate();"/> 
+
+                    <input type="text" id="wy" name="wy" >
+                  <asp:TextBox ID="txt_JobGoal" runat="server" Width="100%" TextMode="MultiLine" ToolTip="请输入工作目标！"></asp:TextBox>
+                     <asp:TextBox ID="TextBox1" runat="server" Width="100%" TextMode="MultiLine" ToolTip="请输入工作目标！"></asp:TextBox>
+                    <asp:Button ID="BttCancel"  runat="server" Text="关闭" OnClientClick="return HideBlock();" />
+                </div>
+            </div>
+      </div> 
+
+
     <div id="test"><%=gethtml()%></div> <%-- 这里显示所有的表格数据--%>
     <script>
         var infoDiv = document.getElementById("inforBlock");
@@ -80,6 +99,48 @@
             infoDiv.style.display = 'none';
         }
     </script>
+    <script>
+        function HideBlock() {
+            document.getElementById("divNewBlock").style.display = "none";
+            return false;
+        }
+
+
+        function ShowBlock(c) {
+            var set = SetBlock();
+            
+            document.getElementById("<%=txt_JobGoal.ClientID%>").value=c;       
+            document.getElementById("wy").value = c;
+            alert(c);
+            document.getElementById("divNewBlock").style.display = "";
+            return false;
+        }
+
+
+
+        function SetBlock() {
+            var top = document.body.scrollTop;
+            var left = document.body.scrollLeft;
+            var height = document.body.clientHeight;
+            var width = document.body.clientWidth;
+
+
+            if (top == 0 && left == 0 && height == 0 && width == 0) {
+                top = document.documentElement.scrollTop;
+                left = document.documentElement.scrollLeft;
+                height = document.documentElement.clientHeight;
+                width = document.documentElement.clientWidth;
+            }
+            return { top: top, left: left, height: height, width: width };
+        }
+
+
+        function Operate() {
+            return false;
+        }
+    </script>
+
+
     <script type="text/javascript">
         // fix for deprecated method in Chrome 37
         if (!window.showModalDialog) {

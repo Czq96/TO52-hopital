@@ -28,6 +28,7 @@ public partial class _Default : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
+
         string patientsDoc = Request.Form["patientsDoc"];
         if (patientsDoc == null)
         {
@@ -35,13 +36,13 @@ public partial class _Default : Page
         }
         string str = System.Environment.CurrentDirectory;
         Local_Data.load_data(Server, patientsDoc);
-        
+
         all_table_html(Local_Data.Data_arrangement_format);
         data_json = Local_Data.get_json();
 
         //tete.Text = data_json;
     }
-    
+
     public string all_table_html(List<List<string>> data) //List<List<int>>
     {
         //根据 表格 arrangement 输出html
@@ -63,32 +64,32 @@ public partial class _Default : Page
                 html += "<table id=\"diary\" border= 1 width=500px bordercolor=#FBBF00 >" +
                        "<tr><td ></td><td ><center>Lundi</td><td><center>Mardi  </td><td>   Mecredi </td><td>   Jeudi  </td><td>   Vendredi  </td></tr>";
             }
-            html += "<tr>"+ "<td > salle " + (i+1)+"</td>";
+            html += "<tr>" + "<td > salle " + (i + 1) + "</td>";
             for (int j = 0; j < data[i].Count; j++)
             {
-                if(data[i][j]!=null&& data[i][j]!= "ouvert" && data[i][j] != "")
+                if (data[i][j] != null && data[i][j] != "ouvert" && data[i][j] != "")
                 {
-                    html += "<td bgcolor =\"#CC4338\"><font color=\"black\">"+
+                    html += "<td bgcolor =\"#CC4338\"><font color=\"black\">" +
                            Local_Data.getSpecialite()[i][j]
                          + "</font><br>";
 
                     //html += "<select style=\"width: 130px; \" onchange=\"window.location = this.value;\" > ";
-                    html += "<select style=\"width: 130px; \" onchange=\"OpenSelectInfo()\" > ";
+                    html += "<select id=\"testSelect\" style=\"width: 130px; \" onchange=\"return ShowBlock(this.value);\" > ";
                     //this.Response.Write("<script language=javascript>window.open('rows.aspx','newwindow','width=200,height=200')</script>");
                     string[] sArray = Regex.Split(data[i][j], ",", RegexOptions.IgnoreCase);
-                    int n = sArray.Count()-1;
-                    html += "<option value= n>" + n+ " patients</option>";
+                    int n = sArray.Count() - 1;
+                    html += "<option value= n>" + n + " patients</option>";
                     foreach (string c in sArray)
                     {
                         if (c != "")
                         {
                             DataTable patient;
                             int patientNumber = Convert.ToInt32(c.ToString());
-                           // patientTest = bdd.select_patient(2);  
+                            // patientTest = bdd.select_patient(2);  
                             patient = bdd.select_patient(patientNumber);
                             html += "<option  " +
-                                "value =\" patient.aspx?id=" + patient.Rows[0][1] + "\">"
-                                + patient.Rows[0][1] +" "+ patient.Rows[0][2]+ "</option>";
+                                "value =\" " + patient.Rows[0][1] + "\">"
+                                + patient.Rows[0][1] + " " + patient.Rows[0][2] + "</option>";
                         }
                     }
                     html += " </select></td>";
@@ -109,7 +110,7 @@ public partial class _Default : Page
                 continue;
             }
         }
-        html +="<div id=\"MyFormLayer\" style=\"DISPLAY: none; Z - INDEX: 103; LEFT: 16px; WIDTH: 408px; POSITION: absolute; TOP: 24px; HEIGHT: 304px\"> < iframe scrolling = \"no\" frameborder = \"0\" width = \"100%\" height = \"100%\" id = \"IFRAME1\" runat = \"server\" > </ iframe > </ div >";
+        html += "<div id=\"MyFormLayer\" style=\"DISPLAY: none; Z - INDEX: 103; LEFT: 16px; WIDTH: 408px; POSITION: absolute; TOP: 24px; HEIGHT: 304px\"> < iframe scrolling = \"no\" frameborder = \"0\" width = \"100%\" height = \"100%\" id = \"IFRAME1\" runat = \"server\" > </ iframe > </ div >";
         return html;
     }
 
@@ -120,5 +121,15 @@ public partial class _Default : Page
     protected void yyy_Click(object sender, EventArgs e)
     {
         all_table_html(Local_Data.Data_arrangement_format); //data_arrangement_format
+    }
+    public string tetete(string c){
+        bdd_functions bdd = new bdd_functions();
+        DataTable patient;
+       
+            int id = Convert.ToInt32(txt_JobGoal.Text.ToString());
+            patient = bdd.select_patient(Convert.ToInt32(id));
+            TextBox1.Text = patient.Rows[0][1].ToString();
+            return patient.Rows[0][1].ToString();
+     
     }
 }
