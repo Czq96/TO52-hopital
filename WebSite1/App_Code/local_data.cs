@@ -4,6 +4,7 @@ using System.Web;
 using System.Dynamic;
 using Newtonsoft.Json;
 using System.Data;
+using System.Reflection;
 
 /// <summary>
 /// local_data 的摘要说明
@@ -34,6 +35,7 @@ public class local_data
         loadPatientIcu(Server, "test/patients2icu");  //引号中不能有空格 patients2icu.xls
         updatePatientInformation();
         updatePatientDepartement();
+        updatePatientIcu();
         data_json = load_json();
         //Data_json ="{}";
         former_arrangement();
@@ -123,6 +125,24 @@ public class local_data
         }
     }
 
+    void updatePatientIcu()
+    {
+        for (int patient = 0; patient < data_patient_icu[0].Count-2; patient++)//TODO: 由于表格最后还有两列所以这里多了两个人
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                //if (Convert.ToInt32(data_patient_icu[patient][i]) == 1)
+                //{
+                    Type t = typeof(bdd_functions);
+                    object obj = Activator.CreateInstance(t);
+                    MethodInfo method = t.GetMethod("update_patient_icu_day"+(i+1).ToString());
+                    int useOrNot = Convert.ToInt32(data_patient_icu[i][patient]);
+                    object[] parametersArray = new object[] {patient + 1, useOrNot};// update_patient_icu_day1（）之类需要的两个参数
+                    method.Invoke(bdd, parametersArray);
+                //}
+            }
+        }
+    }
 
     string load_json()
     {
