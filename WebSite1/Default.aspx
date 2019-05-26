@@ -110,7 +110,7 @@
       </div> 
 
 
-    <div id="test"><%=gethtml()%></div> <%-- 这里显示所有的表格数据--%>
+    <div id="test"><%=gethtml()%></div> <%-- 这里显示所有的手术表格数据--%>
     <script>
         var infoDiv = document.getElementById("inforBlock");
         function displayPatientInfo(obj)

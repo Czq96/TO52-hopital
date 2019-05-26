@@ -96,14 +96,29 @@ public class local_data
 
     void updatePatientInformation()
     {
-        if(Data_patient_information!=null)
+        List<String> specialies = new List<String>(
+                    new string[]{
+                        "otolaryngologique",
+                        "gynlaryngolog",
+                        "orthopyngolo",
+                        "neurologique",
+                        "geurolog",
+                        "ophtalmologique",
+                        "vasculaire",
+                        "cardiaque",
+                        "urologique",
+                    }
+                );
+        if (Data_patient_information!=null)
         {
             for (int patient = 0; patient < Data_patient_information.Count; patient++)
             {
                 bdd.update_patient_specialty(patient+1, Convert.ToInt32(Data_patient_information[patient][0]));
+                bdd.update_patient_departement(patient + 1,specialies[Convert.ToInt32(Data_patient_information[patient][0])-1]);
                 bdd.update_patient_urgencyLevel(patient + 1, Convert.ToInt32(Data_patient_information[patient][1]));
                 bdd.update_patient_waitingTime(patient + 1, Convert.ToInt32(Data_patient_information[patient][2]));
                 bdd.update_patient_maxWaitingTime(patient + 1, Convert.ToInt32(Data_patient_information[patient][3]));
+              
             }
         }
     }

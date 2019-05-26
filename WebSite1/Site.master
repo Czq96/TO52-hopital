@@ -149,8 +149,10 @@
                         <li class="nav-devider"></li>
                      <%-- 有一个下拉选项 <li><a class="has-arrow"  href="index.php?id=1" aria-expanded="true"><i class="fa fa-bar-chart"></i><span class="hide-menu">Dashboard </span></a>
                             </li>--%>
-                        <li> <a c href="Default.aspx"><i class="fa fa-users"></i><span class="hide-menu">Home</span></a></li>
-              
+                        <li> <a c href="Default.aspx"><i class="fa fa-users"></i><span class="hide-menu">Operation Schedule</span></a></li>
+                        <%-- 所有的手术病人 --%>
+                        <li> <a c href="ICUArrangement.aspx"><i class="fa fa-users"></i><span class="hide-menu">ICU arrangement </span></a></li>
+                        <%-- 所有的手术病人 --%>
                         <li> <a c href="patient.aspx"><i class="fa fa-users"></i><span class="hide-menu">Patient</span></a></li>
                        
                     </ul>
