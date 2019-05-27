@@ -77,7 +77,7 @@
                 <tr style="background-color :#808080; color :white">
                     <td><b> patient numéro: </b></td>
                     <td>  <asp:TextBox ID="number" runat="server"></asp:TextBox></td>
-                    </tr>
+                </tr>
                 <tr style="background-color :#808080; color :white"">
                     <td><b> patient name:  </b></td>
                     <td>  <asp:TextBox ID="name" runat="server"></asp:TextBox></td>
@@ -98,10 +98,15 @@
                     <td><b> max waiting time: </b></td>
                     <td>    <asp:TextBox ID="maxWaitingTime" runat="server"></asp:TextBox></td>
                 </tr>
-
             </table>
+
             </div>
             </div>
+
+             <div>
+                <asp:Image ID="icuImage" runat="server"></asp:Image>
+            </div>
+                        
                 <div>     
                   
                     <asp:Button ID="BttCancel"  runat="server" Text="fermer" OnClientClick="return HideBlock();" />
@@ -111,18 +116,17 @@
 
 
     <div id="test"><%=gethtml()%></div> <%-- 这里显示所有的手术表格数据--%>
+
     <script>
         var infoDiv = document.getElementById("inforBlock");
-        function displayPatientInfo(obj)
-        {
+        function displayPatientInfo(obj) {
             var x = selects.offsetLeft, y = obj.offsetTop, h = obj.offsetHeight, w = selects.offsetWidth;
             infoDiv.style.marginLeft = x + w; infoDiv.style.marginTop = y - 30;
-            infoDiv.innerHTML="";
+            infoDiv.innerHTML = "";
             infoDiv.style.display = 'block';
         }
 
-        function vanishPatientInfo()
-        {
+        function vanishPatientInfo() {
             infoDiv.style.display = 'none';
         }
     </script>
@@ -136,16 +140,17 @@
         function ShowBlock(c) {
             var set = SetBlock();
             var m = c.split(",")
-            document.getElementById("<%=number.ClientID%>").value = m[0];    
-            document.getElementById("<%=name.ClientID%>").value = m[1];   
-            document.getElementById("<%=departement.ClientID%>").value = m[2];   
-            document.getElementById("<%=urgencyLevel.ClientID%>").value = m[3];   
-            document.getElementById("<%=waitingTime.ClientID%>").value = m[4];   
-            document.getElementById("<%=maxWaitingTime.ClientID%>").value = m[5];   
+            document.getElementById("<%=number.ClientID%>").value = m[0];
+            document.getElementById("<%=name.ClientID%>").value = m[1];
+            document.getElementById("<%=departement.ClientID%>").value = m[2];
+            document.getElementById("<%=urgencyLevel.ClientID%>").value = m[3];
+            document.getElementById("<%=waitingTime.ClientID%>").value = m[4];
+            document.getElementById("<%=maxWaitingTime.ClientID%>").value = m[5];
+            var img = document.getElementById("<%=icuImage.ClientID%>");
+            img.setAttribute('src', m[6]);//显示图片的链接
 
-          
 
-          
+
             document.getElementById("divNewBlock").style.display = "";
             return false;
         }
@@ -223,7 +228,7 @@
              var height = 50;   //模态窗口的高度
              var url = "patient.aspx?id=3"; //模态窗口的url地址
              returnValue = window.showModalDialog(url, null, 'dialogWidth=' + width + 'px;dialogHeight=' + height + 'px;help:no;status:yes;center: yes');
-             
+
          }
     </script>
 
@@ -350,7 +355,7 @@
             $scope.data = <%=data_json%>;
 
 
-      
+
 
         });
     </script>

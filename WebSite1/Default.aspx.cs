@@ -57,7 +57,7 @@ public partial class _Default : Page
             //    tip.style.marginLeft = x + w + "px"; tip.style.marginTop = y - 30 + "px"; tip.style.display = "block"; tip.innerHTML = "这部分为程序传递（把数据库里相关国家资料传过来）"; }
             //function nodisplay() { tip.style.display = "none"; }
 
-            html += "<script> <script language=\"javascript\"> function OpenSelectInfo() {var width = 1000;  var height = 500;   var url = \"patient.aspx?id=3\"; window.showModalDialog(url, null, 'dialogWidth=' + width + 'px;dialogHeight=' + height + 'px;help:no;status:no'); }</script>";
+            //html += "<script> <script language=\"javascript\"> function OpenSelectInfo() {var width = 1000;  var height = 500;   var url = \"patient.aspx?id=3\"; window.showModalDialog(url, null, 'dialogWidth=' + width + 'px;dialogHeight=' + height + 'px;help:no;status:no'); }</script>";
             if (i == 0)
             { //表头
                 html += "<input type=\"button\" id=\"btn_ModifyNickName\" runat=\"server\" value=\"打开模态窗口\"  style=\"width: 126px;\" onclick=\"OpenSelectInfo()\" />   ";
@@ -84,11 +84,12 @@ public partial class _Default : Page
                         if (c != "")
                         {
                             DataTable patient;
-                            int patientNumber = Convert.ToInt32(c.ToString());
-                            // patientTest = bdd.select_patient(2);  
-                            patient = bdd.select_patient(patientNumber);
+                            PatientInfos pinfo = new PatientInfos();
+                            //patientTest = bdd.select_patient(2);  
+                            patient = pinfo.Patient_Load(Server, c);
+
                             html += "<option  " +
-                                "value =\" " + patient.Rows[0][1] + ","+patient.Rows[0][2] +","+patient.Rows[0][3]+","+ patient.Rows[0][5]+","+ patient.Rows[0][6]+","+ patient.Rows[0][7]+"\">"
+                                "value =\" " + patient.Rows[0][1] + ","+patient.Rows[0][2] +","+patient.Rows[0][3]+","+ patient.Rows[0][5]+","+ patient.Rows[0][6]+","+ patient.Rows[0][7]+ "," + patient.Rows[0][16] + "\">"
                                 + patient.Rows[0][1] + " " + patient.Rows[0][2] + "</option>";
                         }
                     }
