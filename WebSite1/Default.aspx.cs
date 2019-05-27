@@ -10,6 +10,9 @@ using System.Text.RegularExpressions;
 //using System.Web.Script.Serialization;
 //using System.Dynamic;
 //using Newtonsoft.Json;
+using Spire.Xls;
+using Spire.Xls.Charts;
+using System.Drawing.Imaging;
 
 
 public partial class _Default : Page
@@ -25,6 +28,7 @@ public partial class _Default : Page
     public local_data Local_Data = new local_data();
     public string data_json;
     bdd_functions bdd = new bdd_functions();
+    string imgPath;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -37,6 +41,8 @@ public partial class _Default : Page
         string str = System.Environment.CurrentDirectory;
         Local_Data.load_data(Server, patientsDoc);
 
+        imgPath = generateSalleUseGraphic(Local_Data.Data_arrangement_format);
+
         all_table_html(Local_Data.Data_arrangement_format);
         data_json = Local_Data.get_json();
 
@@ -47,7 +53,7 @@ public partial class _Default : Page
     {
         //根据 表格 arrangement 输出html
         html = null;
-        //html = html + " <div>测试测试 ：  后台创建html代码</div>";
+        html = html + " <div>测试测试 ：  后台创建html代码</div>";
         for (int i = 0; i < data.Count; i++)
         {   //鼠标悬浮窗js
             //var tip = document.getElementById("tooltipBlock");
@@ -57,10 +63,9 @@ public partial class _Default : Page
             //    tip.style.marginLeft = x + w + "px"; tip.style.marginTop = y - 30 + "px"; tip.style.display = "block"; tip.innerHTML = "这部分为程序传递（把数据库里相关国家资料传过来）"; }
             //function nodisplay() { tip.style.display = "none"; }
 
-            //html += "<script> <script language=\"javascript\"> function OpenSelectInfo() {var width = 1000;  var height = 500;   var url = \"patient.aspx?id=3\"; window.showModalDialog(url, null, 'dialogWidth=' + width + 'px;dialogHeight=' + height + 'px;help:no;status:no'); }</script>";
+            //html += "<script> <script language=\"javascript\"> function OpenSelectInfo() {var width = 1000;  var height = 500;   var url = \"patient.aspx?id=3\"; window.showModalDialog(url, null, 'dialogWidth=' + width + 'px;dialogHeight=' + height + 'px;help:no;status:no'); }</script
             if (i == 0)
             { //表头
-                html += "<input type=\"button\" id=\"btn_ModifyNickName\" runat=\"server\" value=\"打开模态窗口\"  style=\"width: 126px;\" onclick=\"OpenSelectInfo()\" />   ";
                 html += "<table id=\"diary\" border= 1 width=500px bordercolor=#FBBF00 >" +
                        "<tr><td ></td><td ><center>Lundi</td><td><center>Mardi  </td><td>   Mecredi </td><td>   Jeudi  </td><td>   Vendredi  </td></tr>";
             }
@@ -123,5 +128,76 @@ public partial class _Default : Page
     {
         all_table_html(Local_Data.Data_arrangement_format); //data_arrangement_format
     }
-    
+     
+        
+    public string getImagePath()
+    {
+        return imgPath;
+    }
+
+    protected string generateSalleUseGraphic(List<List<string>> data)
+    {
+        Workbook patientOrs = new Workbook();
+        Worksheet sheet = patientOrs.Worksheets[0];
+        //List<String> weekdays = new List<string> { "weekdays","Monday",
+        //    "Tuesday", "Wednesday", "Thursday", "Friday",};
+        //for (int i = 0; i < 6; i++) {
+        //    sheet.Range["A" + (i + 1).ToString()].Value = weekdays[i];
+        //}
+        //List<String> col = new List<string> { "A","B",
+        //    "C", "D", "E", "F",};
+
+        sheet.Range["A1"].Value = "salle number";
+        sheet.Range["B1"].Value = "patient number";
+
+        //在sheet中添加数据
+        for (int salle = 0; salle < data.Count; salle++) {
+            sheet.Range["A" + (salle+2).ToString()].Value = "salle" + (salle+1).ToString();
+            int personCount = 0;
+            for (int day = 0; day < 5; day++)
+            {
+                if (data[salle][day] != "" && data[salle][day] != null && data[salle][day] != "ouvert") {
+                    string[] sArray = Regex.Split(data[salle][day], ",", RegexOptions.IgnoreCase);
+                    personCount = sArray.Count() - 1;
+                }
+            }
+            sheet.Range["B" + (salle + 2).ToString()].NumberValue = personCount;
+        }
+
+        //创建柱状图 
+        Chart chartSalle = sheet.Charts.Add(ExcelChartType.ColumnClustered);
+        chartSalle.PlotArea.Visible = false;
+        chartSalle.SeriesDataFromRange = true;
+
+
+        //选择数据范围
+        chartSalle.DataRange = sheet.Range["$A$2:$B$11"];
+
+
+        chartSalle.ChartTitle = "Utilisation des salles d'opération dans une semaine";
+        chartSalle.PrimaryCategoryAxis.Title = "salle Id ";
+
+        chartSalle.PrimaryValueAxis.Title = "numbre des patients";
+        chartSalle.PrimaryValueAxis.MinValue = 0;
+        chartSalle.PrimaryValueAxis.MinorUnit = 1;
+
+        chartSalle.PrimaryValueAxis.MajorTickMark = TickMarkType.TickMarkOutside;
+        chartSalle.PrimaryValueAxis.MinorTickMark = TickMarkType.TickMarkInside;
+        chartSalle.PrimaryValueAxis.TickLabelPosition = TickLabelPositionType.TickLabelPositionNextToAxis;
+
+        chartSalle.Legend.Position = LegendPositionType.Right;
+
+
+        string path = Server.MapPath("/temps/1salle.csv");
+        patientOrs.SaveToFile(path);
+
+        System.Drawing.Image[] images = patientOrs.SaveChartAsImage(sheet);
+        string imageName = "/temps/salle_use.jpeg";
+        string imagePath = Server.MapPath(imageName);
+        for (int i = 0; i < images.Length; i++)
+        {
+            images[i].Save(string.Format(imagePath, i), ImageFormat.Jpeg);
+        }
+        return imageName;
+    }
 }

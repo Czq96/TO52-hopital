@@ -76,7 +76,7 @@ public class PatientInfos
         //选择数据范围
         chartICU.DataRange = sheet.Range["$A$1:$B$8"];
 
-        //TODO: 设置轴上的值, 显示周一到周日
+        //TODO: 设置y轴上的值, 显示周一到周日
         //Spire.Xls.Charts.ChartSerie cs1 = chartICU.Series[0];
         //cs1.CategoryLabels = sheet.Range["$A$2:$A$8"];
 

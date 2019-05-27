@@ -114,7 +114,9 @@
             </div>
       </div> 
 
-
+    <div>
+        <img src =<%=getImagePath()%>>
+    </div>
     <div id="test"><%=gethtml()%></div> <%-- 这里显示所有的手术表格数据--%>
 
     <script>
