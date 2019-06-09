@@ -14,11 +14,13 @@ public class local_data
 {
     ExcelReaderListString c = new ExcelReaderListString();
 
-    List<List<string>> data_patient_information = null; 
+    // 从excle 中读取的数据
+    List<List<string>> data_patient_information = null; // 所有病人的基本信息  TODO: 生成数据库中那种具有所有信息的listlist
     List<List<string>> data_patient_ors = null;
     List<List<string>> data_patient_icu = null;
     List<List<string>> data_arrangement = null;
     List<List<string>> data_arrange_specialite = null;
+    //
     private List<List<string>> data_arrangement_format = null;
     private string data_json;
 
@@ -31,8 +33,8 @@ public class local_data
         //生成一个json文件
         loadPatientInformation(Server, "test/patients_information");  //引号中不能有空格 patients2icu.xls
         loadArrangement(Server, "blocks2or-days");
-        loadPatientOrs(Server, patientsDoc);  //引号中不能有空格 patients2ors.xls
-        loadPatientIcu(Server, "test/patients2icu");  //引号中不能有空格 patients2icu.xls
+        loadPatientOrs(Server, patientsDoc);  //patients2ors
+        loadPatientIcu(Server, "test/patients2icu");  //patients2icu.xls
         updatePatientInformation();
         updatePatientDepartement();
         updatePatientIcu();
@@ -44,7 +46,7 @@ public class local_data
     void loadPatientInformation(HttpServerUtility Server, string FileName)
     {
         // 读取.xls 文件将数据存在 data_patient_ors 中； 尚未支持其他格式的表格文件
-        //C:/Users/c/source/repos/WebSite1/WebSite1/       patients2ors.xls   patients2blocks.xls
+        //C:/Users/c/source/repos/WebSite1/WebSite1/ 
         string path = Server.MapPath("./App_Data/" + FileName + ".csv");//xls
         Data_patient_information = c.rowReadAll(path, 1);
     }
@@ -76,6 +78,7 @@ public class local_data
     }
 
     void updatePatientDepartement()
+        //TODO: 根据给出的病人信息来更新数据库
     { //bdd 中更新病人的各种信息  TODO: 病人中新建 arrangement,根据arrangement来修改参数
         for (int salle = 0; salle < Data_arrangement.Count; salle++)
         {
@@ -89,6 +92,16 @@ public class local_data
                         if (Data_patient_ors[arrangeNumber-1][patient] == "1")  //如果某一个病人 patient 要在这个 timeblock 动手术
                         {
                             bdd.update_patient_departement(patient + 1, Data_arrange_specialite[salle][day]);
+                            
+                            //更新病人手术的时间   周一到周五  改为1 为在这一天做手术 默认是0
+                            Type t = typeof(bdd_functions);
+                            object obj = Activator.CreateInstance(t);
+                            MethodInfo method = t.GetMethod("update_patient_ors_day" + (day + 1).ToString());
+                            object[] parametersArray = new object[] { patient + 1, 1 };
+                            method.Invoke(bdd, parametersArray);
+
+                            bdd.update_patient_ors_status(patient + 1,1);
+
                         }
                     }
                 }
@@ -236,7 +249,6 @@ public class local_data
             for (int day = 0; day < Data_arrangement[salle].Count; day++)
             {
                 string all_patient = ""; // 初始化所有为空
-                int p = 0;
                 if (Data_arrangement[salle][day] != "")
                 {
                     int arrange = Convert.ToInt32(Data_arrangement[salle][day].ToString()) - 1;

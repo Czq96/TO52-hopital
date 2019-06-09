@@ -193,4 +193,98 @@ public class bdd_functions
             executeCmd(cmd);
         }
     }
+
+    public void update_patient_ors_day1(int num, int useOrNot)
+    {
+        using (MySqlCommand cmd = new MySqlCommand("UPDATE patient SET orsMonday = @useOrNot WHERE patient.numero = @num "))
+        {
+            cmd.Parameters.AddWithValue("@num", num);
+            cmd.Parameters.AddWithValue("@useOrNot", useOrNot);
+            executeCmd(cmd);
+        }
+    }
+
+    public void update_patient_ors_day2(int num, int useOrNot)
+    {
+        using (MySqlCommand cmd = new MySqlCommand("UPDATE patient SET orsTuesday = @useOrNot WHERE patient.numero = @num "))
+        {
+            cmd.Parameters.AddWithValue("@num", num);
+            cmd.Parameters.AddWithValue("@useOrNot", useOrNot);
+            executeCmd(cmd);
+        }
+    }
+    public void update_patient_ors_day3(int num, int useOrNot)
+    {
+        using (MySqlCommand cmd = new MySqlCommand("UPDATE patient SET orsWednesday = @useOrNot WHERE patient.numero = @num "))
+        {
+            cmd.Parameters.AddWithValue("@num", num);
+            cmd.Parameters.AddWithValue("@useOrNot", useOrNot);
+            executeCmd(cmd);
+        }
+    }
+    public void update_patient_ors_day4(int num, int useOrNot)
+    {
+        using (MySqlCommand cmd = new MySqlCommand("UPDATE patient SET orsThursday = @useOrNot WHERE patient.numero = @num "))
+        {
+            cmd.Parameters.AddWithValue("@num", num);
+            cmd.Parameters.AddWithValue("@useOrNot", useOrNot);
+            executeCmd(cmd);
+        }
+    }
+    public void update_patient_ors_day5(int num, int useOrNot)
+    {
+        using (MySqlCommand cmd = new MySqlCommand("UPDATE patient SET orsFriday = @useOrNot WHERE patient.numero = @num "))
+        {
+            cmd.Parameters.AddWithValue("@num", num);
+            cmd.Parameters.AddWithValue("@useOrNot", useOrNot);
+            executeCmd(cmd);
+        }
+    }
+    public void update_patient_ors_day6(int num, int useOrNot)
+    {
+        using (MySqlCommand cmd = new MySqlCommand("UPDATE patient SET orsSaturday = @useOrNot WHERE patient.numero = @num "))
+        {
+            cmd.Parameters.AddWithValue("@num", num);
+            cmd.Parameters.AddWithValue("@useOrNot", useOrNot);
+            executeCmd(cmd);
+        }
+    }
+    public void update_patient_ors_day7(int num, int useOrNot)
+    {
+        using (MySqlCommand cmd = new MySqlCommand("UPDATE patient SET orsSunday = @useOrNot WHERE patient.numero = @num "))
+        {
+            cmd.Parameters.AddWithValue("@num", num);
+            cmd.Parameters.AddWithValue("@useOrNot", useOrNot);
+            executeCmd(cmd);
+        }
+    }
+    public void update_patient_ors_status(int num, int hasOrNot)
+    {
+        using (MySqlCommand cmd = new MySqlCommand("UPDATE patient SET hasOperation = @useOrNot WHERE patient.numero = @num "))
+        {
+            cmd.Parameters.AddWithValue("@num", num);
+            cmd.Parameters.AddWithValue("@useOrNot", hasOrNot);
+            executeCmd(cmd);
+        }
+    }
+    public int get_patients_number_by_specialty(int id)
+    {
+        int number;
+        using (MySqlCommand cmd = new MySqlCommand("SELECT COUNT(patient.ID) FROM patient WHERE patient.specialty=@specialty"))
+        {
+            cmd.Parameters.AddWithValue("@specialty", id);
+            number= executeCmdGetInt(cmd);
+        }
+        return number;
+    }
+    public int get_patients_number_hasOperation_by_specialty(int id)
+    {
+        int number;
+        using (MySqlCommand cmd = new MySqlCommand("SELECT COUNT(patient.ID) FROM patient WHERE patient.specialty=@specialty AND patient.hasOperation =1"))
+        {
+            cmd.Parameters.AddWithValue("@specialty", id);
+            number= executeCmdGetInt(cmd);
+        }
+        return number;
+    }
 }

@@ -115,8 +115,13 @@
       </div> 
 
     <div>
-        <img src =<%=getImagePath()%>>
+        <img src =<%=getSalleImagePath()%>>
+        <img src =<%=getDayImagePath()%>>
     </div>
+    <div>
+        <img src =<%=getSpecialityImagePath()%>>
+    </div>
+
     <div id="test"><%=gethtml()%></div> <%-- 这里显示所有的手术表格数据--%>
 
     <script>

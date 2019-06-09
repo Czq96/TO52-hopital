@@ -28,7 +28,9 @@ public partial class _Default : Page
     public local_data Local_Data = new local_data();
     public string data_json;
     bdd_functions bdd = new bdd_functions();
-    string imgPath;
+    string imgSalleGraphicPath;
+    string imgDayGraphicPath;
+    string imgSpecialityGraphicPath;
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -41,7 +43,9 @@ public partial class _Default : Page
         string str = System.Environment.CurrentDirectory;
         Local_Data.load_data(Server, patientsDoc);
 
-        imgPath = generateSalleUseGraphic(Local_Data.Data_arrangement_format);
+        imgSalleGraphicPath = generateGraphicSallePatient(Local_Data.Data_arrangement_format);
+        imgDayGraphicPath = generateGraphicDayPatient(Local_Data.Data_arrangement_format);
+        imgSpecialityGraphicPath = generateSpecialitePatientGraphic();
 
         all_table_html(Local_Data.Data_arrangement_format);
         data_json = Local_Data.get_json();
@@ -130,22 +134,25 @@ public partial class _Default : Page
     }
      
         
-    public string getImagePath()
+    public string getSalleImagePath()
     {
-        return imgPath;
+        return imgSalleGraphicPath;
     }
 
-    protected string generateSalleUseGraphic(List<List<string>> data)
+    public string getDayImagePath()
+    {
+        return imgDayGraphicPath;
+    }
+
+    public string getSpecialityImagePath()
+    {
+        return imgSpecialityGraphicPath;
+    }
+
+    protected string generateGraphicSallePatient(List<List<string>> data)
     {
         Workbook patientOrs = new Workbook();
         Worksheet sheet = patientOrs.Worksheets[0];
-        //List<String> weekdays = new List<string> { "weekdays","Monday",
-        //    "Tuesday", "Wednesday", "Thursday", "Friday",};
-        //for (int i = 0; i < 6; i++) {
-        //    sheet.Range["A" + (i + 1).ToString()].Value = weekdays[i];
-        //}
-        //List<String> col = new List<string> { "A","B",
-        //    "C", "D", "E", "F",};
 
         sheet.Range["A1"].Value = "salle number";
         sheet.Range["B1"].Value = "patient number";
@@ -164,35 +171,179 @@ public partial class _Default : Page
             sheet.Range["B" + (salle + 2).ToString()].NumberValue = personCount;
         }
 
-        //创建柱状图 
-        Chart chartSalle = sheet.Charts.Add(ExcelChartType.ColumnClustered);
+        //创建饼图 
+        Chart chartSalle = sheet.Charts.Add(ExcelChartType.Pie);
+        
         chartSalle.PlotArea.Visible = false;
         chartSalle.SeriesDataFromRange = true;
 
+        //Set region of chart data
+        chartSalle.DataRange = sheet.Range["B2:B11"];
+        chartSalle.SeriesDataFromRange = false;
 
-        //选择数据范围
-        chartSalle.DataRange = sheet.Range["$A$2:$B$11"];
+        Spire.Xls.Charts.ChartSerie cs = chartSalle.Series[0];
 
+        //labels
+        cs.CategoryLabels = sheet.Range["A2:A11"];
 
-        chartSalle.ChartTitle = "Utilisation des salles d'opération dans une semaine";
-        chartSalle.PrimaryCategoryAxis.Title = "salle Id ";
+        // Set the value visible in the chart
+        cs.DataPoints.DefaultDataPoint.DataLabels.HasLegendKey = true;
+        cs.DataPoints.DefaultDataPoint.DataLabels.HasValue = true;
+        cs.DataPoints.DefaultDataPoint.DataLabels.HasCategoryName = true;
+        cs.DataPoints.DefaultDataPoint.DataLabels.Position = DataLabelPositionType.Outside;
+        cs.DataPoints.DefaultDataPoint.DataLabels.Delimiter = "-";
 
-        chartSalle.PrimaryValueAxis.Title = "numbre des patients";
-        chartSalle.PrimaryValueAxis.MinValue = 0;
-        chartSalle.PrimaryValueAxis.MinorUnit = 1;
+        cs.DataPoints.DefaultDataPoint.DataLabels.FrameFormat.Fill.Texture = GradientTextureType.Papyrus;
 
-        chartSalle.PrimaryValueAxis.MajorTickMark = TickMarkType.TickMarkOutside;
-        chartSalle.PrimaryValueAxis.MinorTickMark = TickMarkType.TickMarkInside;
-        chartSalle.PrimaryValueAxis.TickLabelPosition = TickLabelPositionType.TickLabelPositionNextToAxis;
+        chartSalle.ChartTitle = "Nombre de patient de chaque salle dans une semaine";
 
-        chartSalle.Legend.Position = LegendPositionType.Right;
-
-
-        string path = Server.MapPath("/temps/1salle.csv");
+        string path = Server.MapPath("/temps/1sallePatient.csv");
         patientOrs.SaveToFile(path);
 
         System.Drawing.Image[] images = patientOrs.SaveChartAsImage(sheet);
         string imageName = "/temps/salle_use.jpeg";
+        string imagePath = Server.MapPath(imageName);
+        for (int i = 0; i < images.Length; i++)
+        {
+            images[i].Save(string.Format(imagePath, i), ImageFormat.Jpeg);
+        }
+        return imageName;
+    }
+
+    protected string generateGraphicDayPatient(List<List<string>> data)
+    {
+        Workbook patientOrs = new Workbook();
+        Worksheet sheet = patientOrs.Worksheets[0];
+   
+        sheet.Range["A1"].Value = "weekdays";
+        sheet.Range["B1"].Value = "patient number";
+
+        List < String > weekdays = new List<string> { "weekdays","Monday",
+            "Tuesday", "Wednesday", "Thursday", "Friday",};
+        //在sheet中添加数据
+        for (int day = 1; day < 6; day++)
+        {
+            sheet.Range["A" + (day +1).ToString()].Value = weekdays[day];
+            int personCount = 0;
+            for (int salle = 0; salle < data.Count; salle++)
+            {
+                if (data[salle][day-1] != "" && data[salle][day - 1] != null && data[salle][day - 1] != "ouvert")
+                {
+                    string[] sArray = Regex.Split(data[salle][day - 1], ",", RegexOptions.IgnoreCase);
+                    personCount = sArray.Count() - 1;
+                }
+            }
+            sheet.Range["B" + (day+1).ToString()].NumberValue = personCount;
+        }
+
+        //创建饼图 
+        Chart chartSalle = sheet.Charts.Add(ExcelChartType.Pie);
+
+        chartSalle.PlotArea.Visible = false;
+        chartSalle.SeriesDataFromRange = true;
+
+        //Set region of chart data
+        chartSalle.DataRange = sheet.Range["B2:B6"];
+        chartSalle.SeriesDataFromRange = false;
+
+        Spire.Xls.Charts.ChartSerie cs = chartSalle.Series[0];
+
+        //labels
+        cs.CategoryLabels = sheet.Range["A2:A6"];
+
+        // Set the value visible in the chart
+        cs.DataPoints.DefaultDataPoint.DataLabels.HasValue = true;
+        cs.DataPoints.DefaultDataPoint.DataLabels.HasCategoryName = true;
+        cs.DataPoints.DefaultDataPoint.DataLabels.Position = DataLabelPositionType.Outside;
+        //cs.DataPoints.DefaultDataPoint.DataLabels.Delimiter = "\n";
+        cs.DataPoints.DefaultDataPoint.DataLabels.FrameFormat.Fill.Texture = GradientTextureType.Papyrus;
+        cs.DataPoints.DefaultDataPoint.DataLabels.HasLegendKey = true;
+
+        chartSalle.ChartTitle = "Nombre de patient de chaque jour dans une semaine";
+        
+        string path = Server.MapPath("/temps/1dayPatient.csv");
+        patientOrs.SaveToFile(path);
+
+        System.Drawing.Image[] images = patientOrs.SaveChartAsImage(sheet);
+        string imageName = "/temps/day_use.jpeg";
+        string imagePath = Server.MapPath(imageName);
+        for (int i = 0; i < images.Length; i++)
+        {
+            images[i].Save(string.Format(imagePath, i), ImageFormat.Jpeg);
+        }
+        return imageName;
+    }
+
+    protected string generateSpecialitePatientGraphic()
+    {
+        Workbook patientOrs = new Workbook();
+        Worksheet sheet = patientOrs.Worksheets[0];
+        List<String> FirstLine = new List<string> { "  ","Avoir Opération",
+            "Attendre Opération", "All"};
+        for (int i = 0; i < 4; i++)
+        {
+            sheet.Range["A" + (i + 1).ToString()].Value = FirstLine[i];
+        }
+        List<String> Colone = new List<string> {
+        "A","B","C","D","E","F","G","H","I","J","K","L"
+        };
+        List<String> FirstColone = new List<string> {
+            "otolaryngologique",
+            "gynlaryngolog",
+            "orthopyngolo",
+            "neurologique",
+            "geurolog",
+            "ophtalmologique",
+            "vasculaire",
+            "cardiaque",
+            "urologique"};
+
+        //在sheet中添加数据
+        for (int specialite = 0; specialite < FirstColone.Count; specialite++)
+        {
+            sheet.Range[Colone[specialite + 1] + "1"].Value = FirstColone[specialite];
+           
+            int patientNumber = bdd.get_patients_number_by_specialty(specialite + 1);
+            int patientNumberHasOperation = bdd.get_patients_number_hasOperation_by_specialty(specialite + 1);
+
+            sheet.Range[Colone[specialite + 1] + "2"].NumberValue = patientNumber;
+            sheet.Range[Colone[specialite + 1] + "3"].NumberValue = patientNumberHasOperation;
+            sheet.Range[Colone[specialite + 1] + "4"].NumberValue = patientNumber-patientNumberHasOperation;
+        }
+
+        //创建柱状图 
+        //        Chart chartSalle = sheet.Charts.Add(ExcelChartType.ColumnClustered);
+        Chart chartSpeciatity = sheet.Charts.Add(ExcelChartType.ColumnStacked);
+        chartSpeciatity.PlotArea.Visible = false;
+        chartSpeciatity.SeriesDataFromRange = true;
+
+        //选择数据范围
+        chartSpeciatity.DataRange = sheet.Range["A2:J3"];
+
+        chartSpeciatity.LeftColumn = 1;
+        chartSpeciatity.TopRow = 15;
+        chartSpeciatity.RightColumn = 20;
+        chartSpeciatity.BottomRow = 40;
+
+        Spire.Xls.Charts.ChartSerie cs = chartSpeciatity.Series[0];
+        chartSpeciatity.Series[1].DataPoints.DefaultDataPoint.DataLabels.HasValue = true;
+        //labels
+        cs.CategoryLabels = sheet.Range["B1:J1"];
+
+        // Set the value visible in the chart
+        cs.DataPoints.DefaultDataPoint.DataLabels.HasValue = true;
+        cs.DataPoints.DefaultDataPoint.DataLabels.Delimiter = "-";
+
+        chartSpeciatity.ChartTitle = "Nombre de patient de spécialité dans une semaine";
+
+        chartSpeciatity.PrimaryCategoryAxis.Title = "spécialité";
+        chartSpeciatity.PrimaryValueAxis.Title = "numbre des patients";
+      
+        string path = Server.MapPath("/temps/SpecialiteJourPatient.csv");
+        patientOrs.SaveToFile(path);
+
+        System.Drawing.Image[] images = patientOrs.SaveChartAsImage(sheet);
+        string imageName = "/temps/speciciate_all.jpeg";
         string imagePath = Server.MapPath(imageName);
         for (int i = 0; i < images.Length; i++)
         {
