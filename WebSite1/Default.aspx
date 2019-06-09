@@ -40,68 +40,48 @@
             }
     </style>
 
-    <%--  后台数据返回测试  -- %>
-    <%--<asp:TextBox ID="tete" runat="server" Width="100%"></asp:TextBox>--%>
-    <div id="description">
-        <br />
-        choose patient blocks：
-        <select style="width: 200px;" name="patientsDoc" id="patientsDoc">
-            <span style="white-space: pre"></span>
-            <option value="patients2blocks">patients2blocks</option>
-            <option value="patients2ors">patients2ors</option>
-        </select>
-    </div>
-    <%-- <asp:Button ID="yyy" runat="server" OnClick="yyy_Click" /> --%>
     
    
 
-     <div>        
-         <input type="button" id="btn_ModifyNickName" runat="server" value="打开模态窗口"  style="width: 126px;" onclick="OpenSelectInfo()" />   
-          
-    </div>
-    <div id="inforBlock" background-color: white; border: 1px solid black;">test悬浮窗</div>
-    <select onclick="javascript:alert('event has been triggered')">
-         <option  value ="1">1</option>
-         <option  value ="2">2</option>
-         <option  value ="3">3</option>
-    </select>
+
+
     <div id="divNewBlock" style=" border:solid 5px;padding:10px;width:400px;
-        position: absolute; display:none;top:15%;right:0%;">
+        position: absolute; display:none;top:5%;right:0%;">
             <div style="padding:3px 15px 3px 15px;text-align:left;vertical-align:middle;" >
-                  <div class="row">
-        <div class="col-md-2"></div>  
-        <div class="col-md-5">
-               <div class="row " style=" font-size:medium">Information de la patient</div>
+               
+          
+        
+               <div style=" font-size:larger;text-align:center">Information de la patient</div>
              
-            <table border="1">
+            <table >
                 <tr style="background-color :#808080; color :white">
-                    <td><b> patient numéro: </b></td>
+                    <td><b>numéro: </b></td>
                     <td>  <asp:TextBox ID="number" runat="server"></asp:TextBox></td>
                 </tr>
                 <tr style="background-color :#808080; color :white"">
-                    <td><b> patient name:  </b></td>
+                    <td><b> nom:  </b></td>
                     <td>  <asp:TextBox ID="name" runat="server"></asp:TextBox></td>
                 </tr>
                 <tr style="background-color :#808080; color :white"">
-                    <td><b> patient departement: </b></td>
+                    <td><b>departement: </b></td>
                     <td>    <asp:TextBox ID="departement" runat="server"></asp:TextBox></td>
                 </tr>
                 <tr style="background-color :#808080; color :white"">
-                    <td><b>  urgency level: </b></td>
+                    <td><b>niveau d'urgence: </b></td>
                     <td>    <asp:TextBox ID="urgencyLevel" runat="server"></asp:TextBox></td>
                 </tr>
                 <tr style="background-color :#808080; color :white"">
-                    <td><b> waiting time: </b></td>
+                    <td><b>temps d'attendre: </b></td>
                     <td>    <asp:TextBox ID="waitingTime" runat="server"></asp:TextBox></td>
                 </tr>
                 <tr style="background-color :#808080; color :white"">
-                    <td><b> max waiting time: </b></td>
+                    <td><b> max temps d'attendre: </b></td>
                     <td>    <asp:TextBox ID="maxWaitingTime" runat="server"></asp:TextBox></td>
                 </tr>
             </table>
 
             </div>
-            </div>
+           
 
              <div>
                 <asp:Image ID="icuImage" runat="server"></asp:Image>
@@ -111,19 +91,29 @@
                   
                     <asp:Button ID="BttCancel"  runat="server" Text="fermer" OnClientClick="return HideBlock();" />
                 </div>
-            </div>
+           
       </div> 
 
-    <div>
-        <img src =<%=getSalleImagePath()%>>
-        <img src =<%=getDayImagePath()%>>
+    <div id="test"><%=gethtml()%></div> <%-- 这里显示所有的手术表格数据--%>
+         
+        <div class="row">
+       
+    </div>
+    
+        <div>
+            
+              
+                     <img src =<%=getSalleImagePath()%>>
+             <img src =<%=getDayImagePath()%>>
+            
+                   </div>  
+            
+        <div>
+       
     </div>
     <div>
         <img src =<%=getSpecialityImagePath()%>>
     </div>
-
-    <div id="test"><%=gethtml()%></div> <%-- 这里显示所有的手术表格数据--%>
-
     <script>
         var infoDiv = document.getElementById("inforBlock");
         function displayPatientInfo(obj) {
@@ -257,114 +247,5 @@
     </div>--%>
 
    
-    <div>----------------------------   angularJS Test----------------------------------------------</div>
-    json 文件查看
-    <div id="bar"><%=data_json%>
-    <style type="text/css" scoped>
-        .ferme {
-            background-color: #978e9d;
-            width: 30px;
-        }
-
-        .ouvert {
-            background-color: #A1F081;
-            width: 30px;
-        }
-
-        .occupe {
-            background-color: #CC4338;
-            width: 30px;
-        }
-
-        .default_select {
-            width: 10px;
-        }
-    </style>
-
-    <div ng-app="myApp2" ng-controller="myCtrl">
-        <div>
-            <table id="diary" border="1" bordercolor="#FBBF00">
-                <tr>
-                    <td></td>
-                    <td>
-                        <center>
-                        Lundi</td>
-                    <td>
-                        <center>
-                        Mardi  </td>
-                    <td>Mecredi </td>
-                    <td>Jeudi  </td>
-                    <td>Vendredi  </td>
-                </tr>
-                <tr ng-repeat="salle in data.salles">
-                    <td>salle {{salle.Number}}:</td>
-                    <td class="{{salle.Lundi.status}}">
-                        <label>
-                            <select width="80px" ng-model="myselect1" onchange="alert(this.value)" ng-if="salle.Lundi.patient_number != 0"
-                                ng-options="patient.id as patient.id for patient in salle.Lundi.patients">
-                                <option value="">{{salle.Lundi.patient_number}} patients</option>
-                                <%--veuille--%>
-                            </select>
-                        </label>
-                        {{salle.Lundi.status}}
-                    </td>
-                    <td class="{{salle.Mardi.status}}">
-                        <label>
-                            <select width="80px" ng-model="myselect1" onchange="alert(this.value)" ng-if="salle.Mardi.patient_number != 0"
-                                ng-options="patient.id as patient.id for patient in salle.Mardi.patients">
-                                <option value="">{{salle.Mardi.patient_number}} patients</option>
-                            </select>
-                        </label>
-                        {{salle.Mardi.status}} </td>
-                    <td class="{{salle.Mercredi.status}}">
-                        <label>
-                            <select width="80px" ng-model="myselect1" onchange="alert(this.value)" ng-if="salle.Mercredi.patient_number != 0"
-                                ng-options="patient.id as patient.id for patient in salle.Mercredi.patients">
-                                <option value="">{{salle.Mercredi.patient_number}} patients</option>
-                            </select>
-                        </label>
-                        {{salle.Mercredi.status}} </td>
-                    <td class="{{salle.Jeudi.status}}">
-                        <label>
-                            <select width="80px" ng-model="myselect1" onchange="alert(this.value)" ng-if="salle.Jeudi.patient_number != 0"
-                                ng-options="patient.id as patient.id for patient in salle.Jeudi.patients">
-                                <option value="">{{salle.Jeudi.patient_number}} patients</option>
-                            </select>
-                        </label>
-                        {{salle.Jeudi.status}} </td>
-                    <td class="{{salle.Vendredi.status}}">
-                        <label>
-                            <select width="80px" ng-model="myselect1" onchange="alert(this.value)" ng-if="salle.Vendredi.patient_number != 0"
-                                ng-options="patient.id as patient.id for patient in salle.Vendredi.patients">
-                                <option value="">{{salle.Vendredi.patient_number}} patients</option>
-                            </select>
-                        </label>
-                        {{salle.Vendredi.status}} </td>
-                </tr>
-                <%--<tbody bs-loading-overlay bs-loading-overlay-reference-id=="{{filter.name}}" bs-loading-overlay-delay="filter.loadingDelay">
-        <tr ng-if="filter.match_items.length == 0 && !filter.firstRun">
-            <td class="bg-white" colspan="{{filter.colspan}}" style="min-height:200px;">
-                <h2 class="text-center">
-                    <span ng-include="filter.cfg.info_tpl"></span>
-                </h2>
-            </td>
-        </tr>
-        <!--<tr ng-class="filter.cfg.row_classes" st-select-row="row" st-select-mode="multiple" ng-repeat="row in filter.match_items" ng-include="filter.cfg.row_tpl"></tr>-->
-        <tr ng-class="{{filter.cfg.row_classes}}" ng-repeat="row in filter.match_items" ng-include="filter.cfg.row_tpl"></tr>
-    </tbody>--%>
-            </table>
-        </div>
-        <%--Full Name: {{data.salles[0].Lundi.status+ " " + lastName}}--%>
-    </div>
-
-    <script>
-        var app = angular.module('myApp2', []).controller('myCtrl', function ($scope) {
-            $scope.data = <%=data_json%>;
-
-
-
-
-        });
-    </script>
-
+   
 </asp:Content>

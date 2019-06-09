@@ -57,7 +57,7 @@ public partial class _Default : Page
     {
         //根据 表格 arrangement 输出html
         html = null;
-        html = html + " <div>测试测试 ：  后台创建html代码</div>";
+      //  html = html + " <div>测试测试 ：  后台创建html代码</div>";
         for (int i = 0; i < data.Count; i++)
         {   //鼠标悬浮窗js
             //var tip = document.getElementById("tooltipBlock");
@@ -98,7 +98,7 @@ public partial class _Default : Page
                             patient = pinfo.Patient_Load(Server, c);
 
                             html += "<option  " +
-                                "value =\" " + patient.Rows[0][1] + ","+patient.Rows[0][2] +","+patient.Rows[0][3]+","+ patient.Rows[0][5]+","+ patient.Rows[0][6]+","+ patient.Rows[0][7]+ "," + patient.Rows[0][16] + "\">"
+                                "value =\" " + patient.Rows[0][1] + ","+patient.Rows[0][2] +","+patient.Rows[0][3]+","+ patient.Rows[0][5]+","+ patient.Rows[0][6]+","+ patient.Rows[0][7]+ "," + patient.Rows[0][24] + "\">"
                                 + patient.Rows[0][1] + " " + patient.Rows[0][2] + "</option>";
                         }
                     }
@@ -218,8 +218,8 @@ public partial class _Default : Page
         sheet.Range["A1"].Value = "weekdays";
         sheet.Range["B1"].Value = "patient number";
 
-        List < String > weekdays = new List<string> { "weekdays","Monday",
-            "Tuesday", "Wednesday", "Thursday", "Friday",};
+        List < String > weekdays = new List<string> { "weekdays","Lundi",
+            "Mardi", "Mercredi", "Jeudi", "Vendredi",};
         //在sheet中添加数据
         for (int day = 1; day < 6; day++)
         {
@@ -351,4 +351,6 @@ public partial class _Default : Page
         }
         return imageName;
     }
+
+
 }

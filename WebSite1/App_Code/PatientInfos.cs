@@ -51,8 +51,8 @@ public class PatientInfos
 
         //文件数据
         Worksheet sheet = patientICU.Worksheets[0];
-        List<String> weekdays = new List<string> { "weekdays","Monday",
-            "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday",};
+        List<String> weekdays = new List<string> { "weekdays","Lundi",
+            "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche",};
         for (int i = 0; i < 8; i++)
         {
             sheet.Range["A" + (i + 1).ToString()].Value = weekdays[i];
