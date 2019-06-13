@@ -61,84 +61,19 @@
             <nav class="navbar top-navbar navbar-expand-md navbar-light">
                 <!-- Logo -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.php">
+                    <a class="navbar-brand" href="Default.php">
                         <!-- Logo icon -->
                         <b><img src="images/logoIcon.png" alt="homepage" class="dark-logo" /></b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
-                        <span>
-                            <img src="images/logoGrand.png" alt="homepage" class="dark-logo" /></span>
                     </a>
                           
                 </div>
                 <!-- End Logo -->
-       <%--      <div class="navbar-collapse">
-                    <!-- toggle and nav items -->
-                    <ul class="navbar-nav mr-auto mt-md-0">
-                        <!-- This is  -->
-                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up text-muted  " href="javascript:void(0)"><i class="mdi mdi-menu"></i></a> </li>
-                        <li class="nav-item m-l-10"> <a class="nav-link sidebartoggler hidden-sm-down text-muted  " href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
-                        
-                    </ul>
-                    <!-- User profile and search -->
-                    <ul class="navbar-nav my-lg-0">
-
-                      <!-- Search -->
-                        <li class="nav-item hidden-sm-down search-box"> <a class="nav-link hidden-sm-down text-muted  " href="javascript:void(0)"><i class="ti-search"></i></a>
-                            <form class="app-search">
-                                <input type="text" class="form-control" placeholder="Search here"> <a class="srh-btn"><i class="ti-close"></i></a> </form>
-                        </li>
-                        
-                        <!-- Profile -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/users/5.jpg" alt="user" class="profile-pic" /></a>
-                            <div class="dropdown-menu dropdown-menu-right animated zoomIn">
-                                <ul class="dropdown-user">
-                                    <li><a href="#"><i class="ti-user"></i> Profile</a></li>
-                                    <li><a href="#"><i class="ti-wallet"></i> Balance</a></li>
-                                    <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
-                                    <li><a href="#"><i class="ti-settings"></i> Setting</a></li>
-                                    <li><a href="#"><i class="fa fa-power-off"></i> Logout</a></li>
-                                </ul>
-                            </div>
-                       </li>
-                   </ul>
-               </div>--%>
             </nav>
         </div>
     <header>
-     <%--   <div class="content-wrapper">
-            <div class="float-left">
-                <p class="site-title"><a runat="server" href="~/">将你的徽标放置在此处</a></p>
-            </div>
-            <div class="float-right">
-                <section id="login">
-                    <asp:LoginView runat="server" ViewStateMode="Disabled">
-                        <AnonymousTemplate>
-                            <ul>
-                                <li><a id="registerLink" runat="server" href="~/Account/Register">注册</a></li>
-                                <li><a id="loginLink" runat="server" href="~/Account/Login">登录</a></li>
-                            </ul>
-                        </AnonymousTemplate>
-                        <LoggedInTemplate>
-                            <p>
-                                Hello, <a runat="server" class="username" href="~/Account/Manage" title="Manage your account">
-                                    <asp:LoginName runat="server" CssClass="username" />
-                                </a>!
-                                <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="注销" LogoutPageUrl="~/" />
-                            </p>
-                        </LoggedInTemplate>
-                    </asp:LoginView>
-                </section>
-                <nav>
-                    <ul id="menu">
-                        <li><a runat="server" href="~/">主页</a></li>
-                        <li><a runat="server" href="~/About">关于</a></li>
-                        <li><a runat="server" href="~/Contact">联系方式</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>--%>
+    
     </header>
           <div class="left-sidebar">
             <!-- Sidebar scroll-->
@@ -149,12 +84,16 @@
                         <li class="nav-devider"></li>
                      <%-- 有一个下拉选项 <li><a class="has-arrow"  href="index.php?id=1" aria-expanded="true"><i class="fa fa-bar-chart"></i><span class="hide-menu">Dashboard </span></a>
                             </li>--%>
-                        <li> <a c href="Default.aspx"><i class="fa fa-users"></i><span class="hide-menu">Operation Schedule</span></a></li>
                         <%-- 所有的手术病人 --%>
-                        <li> <a c href="ICUArrangement.aspx"><i class="fa fa-users"></i><span class="hide-menu">ICU arrangement </span></a></li>
-                        <%-- 所有的手术病人 --%>
+                        <li> <a c href="Default.aspx"><i class="fa fa-users"></i><span class="hide-menu">Opération Agenda</span></a></li>
+                        
+<%--                        <li> <a c href="ICUArrangement.aspx"><i class="fa fa-users"></i><span class="hide-menu">ICU arrangement </span></a></li>
+                        --%>
+                        <li> <a href="javascript:void(0);" onclick="javascript:document.getElementsByID('BodyContent')[0].scrollTop=document.getElementsByID('BodyContent')[0].scrollHeight;">到页面底部</a></li>
+                        <li><a href="#Tableau">Tableau statistique</a></li>
+                        <%-- 
                         <li> <a c href="patient.aspx"><i class="fa fa-users"></i><span class="hide-menu">Patient</span></a></li>
-                       
+                       --%>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -167,15 +106,15 @@
             <asp:ContentPlaceHolder runat="server" ID="MainContent" />
         </section>
     </div>
-   <%-- <footer>
+   <footer>
         <div class="content-wrapper">
             <div class="float-left">
                 <p>
-                    &copy; <%: DateTime.Now.Year %> - 我的 ASP.NET 应用程序
+                    &copy; <%: DateTime.Now.Year %> - Hôpital
                 </p>
             </div>
         </div>
-    </footer>--%>
+    </footer>
     </form>
 </body>
 </html>

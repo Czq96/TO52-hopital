@@ -1,21 +1,5 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
 
-<%--<asp:Content runat="server" ID="FeaturedContent" ContentPlaceHolderID="FeaturedContent">
-    <section class="featured">
-        <div class="content-wrapper">
-          <hgroup class="title">
-                <h1><%: Title %>.</h1>
-                <h2>Modify this template to jump-start your ASP.NET application.</h2>
-            </hgroup>
-            <p>
-                To learn more about ASP.NET, visit <a href="https://asp.net" title="ASP.NET Website">https://asp.net</a>. 
-                The page features <mark>videos, tutorials, and samples</mark> to help you get the most from 
-                ASP.NET. If you have any questions about ASP.NET visit 
-                <a href="https://forums.asp.net/18.aspx" title="ASP.NET Forum">our forums</a>.
-            </p>
-      </div>
-    </section>
-</asp:Content>--%>
 <%--   开头 gethtml（） 返回的表格 的css格式 --%>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <style type="text/css" scoped>
@@ -39,80 +23,65 @@
                 font-size: 20px;
             }
     </style>
+    <div id="divNewBlock" style="border: solid 5px; padding: 10px; width: 400px; position: absolute; display: none; top: 5%; right: 0%;">
+        <div style="padding: 3px 15px 3px 15px; text-align: left; vertical-align: middle;">
 
-    
-   
+            <div style="font-size: larger; text-align: center">Information de la patient</div>
 
-
-
-    <div id="divNewBlock" style=" border:solid 5px;padding:10px;width:400px;
-        position: absolute; display:none;top:5%;right:0%;">
-            <div style="padding:3px 15px 3px 15px;text-align:left;vertical-align:middle;" >
-               
-          
-        
-               <div style=" font-size:larger;text-align:center">Information de la patient</div>
-             
-            <table >
-                <tr style="background-color :#808080; color :white">
+            <table>
+                <tr style="background-color: #808080; color: white">
                     <td><b>numéro: </b></td>
-                    <td>  <asp:TextBox ID="number" runat="server"></asp:TextBox></td>
+                    <td>
+                        <asp:TextBox ID="number" runat="server"></asp:TextBox></td>
                 </tr>
-                <tr style="background-color :#808080; color :white"">
-                    <td><b> nom:  </b></td>
-                    <td>  <asp:TextBox ID="name" runat="server"></asp:TextBox></td>
+                <tr style="background-color: #808080; color: white">
+                    <td><b>nom:  </b></td>
+                    <td>
+                        <asp:TextBox ID="name" runat="server"></asp:TextBox></td>
                 </tr>
-                <tr style="background-color :#808080; color :white"">
+                <tr style="background-color: #808080; color: white">
                     <td><b>departement: </b></td>
-                    <td>    <asp:TextBox ID="departement" runat="server"></asp:TextBox></td>
+                    <td>
+                        <asp:TextBox ID="departement" runat="server"></asp:TextBox></td>
                 </tr>
-                <tr style="background-color :#808080; color :white"">
+                <tr style="background-color: #808080; color: white">
                     <td><b>niveau d'urgence: </b></td>
-                    <td>    <asp:TextBox ID="urgencyLevel" runat="server"></asp:TextBox></td>
+                    <td>
+                        <asp:TextBox ID="urgencyLevel" runat="server"></asp:TextBox></td>
                 </tr>
-                <tr style="background-color :#808080; color :white"">
+                <tr style="background-color: #808080; color: white">
                     <td><b>temps d'attendre: </b></td>
-                    <td>    <asp:TextBox ID="waitingTime" runat="server"></asp:TextBox></td>
+                    <td>
+                        <asp:TextBox ID="waitingTime" runat="server"></asp:TextBox></td>
                 </tr>
-                <tr style="background-color :#808080; color :white"">
-                    <td><b> max temps d'attendre: </b></td>
-                    <td>    <asp:TextBox ID="maxWaitingTime" runat="server"></asp:TextBox></td>
+                <tr style="background-color: #808080; color: white">
+                    <td><b>max temps d'attendre: </b></td>
+                    <td>
+                        <asp:TextBox ID="maxWaitingTime" runat="server"></asp:TextBox></td>
                 </tr>
             </table>
+        </div>
 
-            </div>
-           
+        <div>
+            <asp:Image ID="icuImage" runat="server"></asp:Image>
+        </div>
 
-             <div>
-                <asp:Image ID="icuImage" runat="server"></asp:Image>
-            </div>
-                        
-                <div>     
-                  
-                    <asp:Button ID="BttCancel"  runat="server" Text="fermer" OnClientClick="return HideBlock();" />
-                </div>
-           
-      </div> 
-
-    <div id="test"><%=gethtml()%></div> <%-- 这里显示所有的手术表格数据--%>
-         
-        <div class="row">
-       
+        <div>
+            <asp:Button ID="BttCancel" runat="server" Text="fermer" OnClientClick="return HideBlock();" />
+        </div>
     </div>
+
+    <div id="test"><%=gethtml()%></div>
+    <br><br><br><br>
     
-        <div>
-            
-              
-                     <img src =<%=getSalleImagePath()%>>
-             <img src =<%=getDayImagePath()%>>
-            
-                   </div>  
-            
-        <div>
-       
+    <div id="Tableau" style="font-size:30px;text-align:center" >Tableau statistique</div>
+    <div id ="resultImage1">
+        <img src="<%=getSalleImagePath()%>">
+        <img src="<%=getDayImagePath()%>">
     </div>
+
     <div>
-        <img src =<%=getSpecialityImagePath()%>>
+        <img src="<%=getSpecialityImagePath()%>">
     </div>
     <script>
         var infoDiv = document.getElementById("inforBlock");
@@ -176,7 +145,6 @@
         }
     </script>
 
-
     <script type="text/javascript">
         // fix for deprecated method in Chrome 37
         if (!window.showModalDialog) {
@@ -210,27 +178,15 @@
                         status = v;
                     }
                 }
-
                 var left = 100;
                 var top = 100;
                 var targetWin = window.open(arg1, arg1, 'toolbar=no, location=no, directories=no, status=' + status + ', menubar=no, scrollbars=' + scroll + ', resizable=' + resizable + ', copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
                 targetWin.focus();
             };
         }
-</script>
-     <script type="text/javascript">
-
-         function OpenSelectInfo() {
-             var width = 50;  //模态窗口的宽度
-             var height = 50;   //模态窗口的高度
-             var url = "patient.aspx?id=3"; //模态窗口的url地址
-             returnValue = window.showModalDialog(url, null, 'dialogWidth=' + width + 'px;dialogHeight=' + height + 'px;help:no;status:yes;center: yes');
-
-         }
     </script>
 
-
-<%--    <script>
+    <%--    <script>
         function sech(id) {//改变文件的选择时触发
             var aa = document.getElementById(id);
             var c = aa.selectedIndex;//获得改变后该省的索引号
@@ -245,7 +201,4 @@
     <br>
     Current user's name: {{name}}
     </div>--%>
-
-   
-   
 </asp:Content>

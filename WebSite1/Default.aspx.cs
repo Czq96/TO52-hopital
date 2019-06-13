@@ -78,7 +78,7 @@ public partial class _Default : Page
             {
                 if (data[i][j] != null && data[i][j] != "ouvert" && data[i][j] != "")
                 {
-                    html += "<td bgcolor =\"#CC4338\"><font color=\"black\">" +
+                    html += "<td style=\"word-break: break-all;white-space: normal;\" bgcolor =\"#CC4338\"><font color=\"black\">" +
                            Local_Data.getSpecialite()[i][j]
                          + "</font><br>";
 
@@ -99,7 +99,7 @@ public partial class _Default : Page
 
                             html += "<option  " +
                                 "value =\" " + patient.Rows[0][1] + ","+patient.Rows[0][2] +","+patient.Rows[0][3]+","+ patient.Rows[0][5]+","+ patient.Rows[0][6]+","+ patient.Rows[0][7]+ "," + patient.Rows[0][24] + "\">"
-                                + patient.Rows[0][1] + " " + patient.Rows[0][2] + "</option>";
+                                + "N°" + patient.Rows[0][1] + " " + patient.Rows[0][2] + "</option>";
                         }
                     }
                     html += " </select></td>";
