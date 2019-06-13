@@ -82,14 +82,13 @@
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <li class="nav-devider"></li>
-                     <%-- 有一个下拉选项 <li><a class="has-arrow"  href="index.php?id=1" aria-expanded="true"><i class="fa fa-bar-chart"></i><span class="hide-menu">Dashboard </span></a>
+                        <%-- 有一个下拉选项 <li><a class="has-arrow"  href="index.php?id=1" aria-expanded="true"><i class="fa fa-bar-chart"></i><span class="hide-menu">Dashboard </span></a>
                             </li>--%>
                         <%-- 所有的手术病人 --%>
                         <li> <a c href="Default.aspx"><i class="fa fa-users"></i><span class="hide-menu">Opération Agenda</span></a></li>
                         
 <%--                        <li> <a c href="ICUArrangement.aspx"><i class="fa fa-users"></i><span class="hide-menu">ICU arrangement </span></a></li>
                         --%>
-                        <li> <a href="javascript:void(0);" onclick="javascript:document.getElementsByID('BodyContent')[0].scrollTop=document.getElementsByID('BodyContent')[0].scrollHeight;">到页面底部</a></li>
                         <li><a href="#Tableau">Tableau statistique</a></li>
                         <%-- 
                         <li> <a c href="patient.aspx"><i class="fa fa-users"></i><span class="hide-menu">Patient</span></a></li>

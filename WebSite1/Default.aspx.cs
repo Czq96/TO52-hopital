@@ -57,19 +57,9 @@ public partial class _Default : Page
     {
         //根据 表格 arrangement 输出html
         html = null;
-      //  html = html + " <div>测试测试 ：  后台创建html代码</div>";
         for (int i = 0; i < data.Count; i++)
-        {   //鼠标悬浮窗js
-            //var tip = document.getElementById("tooltipBlock");
-            //var selects = document.getElementById("selects");
-            //function tooltip(obj) {
-            //    var x = selects.offsetLeft, y = obj.offsetTop, h = obj.offsetHeight, w = selects.offsetWidth;  /*tip.style.width = w + "px";  （这部分是定义显示提示的块的宽度） */
-            //    tip.style.marginLeft = x + w + "px"; tip.style.marginTop = y - 30 + "px"; tip.style.display = "block"; tip.innerHTML = "这部分为程序传递（把数据库里相关国家资料传过来）"; }
-            //function nodisplay() { tip.style.display = "none"; }
-
-            //html += "<script> <script language=\"javascript\"> function OpenSelectInfo() {var width = 1000;  var height = 500;   var url = \"patient.aspx?id=3\"; window.showModalDialog(url, null, 'dialogWidth=' + width + 'px;dialogHeight=' + height + 'px;help:no;status:no'); }</script
-            if (i == 0)
-            { //表头
+        {  if (i == 0)
+            { //generate tableau
                 html += "<table id=\"diary\" border= 1 width=500px bordercolor=#FBBF00 >" +
                        "<tr><td ></td><td ><center>Lundi</td><td><center>Mardi  </td><td>   Mecredi </td><td>   Jeudi  </td><td>   Vendredi  </td></tr>";
             }

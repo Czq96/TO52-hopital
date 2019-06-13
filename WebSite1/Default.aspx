@@ -102,7 +102,6 @@
             return false;
         }
 
-
         function ShowBlock(c) {
             var set = SetBlock();
             var m = c.split(",")
@@ -113,23 +112,18 @@
             document.getElementById("<%=waitingTime.ClientID%>").value = m[4];
             document.getElementById("<%=maxWaitingTime.ClientID%>").value = m[5];
             var img = document.getElementById("<%=icuImage.ClientID%>");
-            img.setAttribute('src', m[6]);//显示图片的链接
-
-
-
+            img.setAttribute('src', m[6]);//显示图片
+            
             document.getElementById("divNewBlock").style.display = "";
             return false;
         }
-
-
 
         function SetBlock() {
             var top = document.body.scrollTop;
             var left = document.body.scrollLeft;
             var height = document.body.clientHeight;
             var width = document.body.clientWidth;
-
-
+           
             if (top == 0 && left == 0 && height == 0 && width == 0) {
                 top = document.documentElement.scrollTop;
                 left = document.documentElement.scrollLeft;
@@ -139,51 +133,6 @@
             return { top: top, left: left, height: height, width: width };
         }
 
-
-        function Operate() {
-            return false;
-        }
-    </script>
-
-    <script type="text/javascript">
-        // fix for deprecated method in Chrome 37
-        if (!window.showModalDialog) {
-            window.showModalDialog = function (arg1, arg2, arg3) {
-
-                var w;
-                var h;
-                var resizable = "no";
-                var scroll = "no";
-                var status = "no";
-
-                // get the modal specs
-                var mdattrs = arg3.split(";");
-                for (i = 0; i < mdattrs.length; i++) {
-                    var mdattr = mdattrs[i].split(":");
-
-                    var n = mdattr[0];
-                    var v = mdattr[1];
-                    if (n) { n = n.trim().toLowerCase(); }
-                    if (v) { v = v.trim().toLowerCase(); }
-
-                    if (n == "dialogheight") {
-                        h = v.replace("px", "");
-                    } else if (n == "dialogwidth") {
-                        w = v.replace("px", "");
-                    } else if (n == "resizable") {
-                        resizable = v;
-                    } else if (n == "scroll") {
-                        scroll = v;
-                    } else if (n == "status") {
-                        status = v;
-                    }
-                }
-                var left = 100;
-                var top = 100;
-                var targetWin = window.open(arg1, arg1, 'toolbar=no, location=no, directories=no, status=' + status + ', menubar=no, scrollbars=' + scroll + ', resizable=' + resizable + ', copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
-                targetWin.focus();
-            };
-        }
     </script>
 
     <%--    <script>
