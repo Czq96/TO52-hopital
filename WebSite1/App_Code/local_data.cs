@@ -27,14 +27,14 @@ public class local_data
     bdd_functions bdd = new bdd_functions();
     dynamic data_dic = new ExpandoObject();
 
-    public void load_data(HttpServerUtility Server, string patientsDoc)
+    public void load_data(HttpServerUtility Server)
     {
         //调用读取 excel 文件存到listlist string 中
-        //生成一个json文件
-        loadPatientInformation(Server, "test/patients_information");  //引号中不能有空格 patients2icu.xls
-        loadArrangement(Server, "blocks2or-days");
-        loadPatientOrs(Server, patientsDoc);  //patients2ors
-        loadPatientIcu(Server, "test/patients2icu");  //patients2icu.xls
+        //生成一个json文件  patientInfos patientICU   patientOrs timeBlock
+        loadPatientInformation(Server, "patientInfos");  //引号中不能有空格 patients2icu.xls
+        loadArrangement(Server, "timeBlock");
+        loadPatientOrs(Server, "patientOrs");  //patients2ors
+        loadPatientIcu(Server, "patientICU");  //patients2icu.xls
         updatePatientInformation();
         updatePatientDepartement();
         updatePatientIcu();

@@ -23,6 +23,16 @@
                 font-size: 20px;
             }
     </style>
+    <div>
+    choisir1 ficher patient infomations<asp:FileUpload ID="FileUpload1"  onchange="Text1.value=this.value" runat="server" ></asp:fileupload><br>
+    choisir ficher patient icu information<asp:FileUpload ID="FileUpload2"    runat="server"></asp:fileupload><br>
+    choisir ficher patient opération information<asp:FileUpload ID="FileUpload3"  Text="choisir ficher patient opération information" runat="server"></asp:fileupload><br>
+    <%--choisir ficher time block<asp:FileUpload ID="FileUpload4"  Text="choisir ficher time block" runat="server"></asp:fileupload><br>
+    --%><asp:Button ID="Button1" runat="server" Text="télécharger" OnClick="Button1_Click" />
+    <asp:Label ID="Label1" runat="server" Text="" Style="color: Red"></asp:Label>
+        
+    </div>  
+
     <div id="divNewBlock" style="border: solid 5px; padding: 10px; width: 400px; position: absolute; display: none; top: 5%; right: 0%;">
         <div style="padding: 3px 15px 3px 15px; text-align: left; vertical-align: middle;">
 

@@ -34,14 +34,9 @@ public partial class _Default : Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-
-        string patientsDoc = Request.Form["patientsDoc"];
-        if (patientsDoc == null)
-        {
-            patientsDoc = "test/patients2ors";   //patients2ors   patients2blocks
-        }
+       // patientInfos patientICU   patientOrs timeBlock
         string str = System.Environment.CurrentDirectory;
-        Local_Data.load_data(Server, patientsDoc);
+        Local_Data.load_data(Server);
 
         imgSalleGraphicPath = generateGraphicSallePatient(Local_Data.Data_arrangement_format);
         imgDayGraphicPath = generateGraphicDayPatient(Local_Data.Data_arrangement_format);
@@ -342,5 +337,31 @@ public partial class _Default : Page
         return imageName;
     }
 
+    protected void Button1_Click(object sender, EventArgs e)
+    {
+        if (FileUpload1.HasFile && FileUpload2.HasFile && FileUpload3.HasFile)
+        {
+            string fileExtension1 = System.IO.Path.GetExtension(FileUpload1.FileName).ToLower();
+            string fileExtension2 = System.IO.Path.GetExtension(FileUpload2.FileName).ToLower();
+            string fileExtension3 = System.IO.Path.GetExtension(FileUpload3.FileName).ToLower();
+            //string fileExtension4 = System.IO.Path.GetExtension(FileUpload4.FileName).ToLower();
+            if (fileExtension1 == ".csv" && fileExtension2 == ".csv" && fileExtension3 == ".csv" /*&& fileExtension4 == ".csv"*/)
+            {
+                FileUpload1.SaveAs(Server.MapPath("/App_Data/") + "patientInfos.csv");
+                FileUpload2.SaveAs(Server.MapPath("/App_Data/") + "patientICU.csv"); 
+                FileUpload3.SaveAs(Server.MapPath("/App_Data/") + "patientOrs.csv");
+               // FileUpload3.SaveAs(Server.MapPath("/test/") + "timeBlock.csv");
+                Label1.Text = "télécharger réussi ！";
+            }
+            else
+            {
+                Response.Write("<script>alert('Format de fichiers insuffisant, veuillez télécharger trois fichiers csv ');</script>");
+            }
+        }
+        else
+        {
+            Response.Write("<script>alert('Nombre de fichiers insuffisant, veuillez télécharger trois fichiers');</script>");
+        }
 
+    }
 }
