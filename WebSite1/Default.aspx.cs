@@ -289,6 +289,7 @@ public partial class _Default : Page
             sheet.Range[Colone[specialite + 1] + "1"].Value = FirstColone[specialite];
            
             int patientNumber = bdd.get_patients_number_by_specialty(specialite + 1);
+            //
             int patientNumberHasOperation = bdd.get_patients_number_hasOperation_by_specialty(specialite + 1);
 
             sheet.Range[Colone[specialite + 1] + "2"].NumberValue = patientNumber;
@@ -352,6 +353,8 @@ public partial class _Default : Page
                 FileUpload3.SaveAs(Server.MapPath("/App_Data/") + "patientOrs.csv");
                // FileUpload3.SaveAs(Server.MapPath("/test/") + "timeBlock.csv");
                 Label1.Text = "télécharger réussi ！";
+
+                Response.Write("<script>window.location.reload();</script>");
             }
             else
             {

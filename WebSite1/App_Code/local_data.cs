@@ -80,6 +80,19 @@ public class local_data
     void updatePatientDepartement()
         //TODO: 根据给出的病人信息来更新数据库
     { //bdd 中更新病人的各种信息  TODO: 病人中新建 arrangement,根据arrangement来修改参数
+        List<String> specialies = new List<String>(
+                    new string[]{
+                        "otolaryngologique",
+                        "gynlaryngolog",
+                        "orthopyngolo",
+                        "neurologique",
+                        "geurolog",
+                        "ophtalmologique",
+                        "vasculaire",
+                        "cardiaque",
+                        "urologique",
+                    }
+                );
         for (int salle = 0; salle < Data_arrangement.Count; salle++)
         {
             for (int day = 0; day < Data_arrangement[salle].Count; day++)
@@ -91,7 +104,11 @@ public class local_data
                     {
                         if (Data_patient_ors[arrangeNumber-1][patient] == "1")  //如果某一个病人 patient 要在这个 timeblock 动手术
                         {
+                            // 病人在 infomation 这个excle中的科室   和  最终做手术的科室不同时，将病人计算为做手术的科室的人
+                            // 问题 ： 病人可以有多种科室吗？ 
                             bdd.update_patient_departement(patient + 1, Data_arrange_specialite[salle][day]);
+                            int n = specialies.IndexOf(Data_arrange_specialite[salle][day]);
+                            bdd.update_patient_specialty(patient + 1, Convert.ToInt32(n+1));
                             
                             //更新病人手术的时间   周一到周五  改为1 为在这一天做手术 默认是0
                             Type t = typeof(bdd_functions);
