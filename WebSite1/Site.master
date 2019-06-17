@@ -41,9 +41,6 @@
     <script src="https:**oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https:**oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
-    <script src="http://code.angularjs.org/1.7.5/angular.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  
     <%--<script src="./Scripts/i18n/angular.js"></script>--%>
     
@@ -61,7 +58,7 @@
             <nav class="navbar top-navbar navbar-expand-md navbar-light">
                 <!-- Logo -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="Default.php">
+                    <a class="navbar-brand" href="Default.aspx">
                         <!-- Logo icon -->
                         <b><img src="images/logoIcon.png" alt="homepage" class="dark-logo" /></b>
                         <!--End Logo icon -->

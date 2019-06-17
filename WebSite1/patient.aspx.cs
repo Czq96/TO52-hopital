@@ -54,7 +54,7 @@ public partial class patient : System.Web.UI.Page
             if (i != 0)
                 sheet.Range["B" + (i + 1).ToString()].NumberValue = Convert.ToInt32(result.Rows[0][i + 8]);
             else
-                sheet.Range["B" + (i + 1).ToString()].Value = "use or not";
+                sheet.Range["B" + (i + 1).ToString()].Value = " ";
         }
        
         //添加图表 簇状图
@@ -71,28 +71,21 @@ public partial class patient : System.Web.UI.Page
         //选择数据范围
         chartICU.DataRange = sheet.Range["$A$1:$B$8"];
 
-        //TODO: 设置轴上的值, 显示周一到周日
-        //Spire.Xls.Charts.ChartSerie cs1 = chartICU.Series[0];
-        //cs1.CategoryLabels = sheet.Range["$A$2:$A$8"];
+        chartICU.ChartTitle = "";
+        // y
+        chartICU.PrimaryCategoryAxis.Title = "Jours de la semaine";
 
-
-        //var cs1 = (ChartSerie)chartICU.Series[0];
-        //cs1.SerieType = ExcelChartType.ColumnClustered;
-
-        chartICU.ChartTitle = string.Empty;
-        chartICU.PrimaryCategoryAxis.Title = string.Empty;
-
-        chartICU.PrimaryValueAxis.Title = string.Empty;
+        // x
+        chartICU.PrimaryValueAxis.Title = "Utiliser USI ou non";
+        chartICU.PrimaryValueAxis.MajorTickMark = TickMarkType.TickMarkOutside;
+        chartICU.PrimaryValueAxis.MinorTickMark = TickMarkType.TickMarkInside;
+        chartICU.PrimaryValueAxis.TickLabelPosition = TickLabelPositionType.TickLabelPositionNextToAxis;
         chartICU.PrimaryValueAxis.MinValue = 0;
         chartICU.PrimaryValueAxis.MaxValue = 1;
         chartICU.PrimaryValueAxis.MinorUnit = 1;
 
-        chartICU.PrimaryValueAxis.MajorTickMark = TickMarkType.TickMarkOutside;
-        chartICU.PrimaryValueAxis.MinorTickMark = TickMarkType.TickMarkInside;
-        chartICU.PrimaryValueAxis.TickLabelPosition = TickLabelPositionType.TickLabelPositionNextToAxis;
 
         chartICU.Legend.Position = LegendPositionType.Right;
-
 
         //保存文件
         //patientICU.SaveToFile(filename);
