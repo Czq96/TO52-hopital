@@ -287,4 +287,13 @@ public class bdd_functions
         }
         return number;
     }
+    //bdd.init_patient_operation(patient + 1); 
+    public void init_patient_operation(int num)
+    {
+        using (MySqlCommand cmd = new MySqlCommand("UPDATE `patient` SET `orsMonday` = '0', `orsTuesday` = '0', `orsWednesday` = '0', `orsThursday` = '0', `orsFriday` = '0', `orsSaturday` = '0', `orsSunday` = '0', `hasOperation` = '0' WHERE `patient`.`ID` = @num"))
+        {
+            cmd.Parameters.AddWithValue("@num", num);
+            executeCmd(cmd);
+}
+    }
 }

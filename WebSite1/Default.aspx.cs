@@ -150,7 +150,8 @@ public partial class _Default : Page
             {
                 if (data[salle][day] != "" && data[salle][day] != null && data[salle][day] != "ouvert") {
                     string[] sArray = Regex.Split(data[salle][day], ",", RegexOptions.IgnoreCase);
-                    personCount = sArray.Count() - 1;
+                    //for (int i = 0; i <  i++)
+                    personCount += sArray.Count() - 1;
                 }
             }
             sheet.Range["B" + (salle + 2).ToString()].NumberValue = personCount;
@@ -214,8 +215,9 @@ public partial class _Default : Page
             {
                 if (data[salle][day-1] != "" && data[salle][day - 1] != null && data[salle][day - 1] != "ouvert")
                 {
-                    string[] sArray = Regex.Split(data[salle][day - 1], ",", RegexOptions.IgnoreCase);
-                    personCount = sArray.Count() - 1;
+                    string[] sArray = Regex.Split(data[salle][day - 1], ",", RegexOptions.IgnoreCase);// 这里是病人的编号
+                    //for (int i = 0; i <  i++)
+                        personCount += sArray.Count() - 1;
                 }
             }
             sheet.Range["B" + (day+1).ToString()].NumberValue = personCount;
@@ -292,9 +294,9 @@ public partial class _Default : Page
             //
             int patientNumberHasOperation = bdd.get_patients_number_hasOperation_by_specialty(specialite + 1);
 
-            sheet.Range[Colone[specialite + 1] + "2"].NumberValue = patientNumber;
-            sheet.Range[Colone[specialite + 1] + "3"].NumberValue = patientNumberHasOperation;
-            sheet.Range[Colone[specialite + 1] + "4"].NumberValue = patientNumber-patientNumberHasOperation;
+            sheet.Range[Colone[specialite + 1] + "2"].NumberValue = patientNumberHasOperation;
+            sheet.Range[Colone[specialite + 1] + "3"].NumberValue = patientNumber - patientNumberHasOperation;
+            sheet.Range[Colone[specialite + 1] + "4"].NumberValue = patientNumber;
         }
 
         //创建柱状图 
