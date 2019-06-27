@@ -1,4 +1,7 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="patient.aspx.cs" Inherits="patient" %>
+﻿<%-- now this page  is not useful
+    for show the infoamtion of apatient and  CRUD operations
+    --%>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Site.master" AutoEventWireup="true" CodeFile="patient.aspx.cs" Inherits="patient" %>
 
 
 

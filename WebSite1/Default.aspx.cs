@@ -1,4 +1,8 @@
-﻿using System;
+﻿/* 用来显示首页上的各种信息  和 各种操作的后端代码
+ * backend for default.aspx
+ * 
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,14 +22,8 @@ using System.Drawing.Imaging;
 public partial class _Default : Page
 {
     string html = null;
-    //ExcelReaderListString c = new ExcelReaderListString();
-
-    //List<List<string>> data_patient = null;
-    //List<List<string>> data_arrangement = null;
-    //List<List<string>> data_arrangement_format = null;
-
-    //List<List<int>> arrangement = null;
     public local_data Local_Data = new local_data();
+    // data with format json
     public string data_json;
     bdd_functions bdd = new bdd_functions();
     string imgSalleGraphicPath;

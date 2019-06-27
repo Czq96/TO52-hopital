@@ -1,6 +1,8 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
+﻿
+<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
 
 <%--   开头 gethtml（） 返回的表格 的css格式 --%>
+<%--   css for default arrangement table --%>
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
     <style type="text/css" scoped>
         #diary {
@@ -23,16 +25,19 @@
                 font-size: 20px;
             }
     </style>
+    
+<%--  div for upload file--%>
     <div>
     choisir1 ficher patient infomations<asp:FileUpload ID="FileUpload1"  onchange="Text1.value=this.value" runat="server" ></asp:fileupload><br>
     choisir ficher patient icu information<asp:FileUpload ID="FileUpload2"    runat="server"></asp:fileupload><br>
     choisir ficher patient opération information<asp:FileUpload ID="FileUpload3"  Text="choisir ficher patient opération information" runat="server"></asp:fileupload><br>
-    <%--choisir ficher time block<asp:FileUpload ID="FileUpload4"  Text="choisir ficher time block" runat="server"></asp:fileupload><br>
-    --%><asp:Button ID="Button1" runat="server" Text="télécharger" OnClick="Button1_Click" />
+    <%--choisir ficher time block<asp:FileUpload ID="FileUpload4"  Text="choisir ficher time block" runat="server"></asp:fileupload><br>--%>
+    <asp:Button ID="Button1" runat="server" Text="télécharger" OnClick="Button1_Click" />
     <asp:Label ID="Label1" runat="server" Text="" Style="color: Red"></asp:Label>
         
     </div>  
 
+    <%--  div for information of a patient after click id of patient--%>
     <div id="divNewBlock" style="border: solid 5px; padding: 10px; width: 400px; position: absolute; display: none; top: 5%; right: 0%;">
         <div style="padding: 3px 15px 3px 15px; text-align: left; vertical-align: middle;">
 
@@ -81,9 +86,11 @@
         </div>
     </div>
 
+    <%--  get arrangement table (generate in default.aspx.cs)--%>
     <div id="test"><%=gethtml()%></div>
     <br><br><br><br>
     
+    <%--  show different image  (generate in default.aspx.cs)--%>
     <div id="Tableau" style="font-size:30px;text-align:center" >Tableau statistique</div>
     <div id ="resultImage1">
         <img src="<%=getSalleImagePath()%>">
@@ -93,19 +100,8 @@
     <div>
         <img src="<%=getSpecialityImagePath()%>">
     </div>
-    <script>
-        var infoDiv = document.getElementById("inforBlock");
-        function displayPatientInfo(obj) {
-            var x = selects.offsetLeft, y = obj.offsetTop, h = obj.offsetHeight, w = selects.offsetWidth;
-            infoDiv.style.marginLeft = x + w; infoDiv.style.marginTop = y - 30;
-            infoDiv.innerHTML = "";
-            infoDiv.style.display = 'block';
-        }
 
-        function vanishPatientInfo() {
-            infoDiv.style.display = 'none';
-        }
-    </script>
+    <%--script for show patient infomation --%>
     <script>
         function HideBlock() {
             document.getElementById("divNewBlock").style.display = "none";
@@ -122,7 +118,7 @@
             document.getElementById("<%=waitingTime.ClientID%>").value = m[4];
             document.getElementById("<%=maxWaitingTime.ClientID%>").value = m[5];
             var img = document.getElementById("<%=icuImage.ClientID%>");
-            img.setAttribute('src', m[6]);//显示图片
+            img.setAttribute('src', m[6]);// show image for patient icu information
             
             document.getElementById("divNewBlock").style.display = "";
             return false;
@@ -145,19 +141,4 @@
 
     </script>
 
-    <%--    <script>
-        function sech(id) {//改变文件的选择时触发
-            var aa = document.getElementById(id);
-            var c = aa.selectedIndex;//获得改变后该省的索引号
-            document.getElementById("HiddenField1").value = aa.options[c].text;//将选中的text赋值给HiddenField1的Value;
-        }
-    </script>--%>
-
-
-    <%--<div  ng-app>
-    Angularjs TEST
-    Name: <input type=text ng-model="name">
-    <br>
-    Current user's name: {{name}}
-    </div>--%>
 </asp:Content>
