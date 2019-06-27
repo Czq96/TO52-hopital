@@ -11,14 +11,14 @@ using System.Reflection;
 /// 读取excel文档的数据,保存到  List<List<string>>
 /// 并调用 sql来刷新数据库
 /// 
-/// save all data in excle withe format  List<List<string>>
+/// save all data in excel withe format  List<List<string>>
 /// and update database
 /// </summary>
 public class local_data
 {
     ExcelReaderListString c = new ExcelReaderListString();
 
-    // 从excle 中读取的数据   data from excel
+    // 从excel 中读取的数据   data from excel
     List<List<string>> data_patient_information = null; // 所有病人的基本信息  TODO: 生成数据库中那种具有所有信息的listlist
     List<List<string>> data_patient_ors = null;
     List<List<string>> data_patient_icu = null;
@@ -111,8 +111,8 @@ public class local_data
                         // update database
                         if (Data_patient_ors[arrangeNumber-1][patient] == "1")  
                         {
-                            // 病人在 patient infomation 这个excle中的科室   和  最终做手术的科室不同时，将病人计算为做手术的科室的人
-                            // if patient have different specialite in file excle patient information and file arrangement
+                            // 病人在 patient infomation 这个excel中的科室   和  最终做手术的科室不同时，将病人计算为做手术的科室的人
+                            // if patient have different specialite in file excel patient information and file arrangement
                             // use the specailite in file arrangement
                             // TODO: to avoid this problem
                             bdd.update_patient_departement(patient + 1, Data_arrange_specialite[salle][day]);

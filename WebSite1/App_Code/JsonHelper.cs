@@ -9,7 +9,7 @@ using System.Runtime.Serialization;
 using System.Text;
 
 /// <summary>
-/// ListlistToJson 的摘要说明
+/// ListlistToJson 
 /// </summary>
 public class JsonHelper
 {

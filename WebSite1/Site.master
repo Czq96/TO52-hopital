@@ -2,21 +2,8 @@
 
 <!DOCTYPE html>
 <html lang="zh" xmlns:ng="http://angularjs.org" id="ng-app">
-<%--<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <meta charset="utf-8" />
-    <title><%: Page.Title %>- 我的 ASP.NET 应用程序</title>
-    <link href="~/Content/Site.css" rel="stylesheet" />
-    <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <asp:PlaceHolder runat="server">           
-        <script src="<%: ResolveUrl("~/Scripts/modernizr-2.6.2.js") %>"></script>
-    </asp:PlaceHolder>
-    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-    <meta name="viewport" content="width=device-width" />
-    <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
-</head>--%>
-    
-<head  runat="server">
+
+<head runat="server">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- Tell the browser to be responsive to screen width -->
@@ -28,7 +15,7 @@
     <title>TX/TX - Organisation des blocs opératoires</title>
 
     <link href="css/lib/chartist/chartist.min.css" rel="stylesheet">
-	<link href="css/lib/owl.carousel.min.css" rel="stylesheet" />
+    <link href="css/lib/owl.carousel.min.css" rel="stylesheet" />
     <link href="css/lib/owl.theme.default.min.css" rel="stylesheet" />
     <!-- Bootstrap Core CSS -->
     <link href="css/lib/bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -41,76 +28,74 @@
     <script src="https:**oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https:**oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
- 
+
     <%--<script src="./Scripts/i18n/angular.js"></script>--%>
-    
 </head>
 <body>
     <form runat="server">
 
-    <asp:ScriptManager runat="server">
-        <Scripts>
-            <asp:ScriptReference Name="jquery" />
-            <asp:ScriptReference Name="jquery.ui.combined" />
-        </Scripts>
-    </asp:ScriptManager>
-                <div class="header">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="jquery.ui.combined" />
+            </Scripts>
+        </asp:ScriptManager>
+        <div class="header">
             <nav class="navbar top-navbar navbar-expand-md navbar-light">
                 <!-- Logo -->
                 <div class="navbar-header">
                     <a class="navbar-brand" href="Default.aspx">
                         <!-- Logo icon -->
-                        <b><img src="images/logoIcon.png" alt="homepage" class="dark-logo" /></b>
+                        <b>
+                            <img src="images/logoIcon.png" alt="homepage" class="dark-logo" /></b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
                     </a>
-                          
+
                 </div>
                 <!-- End Logo -->
             </nav>
         </div>
-    <header>
-    
-    </header>
-          <div class="left-sidebar">
+        <header>
+        </header>
+        <div class="left-sidebar">
             <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
-                 <!-- Sidebar navigation-->
+                <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <li class="nav-devider"></li>
-                        <%-- 有一个下拉选项 <li><a class="has-arrow"  href="index.php?id=1" aria-expanded="true"><i class="fa fa-bar-chart"></i><span class="hide-menu">Dashboard </span></a>
-                            </li>--%>
                         <%-- 所有的手术病人 --%>
-                        <li> <a c href="Default.aspx"><i class="fa fa-users"></i><span class="hide-menu">Opération Agenda</span></a></li>
-                        
-<%--                        <li> <a c href="ICUArrangement.aspx"><i class="fa fa-users"></i><span class="hide-menu">ICU arrangement </span></a></li>
+                        <li><a href="Default.aspx"><i class="fa fa-users"></i><span class="hide-menu">Opération Agenda</span></a></li>
+
+                        <%--<li> <a c href="ICUArrangement.aspx"><i class="fa fa-users"></i><span class="hide-menu">ICU arrangement </span></a></li>
                         --%>
-                        <li><a href="#Tableau">Tableau statistique</a></li>
+                         <%-- TODO: now jump to element id "Tableau" so change page and click will cause problem--%>
+                        <li><a href="#Tableau">Tableau statistique</a></li> 
                         <%-- 
                         <li> <a c href="patient.aspx"><i class="fa fa-users"></i><span class="hide-menu">Patient</span></a></li>
-                       --%>
+                        --%>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
             </div>
             <!-- End Sidebar scroll-->
         </div>
-    <div class="page-wrapper"">
-      <%--  <asp:ContentPlaceHolder runat="server" ID="FeaturedContent" />--%>
-        <section class="content-wrapper main-content clear-fix">
-            <asp:ContentPlaceHolder runat="server" ID="MainContent" />
-        </section>
-    </div>
-   <footer>
-        <div class="content-wrapper">
-            <div class="float-left">
-                <p>
-                    &copy; <%: DateTime.Now.Year %> - Hôpital
-                </p>
-            </div>
+        <div class="page-wrapper">
+            <%--  <asp:ContentPlaceHolder runat="server" ID="FeaturedContent" />--%>
+            <section class="content-wrapper main-content clear-fix">
+                <asp:ContentPlaceHolder runat="server" ID="MainContent" />
+            </section>
         </div>
-    </footer>
+        <footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>
+                        &copy; <%: DateTime.Now.Year %> - Hôpital
+                    </p>
+                </div>
+            </div>
+        </footer>
     </form>
 </body>
 </html>

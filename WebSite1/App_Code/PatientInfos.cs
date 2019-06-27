@@ -13,7 +13,8 @@ using System.Drawing.Imaging;
 
 
 /// <summary>
-/// PatientInfos 的摘要说明
+/// PatientInfos 用于生成点击病人编号之后的div内容
+/// Used to generate the div content after clicking the patient number
 /// </summary>
 public class PatientInfos
 {
@@ -26,12 +27,14 @@ public class PatientInfos
     {
         int patientID= Convert.ToInt32(patientId);
 
-        //TODO 重复创建了数据库request 需要优化  
+        //TODO 重复创建了数据库request 需要优化
+        //Repeatedly created the database request needs to be optimized
         bdd_functions bdd = new bdd_functions();
         DataTable patient;
         patient = bdd.select_patient(patientID);
 
         //TODO:这里每次都会重新生成图片效率低下
+        //Every time the image will be regenerated and inefficient
         String icuImage = GenerGraphic(Server, patient, Convert.ToInt32(patient.Rows[0][1].ToString()));
         patient.Columns.Add("Image_path", Type.GetType("System.String"));
 
@@ -42,14 +45,15 @@ public class PatientInfos
         //TextBox1.Text = icuImage.ImageUrl;
     }
 
-    //返回一个图片的路径
+    //use SpireFree.xls  to generate image and store in  ~/temps/
     public String GenerGraphic(HttpServerUtility Server, DataTable result, int number)
     {
         Workbook patientICU = new Workbook();
-        //TODO:使用临时文件
+        //TODO:使用临时文件  Use temporary files
         string filename = "patient_" + number.ToString() + ".csv";
 
-        //文件数据
+        //文件数据 
+        //data for generate graph
         Worksheet sheet = patientICU.Worksheets[0];
         List<String> weekdays = new List<string> { "weekdays","Lundi",
             "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche",};

@@ -1,4 +1,7 @@
-﻿using System;
+﻿///read excel file 
+///and return List<List<string>> 
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,14 +12,13 @@ using System.Data;
 
 public class ExcelReaderListString
 {
-    public List<List<string>> rowReadAll(string save_address, int sheet_number)//读取excel表格相应工作表的所有数据 仅限 xls文档
+    public List<List<string>> rowReadAll(string save_address, int sheet_number)
     {
         List<List<string>> data = null;
-        //如果传入参数合法
         if (!string.IsNullOrEmpty(save_address) && sheet_number > 0)
         {
             //根据文件格式来读取
-            //获取后缀
+            //read file depends on type   xls or csv 
             string extension = Path.GetExtension(save_address);
             if (extension==".csv")
             {
@@ -40,8 +42,7 @@ public class ExcelReaderListString
         {
             //如果传入参数合法
             if (!string.IsNullOrEmpty(save_address) && sheet_number > 0)
-            {// System.IO.FileStream fs = new System.IO.FileStream(filePath, System.IO.FileMode.Open, 
-             //   System.IO.FileAccess.Read);   无法读取csv 的原因可能是因为编码
+            {
                 readfile = new FileStream(save_address, FileMode.Open, FileAccess.Read);
                 HSSFWorkbook hssfworkbook = new HSSFWorkbook(readfile);
                 ISheet sheet = hssfworkbook.GetSheetAt(sheet_number - 1);
@@ -112,21 +113,21 @@ public class ExcelReaderListString
                                 }
                                 else
                                 {
-                                    oneRow.Add("");//填充空的数据
+                                    oneRow.Add("");//填充空的数据   for empty cell
                                 }
                             }
                             if (data == null)
                             {
-                                data = new List<List<string>>();//初始化
+                                data = new List<List<string>>();//initialize
                             }
                             data.Add(oneRow);
                         }
                         else
                         {
-                            List<string> oneRow = new List<string>();//为相应位置空行创建内存中的空数据行
+                            List<string> oneRow = new List<string>();
                             for (int columnIndex = sart_column - 1; columnIndex < stop_column; columnIndex++)
                             {
-                                oneRow.Add("");//填充空的数据
+                                oneRow.Add("");//填充空的数据 for empty row
                             }
                             if (data == null)
                             {
@@ -149,7 +150,7 @@ public class ExcelReaderListString
         return data;
     }
 
-    public static List<List<string>> readCsv(string filePath)//从csv读取数据返回table
+    public static List<List<string>> readCsv(string filePath)
     {
         System.Text.Encoding encoding = GetType(filePath); //Encoding.ASCII;//
         DataTable dt = new DataTable();
@@ -193,15 +194,16 @@ public class ExcelReaderListString
     fs.Close();
     return r;
 }
- 
-/// 通过给定的文件流，判断文件的编码类型
-/// <param name="fs">文件流</param>
-/// <returns>文件的编码类型</returns>
-public static System.Text.Encoding GetType(System.IO.FileStream fs)
+
+    /// 通过给定的文件流，判断文件的编码类型
+    /// Determine the encoding type of a file by a given file stream
+    /// <param name="fs">文件流</param>
+    /// <returns>文件的编码类型</returns>
+    public static System.Text.Encoding GetType(System.IO.FileStream fs)
 {  
     byte[] Unicode = new byte[] { 0xFF, 0xFE, 0x41 };
     byte[] UnicodeBIG = new byte[] { 0xFE, 0xFF, 0x00 };
-    byte[] UTF8 = new byte[] { 0xEF, 0xBB, 0xBF }; //带BOM
+    byte[] UTF8 = new byte[] { 0xEF, 0xBB, 0xBF }; //with BOM
     System.Text.Encoding reVal = System.Text.Encoding.Default;
  
     System.IO.BinaryReader r = new System.IO.BinaryReader(fs, System.Text.Encoding.Default);
@@ -225,6 +227,7 @@ public static System.Text.Encoding GetType(System.IO.FileStream fs)
 }
 
     /// 判断是否是不带 BOM 的 UTF8 格式
+    /// Determine if it is UTF8 format without BOM
     /// <param name="data"></param>
     /// <returns></returns>
     private static bool IsUTF8Bytes(byte[] data)
@@ -262,7 +265,7 @@ public static System.Text.Encoding GetType(System.IO.FileStream fs)
         }
         if (charByteCounter > 1)
         {
-            throw new Exception("非预期的byte格式");
+            throw new Exception("非预期的byte格式  Unexpected byte format");
         }
         return true;
     }

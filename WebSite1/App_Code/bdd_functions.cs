@@ -3,7 +3,7 @@ using System.Data;
 using MySql.Data.MySqlClient;
 
 /// <summary>
-/// bdd_functions 的摘要说明
+/// bdd_functions for run the sql 
 /// </summary>
 public class bdd_functions
 {

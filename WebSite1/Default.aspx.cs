@@ -30,6 +30,7 @@ public partial class _Default : Page
     string imgDayGraphicPath;
     string imgSpecialityGraphicPath;
 
+    // Attention : delete the other lignes or columns (like columns for sum) in csv file 
     protected void Page_Load(object sender, EventArgs e)
     {
        // patientInfos patientICU   patientOrs timeBlock
@@ -40,34 +41,38 @@ public partial class _Default : Page
         imgDayGraphicPath = generateGraphicDayPatient(Local_Data.Data_arrangement_format);
         imgSpecialityGraphicPath = generateSpecialitePatientGraphic();
 
+        // generate html for arrangement table
         all_table_html(Local_Data.Data_arrangement_format);
-        data_json = Local_Data.get_json();
 
+        //TODO: use json
+        data_json = Local_Data.get_json();
         //tete.Text = data_json;
     }
 
     public string all_table_html(List<List<string>> data) //List<List<int>>
     {
         //根据 表格 arrangement 输出html
+        //generate html with data
         html = null;
         for (int i = 0; i < data.Count; i++)
         {  if (i == 0)
-            { //generate tableau
+            { //生成表头   Generate header
                 html += "<table id=\"diary\" border= 1 width=500px bordercolor=#FBBF00 >" +
                        "<tr><td ></td><td ><center>Lundi</td><td><center>Mardi  </td><td>   Mecredi </td><td>   Jeudi  </td><td>   Vendredi  </td></tr>";
             }
             html += "<tr>" + "<td > salle " + (i + 1) + "</td>";
+            // 生成表格内部数据    Generate internal data for the table
             for (int j = 0; j < data[i].Count; j++)
             {
+                // for one cell use select if there are patients
                 if (data[i][j] != null && data[i][j] != "ouvert" && data[i][j] != "")
                 {
                     html += "<td style=\"word-break: break-all;white-space: normal;\" bgcolor =\"#CC4338\"><font color=\"black\">" +
                            Local_Data.getSpecialite()[i][j]
                          + "</font><br>";
-
-                    //html += "<select style=\"width: 130px; \" onchange=\"window.location = this.value;\" > ";
+                     
                     html += "<select id=\"testSelect\" style=\"width: 130px; \" onchange=\"return ShowBlock(this.value);\" > ";
-                    //this.Response.Write("<script language=javascript>window.open('rows.aspx','newwindow','width=200,height=200')</script>");
+
                     string[] sArray = Regex.Split(data[i][j], ",", RegexOptions.IgnoreCase);
                     int n = sArray.Count() - 1;
                     html += "<option value= n>" + n + " patients</option>";
@@ -111,11 +116,6 @@ public partial class _Default : Page
     {
         return html;
     }
-    protected void yyy_Click(object sender, EventArgs e)
-    {
-        all_table_html(Local_Data.Data_arrangement_format); //data_arrangement_format
-    }
-     
         
     public string getSalleImagePath()
     {
@@ -132,6 +132,9 @@ public partial class _Default : Page
         return imgSpecialityGraphicPath;
     }
 
+    //use spirefree.xls to generate image 
+    // 中文版帮助 https://www.e-iceblue.cn/spirexls/create-a-combination-chart-in-excel.html
+    // english version document : https://www.e-iceblue.com/Tutorials/Spire.XLS/Spire.XLS-Program-Guide/Spire.XLS-Program-Guide-Content.html
     protected string generateGraphicSallePatient(List<List<string>> data)
     {
         Workbook patientOrs = new Workbook();
@@ -141,6 +144,7 @@ public partial class _Default : Page
         sheet.Range["B1"].Value = "patient number";
 
         //在sheet中添加数据
+        //add date in sheet
         for (int salle = 0; salle < data.Count; salle++) {
             sheet.Range["A" + (salle+2).ToString()].Value = "salle" + (salle+1).ToString();
             int personCount = 0;
@@ -155,6 +159,7 @@ public partial class _Default : Page
             sheet.Range["B" + (salle + 2).ToString()].NumberValue = personCount;
         }
 
+        // create graph
         //创建饼图 
         Chart chartSalle = sheet.Charts.Add(ExcelChartType.Pie);
         
@@ -338,6 +343,7 @@ public partial class _Default : Page
         return imageName;
     }
 
+    // button for upload the files
     protected void Button1_Click(object sender, EventArgs e)
     {
         if (FileUpload1.HasFile && FileUpload2.HasFile && FileUpload3.HasFile)
